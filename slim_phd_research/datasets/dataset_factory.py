@@ -18,12 +18,12 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from datasets import vinet
-from datasets import vinet_binary
+from datasets import cats_vs_dogs
+from datasets import flowers
 
 datasets_map = {
-    'vinet':vinet, #ternary 
-    'vinet_binary':vinet_binary
+    'cats_vs_dogs':cats_vs_dogs, #ternary 
+    'flowers':flowers
 }
 
 

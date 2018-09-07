@@ -29,9 +29,9 @@ from datasets import dataset_utils
 
 slim = tf.contrib.slim
 
-_FILE_PATTERN = 'vinet_%s_*.tfrecord'
+_FILE_PATTERN = 'cats_vs_dogs_%s_*.tfrecord'
 
-SPLITS_TO_SIZES = {'train': 693084, 'validation': 0, 'test':0}
+SPLITS_TO_SIZES = {'train': 25000, 'validation': 0, 'test':0}
 
 _NUM_CLASSES = 5 
 
