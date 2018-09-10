@@ -24,6 +24,7 @@ from datasets import dataset_factory
 from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
+
 import datetime
 import os
 slim = tf.contrib.slim
@@ -33,13 +34,11 @@ tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
 tf.app.flags.DEFINE_string(
-    'train_dir', 'D:\\viNet\RnD\\results\\summaries\\' +
-    'Inception_' +
-    datetime.datetime.now().strftime("%Y_%m_%d_%H_%M%S"),
+    'train_dir', 'E:\\Thesis\\summaries',
     'Directory where checkpoints and event logs are written to.')
 
 tf.app.flags.DEFINE_string(
-    'customer', 'E3',
+    'customer', 'cifar10',
     'Name of the customer or site ')
 
 tf.app.flags.DEFINE_integer('num_clones', 1,
@@ -85,7 +84,7 @@ tf.app.flags.DEFINE_float(
     'weight_decay', 0.00004, 'The weight decay on the model weights.')
 
 tf.app.flags.DEFINE_string(
-    'optimizer', 'adam',
+    'optimizer', 'sgd',
     'The name of the optimizer, one of "adadelta", "adagrad", "adam",'
     '"ftrl", "momentum", "sgd" or "rmsprop".')
 
@@ -173,13 +172,13 @@ tf.app.flags.DEFINE_float(
 #######################
 
 tf.app.flags.DEFINE_string(
-    'dataset_name', 'vinet', 'The name of the dataset to load.')
+    'dataset_name', 'cifar10', 'The name of the dataset to load.')
 
 tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', "D:\\viNet\\RnD\\data\\stage\\tfrecord\\E3_Augmented_V1\\train", 'The directory where the dataset files are stored.')
+    'dataset_dir', "E:\\DATA\\cifar10", 'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
@@ -188,26 +187,26 @@ tf.app.flags.DEFINE_integer(
     'class for the ImageNet dataset.')
 
 tf.app.flags.DEFINE_string(
-    'model_name', 'inception_v2', 'The name of the architecture to train.')
+    'model_name', 'inception_v4', 'The name of the architecture to train.')
 
 tf.app.flags.DEFINE_string(
     'preprocessing_name', None, 'The name of the preprocessing to use. If left '
     'as `None`, then the model_name flag is used.')
 
 tf.app.flags.DEFINE_integer(
-    'batch_size', 4, 'The number of samples in each batch.')
+    'batch_size', 1, 'The number of samples in each batch.')
 tf.app.flags.DEFINE_integer(
     'train_image_size', 224, 'Train image size')
 
 tf.app.flags.DEFINE_integer('max_number_of_steps',
-                            100000, 'The maximum number of training steps.')
+                            10000, 'The maximum number of training steps.')
 
 #####################
 # Fine-Tuning Flags #
 #####################
 
 tf.app.flags.DEFINE_string(
-    'checkpoint_path', "D:\\viNet\\RnD\\results\\summaries\\Inception_2018_08_17_16_0935",
+    'checkpoint_path', None,
     'The path to a checkpoint from which to fine-tune.')
 
 tf.app.flags.DEFINE_string(
@@ -343,7 +342,7 @@ def _get_init_fn():
     Returns:
       An init function run by the supervisor.
     """
-    print ("CHECKPOINT_PATH = " + FLAGS.checkpoint_path)
+    #print("CHECKPOINT_PATH = " + FLAGS.checkpoint_path)
     if FLAGS.checkpoint_path is None:
         return None
 
@@ -408,7 +407,9 @@ def main(_):
             'You must supply the dataset directory with --dataset_dir')
 
     tf.logging.set_verbosity(tf.logging.INFO)
-    FLAGS.train_dir = os.path.join('D:\\viNet\RnD\\results\\summaries\\',"InceptionV2_"+datetime.datetime.now().strftime("%Y_%m_%d_%H_%M%S")+"_"+FLAGS.customer + "_"+str(FLAGS.max_number_of_steps) + "iters_"+str(FLAGS.batch_size)+"batch.txt")
+    FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name +"_"+FLAGS.dataset_name + 
+                "_"+str(FLAGS.max_number_of_steps) + "iters_"+str(FLAGS.batch_size)+"batch"
+                +"_"+FLAGS.optimizer+"_"+datetime.datetime.now().strftime("%Y%m%d%H"))
     _write_out_config()
     with tf.Graph().as_default():
         #######################
@@ -583,7 +584,7 @@ def main(_):
 
         # Merge all summaries together.
         summary_op = tf.summary.merge(list(summaries), name='summary_op')
-
+        session_config = tf.ConfigProto(allow_soft_placement=True) 
         ##########################
         # Kicks off the training. #
         ###########################
@@ -598,7 +599,8 @@ def main(_):
             log_every_n_steps=FLAGS.log_every_n_steps,
             save_summaries_secs=FLAGS.save_summaries_secs,
             save_interval_secs=FLAGS.save_interval_secs,
-            sync_optimizer=optimizer if FLAGS.sync_replicas else None)
+            sync_optimizer=optimizer if FLAGS.sync_replicas else None,
+            session_config=session_config)
 
 
 if __name__ == '__main__':

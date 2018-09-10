@@ -18,12 +18,12 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from datasets import cats_vs_dogs
-from datasets import flowers
+from datasets import cifar10
 
 datasets_map = {
-    'cats_vs_dogs':cats_vs_dogs, #ternary 
-    'flowers':flowers
+    #'cats_vs_dogs':cats_vs_dogs, #ternary 
+#    'flowers':flowers,
+     'cifar10':cifar10
 }
 
 
