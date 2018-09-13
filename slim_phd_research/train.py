@@ -168,7 +168,7 @@ tf.app.flags.DEFINE_float(
     'If left as None, then moving averages are not used.')
 
 #######################
-# Dataset Flags #
+# Dataset Flags 
 #######################
 
 tf.app.flags.DEFINE_string(
@@ -178,7 +178,7 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', "E:\\DATA\\cifar10", 'The directory where the dataset files are stored.')
+    'dataset_dir', "E:\\DATA\\cifar\\cifar10\\tfrecord\\cifar10_original\\train-original", 'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
@@ -187,7 +187,7 @@ tf.app.flags.DEFINE_integer(
     'class for the ImageNet dataset.')
 
 tf.app.flags.DEFINE_string(
-    'model_name', 'inception_v4', 'The name of the architecture to train.')
+    'model_name', 'inception_v1', 'The name of the architecture to train.')
 
 tf.app.flags.DEFINE_string(
     'preprocessing_name', None, 'The name of the preprocessing to use. If left '

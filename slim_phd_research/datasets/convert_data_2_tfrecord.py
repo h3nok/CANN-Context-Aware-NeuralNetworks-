@@ -89,7 +89,7 @@ def _get_filenames_and_classes(dataset_dir, tracks, subsample_minimum):
             if subsample_minimum:
                 for i in range(minimum_number_of_files):
                     filename = files[i]
-                if not filename.endswith('.jpg') and not filename.endswith('.jpeg'):
+                if not filename.endswith('.jpg') and not filename.endswith('.jpeg') and not filename.endswith(".png"):
                     print("Error: Unknown file format \'{}\'".format(filename))
                     continue
                     path = os.path.join(directory, filename)
@@ -97,7 +97,7 @@ def _get_filenames_and_classes(dataset_dir, tracks, subsample_minimum):
                     files_per_class += 1
             else:
                 for filename in files:
-                    if not filename.endswith('.jpg') and not filename.endswith('.jpeg'):
+                    if not filename.endswith('.jpg') and not filename.endswith('.jpeg') and not filename.endswith(".png"):
                         print("Error: Unknown file format \'{}\'".format(filename))
                         continue
                     path = os.path.join(directory, filename)
@@ -108,13 +108,15 @@ def _get_filenames_and_classes(dataset_dir, tracks, subsample_minimum):
     return training_filenames, sorted(class_names)
 
 
-def _get_dataset_filename(dataset_dir, split_name, shard_id):
-    output_filename = 'vinet_%s_%05d-of-%05d.tfrecord' % (
+def _get_dataset_filename(dataset_dir, split_name, shard_id,prefix):
+    if prefix is None:
+        raise ValueError("Please supply tfrecord name prefix")
+    output_filename = prefix+'_%s_%05d-of-%05d.tfrecord' % (
         split_name, shard_id, _NUM_SHARDS)
     return os.path.join(dataset_dir, output_filename)
 
 
-def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tracks, normalize):
+def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tracks, normalize,prefix):
     """Converts the given filenames to a TFRecord dataset.
 
     Args:
@@ -135,7 +137,7 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tra
 
             for shard_id in range(_NUM_SHARDS):
                 output_filename = _get_dataset_filename(
-                    dataset_dir, split_name, shard_id)
+                    dataset_dir, split_name, shard_id,prefix)
                 # if not os.path.exists(output_filename):
                 #       os.makedirs(output_filename)
 
@@ -177,17 +179,17 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tra
     sys.stdout.flush()
 
 
-def _dataset_exists(dataset_dir):
+def _dataset_exists(dataset_dir,prefix):
     for split_name in ['train', 'validation']:
         for shard_id in range(_NUM_SHARDS):
             output_filename = _get_dataset_filename(
-                dataset_dir, split_name, shard_id)
+                dataset_dir, split_name, shard_id,prefix)
             if not tf.gfile.Exists(output_filename):
                 return False
     return True
 
 
-def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, subsample=False, normalize=False):
+def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, subsample=False, normalize=False,prefix=None):
     """Runs the download and conversion operation.
 
     Args:
@@ -196,7 +198,7 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
     if not tf.gfile.Exists(dataset_dir):
         tf.gfile.MakeDirs(dataset_dir)
 
-    if _dataset_exists(dataset_dir):
+    if _dataset_exists(dataset_dir,prefix):
         print('Dataset files already exist. Exiting without re-creating them.')
         return
 
@@ -217,9 +219,9 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
         os.makedirs(output_dir)
     # First, convert the training and validation sets.
     _convert_dataset('train', training_filenames,
-                     class_names_to_ids, output_dir, tracks, normalize)
+                     class_names_to_ids, output_dir, tracks, normalize,prefix)
     _convert_dataset('validation', validation_filenames,
-                     class_names_to_ids, output_dir, False, normalize)
+                     class_names_to_ids, output_dir, False, normalize,prefix)
 
     # Finally, write the labels file:
     labels_to_class_names = dict(zip(range(len(class_names)), class_names))
@@ -230,10 +232,10 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
 
 
 if __name__ == '__main__':
-    DATASET_DIR = "D:\\viNet\\RnD\\data\\stage\\TOTW-Avangrid-v2.2"
-    OUTPUT_DIR = 'D:\\viNet\\RnD\data\\stage\\'
-    NAME = "TOTO_Avangrid_Augmented_V1"
-    TYPE = 'train'
+    DATASET_DIR = "E:\DATA\\cifar\\cifar10\\grouped\\train"
+    OUTPUT_DIR = 'E:\\DATA\\cifar\\cifar10\\'
+    NAME = "cifar10_original"
+    TYPE = 'train-original'
+    PREFIX = "cifar10_original"
 
-    run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE,
-        False, subsample=False, normalize=False)
+    run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE,False, subsample=False, normalize=False,prefix=PREFIX)
