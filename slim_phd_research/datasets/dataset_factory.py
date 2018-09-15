@@ -19,11 +19,19 @@ from __future__ import division
 from __future__ import print_function
 
 from datasets import cifar10
+from datasets import caltech101
+from datasets import caltech256
+from datasets import cifar100
+from datasets import cats_vs_dogs
+from datasets import flowers
 
 datasets_map = {
-    #'cats_vs_dogs':cats_vs_dogs, #ternary 
-#    'flowers':flowers,
-     'cifar10':cifar10
+      'cats_vs_dogs':cats_vs_dogs,
+      'flowers':flowers,
+      'cifar10':cifar10,
+      'caltech101':caltech101,
+      'caltech256':caltech256,
+      'cifar100':cifar100
 }
 
 

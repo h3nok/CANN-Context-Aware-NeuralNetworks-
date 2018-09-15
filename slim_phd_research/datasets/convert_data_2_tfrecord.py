@@ -220,8 +220,8 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
     # First, convert the training and validation sets.
     _convert_dataset('train', training_filenames,
                      class_names_to_ids, output_dir, tracks, normalize,prefix)
-    _convert_dataset('validation', validation_filenames,
-                     class_names_to_ids, output_dir, False, normalize,prefix)
+    #_convert_dataset('validation', validation_filenames,
+                     #class_names_to_ids, output_dir, False, normalize,prefix)
 
     # Finally, write the labels file:
     labels_to_class_names = dict(zip(range(len(class_names)), class_names))
@@ -232,10 +232,26 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
 
 
 if __name__ == '__main__':
-    DATASET_DIR = "E:\DATA\\cifar\\cifar10\\grouped\\train"
-    OUTPUT_DIR = 'E:\\DATA\\cifar\\cifar10\\'
-    NAME = "cifar10_original"
+    DATASET_DIR = "E:\DATA\cifar\cifar100\cifar100\\train"
+    OUTPUT_DIR = 'E:\DATA\cifar\cifar100\\'
+    NAME = "cifar100_original"
     TYPE = 'train-original'
-    PREFIX = "cifar10_original"
+    PREFIX = "cifar100_original"
 
     run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE,False, subsample=False, normalize=False,prefix=PREFIX)
+
+    # DATASET_DIR = "E:\DATA\caltech\caltech101\preprocessed\\reconstructed\caltech101\\ae\increasing\\4x4"
+    # OUTPUT_DIR = 'E:\DATA\caltech\caltech101\\'
+    # NAME = "caltech101_4x4_AE"
+    # TYPE = 'train-AE-4x4'
+    # PREFIX = "caltech101_4x4"
+
+    # run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE,False, subsample=False, normalize=False,prefix=PREFIX)
+
+    # DATASET_DIR = "E:\DATA\caltech\caltech101\preprocessed\\reconstructed\caltech101\\ae\increasing\\8x8"
+    # OUTPUT_DIR = 'E:\DATA\caltech\caltech101\\'
+    # NAME = "caltech101_8x8_AE"
+    # TYPE = 'train-AE-8x8'
+    # PREFIX = "caltech101_8x8"
+
+    # run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE,False, subsample=False, normalize=False,prefix=PREFIX)

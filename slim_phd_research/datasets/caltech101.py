@@ -28,15 +28,15 @@ from datasets import dataset_utils
 
 slim = tf.contrib.slim
 
-_FILE_PATTERN = 'cifar10_%s_*.tfrecord'
+_FILE_PATTERN = 'caltech_%s_*.tfrecord'
 
 SPLITS_TO_SIZES = {'train': 50000, 'test': 10000}
 
-_NUM_CLASSES = 10
+_NUM_CLASSES = 102
 
 _ITEMS_TO_DESCRIPTIONS = {
     'image': 'A [32 x 32 x 3] color image.',
-    'label': 'A single integer between 0 and 9',
+    'label': 'A single integer between 0 and 101',
 }
 
 
