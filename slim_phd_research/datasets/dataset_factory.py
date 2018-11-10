@@ -23,11 +23,11 @@ from datasets import caltech101
 from datasets import caltech256
 from datasets import cifar100
 from datasets import cats_vs_dogs
-from datasets import flowers
+# from datasets import flowers
 
 datasets_map = {
-      'cats_vs_dogs':cats_vs_dogs,
-      'flowers':flowers,
+      # 'cats_vs_dogs':cats_vs_dogs,
+      # 'flowers':flowers,
       'cifar10':cifar10,
       'caltech101':caltech101,
       'caltech256':caltech256,

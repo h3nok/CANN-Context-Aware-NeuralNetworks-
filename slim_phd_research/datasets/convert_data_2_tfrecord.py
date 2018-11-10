@@ -232,26 +232,9 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
 
 
 if __name__ == '__main__':
-    DATASET_DIR = "E:\DATA\cifar\cifar100\cifar100\\train"
-    OUTPUT_DIR = 'E:\DATA\cifar\cifar100\\'
-    NAME = "cifar100_original"
+    DATASET_DIR = "E:\\DATA\\caltech\\caltech256\\original"
+    OUTPUT_DIR = 'E:\DATA\caltech\caltech256'
+    NAME = "caltech256"
     TYPE = 'train-original'
-    PREFIX = "cifar100_original"
-
+    PREFIX = "train-original"
     run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE,False, subsample=False, normalize=False,prefix=PREFIX)
-
-    # DATASET_DIR = "E:\DATA\caltech\caltech101\preprocessed\\reconstructed\caltech101\\ae\increasing\\4x4"
-    # OUTPUT_DIR = 'E:\DATA\caltech\caltech101\\'
-    # NAME = "caltech101_4x4_AE"
-    # TYPE = 'train-AE-4x4'
-    # PREFIX = "caltech101_4x4"
-
-    # run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE,False, subsample=False, normalize=False,prefix=PREFIX)
-
-    # DATASET_DIR = "E:\DATA\caltech\caltech101\preprocessed\\reconstructed\caltech101\\ae\increasing\\8x8"
-    # OUTPUT_DIR = 'E:\DATA\caltech\caltech101\\'
-    # NAME = "caltech101_8x8_AE"
-    # TYPE = 'train-AE-8x8'
-    # PREFIX = "caltech101_8x8"
-
-    # run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE,False, subsample=False, normalize=False,prefix=PREFIX)

@@ -24,8 +24,11 @@ from datasets import dataset_factory
 from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
+import numpy as np
 
 import datetime
+from PIL import Image
+
 import os
 slim = tf.contrib.slim
 
@@ -178,7 +181,7 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', "E:\\DATA\\cifar\\cifar10\\tfrecord\\cifar10_original\\train-original", 'The directory where the dataset files are stored.')
+    'dataset_dir', "E:\\DATA\\cifar\\cifar10\\tfrecord\\train-original", 'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
@@ -463,8 +466,13 @@ def main(_):
 
             train_image_size = FLAGS.train_image_size or network_fn.default_image_size
 
-            image = image_preprocessing_fn(
-                image, train_image_size, train_image_size)
+            print (image)
+            image = image_preprocessing_fn(image, train_image_size, train_image_size)
+            
+            print (image)
+            # Image.fromarray(np.asarray(image)).show()
+
+            prompt = input("Press some key to continue...")
 
             images, labels = tf.train.batch(
                 [image, label],

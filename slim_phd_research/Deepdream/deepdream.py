@@ -253,8 +253,9 @@ def render_deepdream(t_obj, img0=img_noise,
 
         showarray(img/255.0,name=save_filename)
 
-img0 = Image.open("E:\\viNet_RnD\\deepdream\\ucd.jpg")
+img0 = Image.open("E:\\viNet_RnD\\deepdream\\bi.jpg")
 img0 = np.float32(img0)
 
-render_deepdream(tf.square(T('mixed4c')), img0,save_filename="E:\\viNet_RnD\\deepdream\\ucd_1.jpg")
-render_deepdream(T(layer)[:,:,:,139], img0,save_filename="E:\\viNet_RnD\\deepdream\\ucd_2.jpg")
+#render_deepdream(tf.square(T('mixed4c')), img0,save_filename="E:\\viNet_RnD\\deepdream\\EVE\\Evelyn_Yarrish_4c.jpg")
+render_deepdream(T(layer)[:,:,:,133], img0,save_filename="E:\\viNet_RnD\\deepdream\\EVE\\bi_133.jpg")
+render_deepdream(T(layer)[:,:,:,134], img0,save_filename="E:\\viNet_RnD\\deepdream\\EVE\\bi_134.jpg")
