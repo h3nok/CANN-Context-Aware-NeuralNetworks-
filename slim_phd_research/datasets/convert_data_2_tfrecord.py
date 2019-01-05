@@ -108,7 +108,7 @@ def _get_filenames_and_classes(dataset_dir, tracks, subsample_minimum):
     return training_filenames, sorted(class_names)
 
 
-def _get_dataset_filename(dataset_dir, split_name, shard_id,prefix):
+def _get_dataset_filename(dataset_dir, split_name, shard_id, prefix):
     if prefix is None:
         raise ValueError("Please supply tfrecord name prefix")
     output_filename = prefix+'_%s_%05d-of-%05d.tfrecord' % (
@@ -116,7 +116,11 @@ def _get_dataset_filename(dataset_dir, split_name, shard_id,prefix):
     return os.path.join(dataset_dir, output_filename)
 
 
-def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tracks, normalize,prefix):
+def _cc_ppor(measure_type):
+    pass
+
+
+def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tracks, normalize, prefix, ppor=None):
     """Converts the given filenames to a TFRecord dataset.
 
     Args:
@@ -125,6 +129,7 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tra
       class_names_to_ids: A dictionary from class names (strings) to ids
         (integers).
       dataset_dir: The directory where the converted datasets are stored.
+      ppor: image preprocessing based on Patch ordering and Reconstruction 
     """
     assert split_name in ['train', 'validation']
 
@@ -137,7 +142,7 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tra
 
             for shard_id in range(_NUM_SHARDS):
                 output_filename = _get_dataset_filename(
-                    dataset_dir, split_name, shard_id,prefix)
+                    dataset_dir, split_name, shard_id, prefix)
                 # if not os.path.exists(output_filename):
                 #       os.makedirs(output_filename)
 
@@ -151,6 +156,8 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tra
                                 i + 1, len(filenames), shard_id))
                             sys.stdout.flush()
 
+                            # TODO: stick p-por here
+
                             # Read the filename:
                             image_data = tf.gfile.FastGFile(
                                 filenames[i], 'rb').read()
@@ -163,33 +170,31 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tra
 
                             class_name = os.path.basename(
                                 os.path.dirname(filenames[i]))
-                            if tracks:
-                                class_name = os.path.basename(
-                                    os.path.dirname(os.path.dirname(filenames[i])))
+
                             class_id = class_names_to_ids[class_name]
 
                             example = dataset_utils.image_to_tfexample(
                                 image_data, b'jpg', height, width, class_id)
                             tfrecord_writer.write(example.SerializeToString())
                         except:
-                            print ("Unable to process {} file".format(filenames[i]))
-
+                            print("Unable to process {} file".format(
+                                filenames[i]))
 
     sys.stdout.write('\n')
     sys.stdout.flush()
 
 
-def _dataset_exists(dataset_dir,prefix):
+def _dataset_exists(dataset_dir, prefix):
     for split_name in ['train', 'validation']:
         for shard_id in range(_NUM_SHARDS):
             output_filename = _get_dataset_filename(
-                dataset_dir, split_name, shard_id,prefix)
+                dataset_dir, split_name, shard_id, prefix)
             if not tf.gfile.Exists(output_filename):
                 return False
     return True
 
 
-def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, subsample=False, normalize=False,prefix=None):
+def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, subsample=False, normalize=False, prefix=None, ppor='mi'):
     """Runs the download and conversion operation.
 
     Args:
@@ -198,7 +203,7 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
     if not tf.gfile.Exists(dataset_dir):
         tf.gfile.MakeDirs(dataset_dir)
 
-    if _dataset_exists(dataset_dir,prefix):
+    if _dataset_exists(dataset_dir, prefix):
         print('Dataset files already exist. Exiting without re-creating them.')
         return
 
@@ -219,9 +224,9 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
         os.makedirs(output_dir)
     # First, convert the training and validation sets.
     _convert_dataset('train', training_filenames,
-                     class_names_to_ids, output_dir, tracks, normalize,prefix)
-    #_convert_dataset('validation', validation_filenames,
-                     #class_names_to_ids, output_dir, False, normalize,prefix)
+                     class_names_to_ids, output_dir, tracks, normalize, prefix)
+    # _convert_dataset('validation', validation_filenames,
+    # class_names_to_ids, output_dir, False, normalize,prefix)
 
     # Finally, write the labels file:
     labels_to_class_names = dict(zip(range(len(class_names)), class_names))
@@ -237,4 +242,5 @@ if __name__ == '__main__':
     NAME = "caltech256"
     TYPE = 'train-original'
     PREFIX = "train-original"
-    run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE,False, subsample=False, normalize=False,prefix=PREFIX)
+    run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE, False,
+        subsample=False, normalize=False, prefix=PREFIX, ppor='mi')

@@ -171,7 +171,7 @@ tf.app.flags.DEFINE_float(
     'If left as None, then moving averages are not used.')
 
 #######################
-# Dataset Flags 
+# Dataset Flags
 #######################
 
 tf.app.flags.DEFINE_string(
@@ -410,9 +410,10 @@ def main(_):
             'You must supply the dataset directory with --dataset_dir')
 
     tf.logging.set_verbosity(tf.logging.INFO)
-    FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name +"_"+FLAGS.dataset_name + 
-                "_"+str(FLAGS.max_number_of_steps) + "iters_"+str(FLAGS.batch_size)+"batch"
-                +"_"+FLAGS.optimizer+"_"+datetime.datetime.now().strftime("%Y%m%d%H"))
+    FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name + "_"+FLAGS.dataset_name +
+                                   "_"+str(FLAGS.max_number_of_steps) +
+                                   "iters_"+str(FLAGS.batch_size)+"batch"
+                                   + "_"+FLAGS.optimizer+"_"+datetime.datetime.now().strftime("%Y%m%d%H"))
     _write_out_config()
     with tf.Graph().as_default():
         #######################
@@ -466,10 +467,9 @@ def main(_):
 
             train_image_size = FLAGS.train_image_size or network_fn.default_image_size
 
-            print (image)
-            image = image_preprocessing_fn(image, train_image_size, train_image_size)
-            
-            print (image)
+            image = image_preprocessing_fn(
+                image, train_image_size, train_image_size)
+
             # Image.fromarray(np.asarray(image)).show()
 
             prompt = input("Press some key to continue...")
@@ -592,7 +592,7 @@ def main(_):
 
         # Merge all summaries together.
         summary_op = tf.summary.merge(list(summaries), name='summary_op')
-        session_config = tf.ConfigProto(allow_soft_placement=True) 
+        session_config = tf.ConfigProto(allow_soft_placement=True)
         ##########################
         # Kicks off the training. #
         ###########################
