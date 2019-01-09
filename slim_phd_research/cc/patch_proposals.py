@@ -1,13 +1,17 @@
 import os
 
 import cv2
+import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 import tensorflow.image as tfimage
 from keras.backend import tensorflow_backend as KTF
 from PIL import Image
+from skimage.util.shape import view_as_blocks, view_as_windows
 from sklearn.feature_extraction import image
+from sklearn.feature_extraction.image import extract_patches
 
+from cc_utils import ImagePlot as IMPLOT
 from cc_utils import ImageReader as CCIR
 
 
@@ -79,28 +83,40 @@ def extract_patches_tf():
     sess.close()
 
 
-def generate_patches(image_tesnor, patch_size):
+def generate_patches(image_tensor, patch_size):
     if not isinstance(patch_size, tuple):
         raise ValueError("Patch size must be of tuple type, (w,h)")
 
+    patches = view_as_blocks(image_tensor, patch_size)
+
+    # collapse the last two dimensions in one
+    patches = patches.reshape(patches.shape[0],patches.shape[1],-1)
+
+    return patches, len(patches)
+
+def extract_patches2(image_tensor, patch_size):
+    if not isinstance(patch_size, tuple):
+        raise ValueError("Patch size must be of tuple type, (w,h)")
+    assert len(image_tensor.shape) == 3, "Supplied image is not color image"
+    assert image_tensor.shape[0] == image_tensor.shape[1], "Sample is not sqaure, migh need resizing"
+    max_patches = int(image_tensor.shape[0]/patch_size[0])
     patches = image.extract_patches_2d(image_tensor, patch_size)
 
-    return patches, patches.shape
+    return patches, len(patches)
 
-# image_string = tf.gfile.FastGFile(image_file, 'rb').read()
+def test_generate_patches():
+    image_file = "C:\\phd\\Samples\\resized.png"
+    if not os.path.exists(image_file):
+        print("ERROR: file \'{}\' not found ".format(image_file))
+    image_reader = CCIR()
+    image_plot = IMPLOT()
+    image_tensor, r, g, b = image_reader.read_jpeg_to_ndarray_using_cv(image_file)
+    patches,  number_of_patches = generate_patches(image_tensor, (4, 4,3))
+
+    print("Patch shape: {}".format(patches.shape))
+    print("Number of patches: {} ".format(number_of_patches))
 
 
-image_file = "C:\\phd\\Samples\\resized.jpg"
 
-if not os.path.exists(image_file):
-    print("ERROR: file \'{}\' not found ".format(image_file))
-
-image_reader = CCIR()
-image_tensor = image_reader.read_jpeg_to_ndarray(image_file)
-print (image_tensor.shape)
-patches, number_of_patches = generate_patches(image_tensor, (32, 32))
-
-print(patches[8].shape)
-print (number_of_patches)
-
-cv2.imshow("patch_0", patches[0])
+if __name__ == '__main__':
+    test_generate_patches()
