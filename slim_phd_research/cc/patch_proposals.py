@@ -90,9 +90,10 @@ def generate_patches(image_tensor, patch_size):
     patches = view_as_blocks(image_tensor, patch_size)
 
     # collapse the last two dimensions in one
-    patches = patches.reshape(patches.shape[0],patches.shape[1],-1)
+    patches = patches.reshape(patches.shape[0], patches.shape[1], -1)
 
     return patches, len(patches)
+
 
 def extract_patches2(image_tensor, patch_size):
     if not isinstance(patch_size, tuple):
@@ -104,18 +105,19 @@ def extract_patches2(image_tensor, patch_size):
 
     return patches, len(patches)
 
+
 def test_generate_patches():
     image_file = "C:\\phd\\Samples\\resized.png"
     if not os.path.exists(image_file):
         print("ERROR: file \'{}\' not found ".format(image_file))
     image_reader = CCIR()
     image_plot = IMPLOT()
-    image_tensor, r, g, b = image_reader.read_jpeg_to_ndarray_using_cv(image_file)
-    patches,  number_of_patches = generate_patches(image_tensor, (4, 4,3))
+    image_tensor, r, g, b = image_reader.read_jpeg_to_ndarray_using_cv(
+        image_file)
+    patches,  number_of_patches = generate_patches(image_tensor, (4, 4, 3))
 
     print("Patch shape: {}".format(patches.shape))
     print("Number of patches: {} ".format(number_of_patches))
-
 
 
 if __name__ == '__main__':

@@ -106,7 +106,7 @@ def plot_patches(patches, fignum=None, low=0, high=0):
             high = len(patches)
         pmin, pmax = patches.min(), patches.max()
         dims = np.ceil(np.sqrt(high - low))
-        for idx in xrange(high - low):
+        for idx in range(high - low):
             spl = plt.subplot(dims, dims, idx + 1)
             ax = plt.axis('off')
             im = plt.imshow(patches[idx], cmap=matplotlib.cm.gray)

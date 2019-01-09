@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import math
 import numpy as np
 
+
 class ImageReader(object):
     """Helper class that provides TensorFlow image coding utilities."""
 
@@ -28,37 +29,38 @@ class ImageReader(object):
 
     def read_jpeg_to_ndarray_using_cv(self, image_file):
         image_data = cv2.imread(image_file)
-        b,g,r = cv2.split(image_data)
+        b, g, r = cv2.split(image_data)
         assert len(image_data.shape) == 3
         assert image_data.shape[2] == 3
         (h, w) = image_data.shape[:2]
         assert h == w
 
-        return image_data, r,g,b
+        return image_data, r, g, b
 
-    def open(self, image_file,resize=(32,32)):
+    def open(self, image_file, resize=(32, 32)):
         img = mpimg.imread(image_file)
 
         return img
 
+
 class ImagePlot(object):
 
-    def plot_multiple(self,tensor_list, subsample):
+    def plot_multiple(self, tensor_list, subsample):
         rows = subsample/2
         cols = subsample/2
 
-        fig = plt.figure(figsize=(8,8))
+        fig = plt.figure(figsize=(8, 8))
 
-        for i in range(1,subsample+1):
-            fig.add_subplot(rows,cols,i)
-            for j in range(1,subsample+1):
-                print (i)
-                print (j)
-                plt.imshow(tensor_list[i-1,j-1])
+        for i in range(1, subsample+1):
+            fig.add_subplot(rows, cols, i)
+            for j in range(1, subsample+1):
+                print(i)
+                print(j)
+                plt.imshow(tensor_list[i-1, j-1])
 
         plt.show()
-    
-    def plot_patches(self,patches, fignum=None, low=0, high=0):
+
+    def plot_patches(self, patches, fignum=None, low=0, high=0):
         """
         Given a stack of 2D patches indexed by the first dimension, plot the
         patches in subplots. 
@@ -85,6 +87,3 @@ class ImagePlot(object):
             plt.show()
         finally:
             plt.interactive(istate)
-
-
-
