@@ -42,6 +42,29 @@ class ImageReader(object):
 
         return img
 
+    def _read_image_bytes(self,image_file):
+        return tf.gfile.FastGFile(image_file, 'rb').read()
+
+    def decode_image_tf(self,image_file):
+        image = self._read_image_bytes(image_file)
+        return tf.image.decode_image(image, channels=3)
+
+
+    def check_image(self,image):
+        assertion = tf.assert_equal(tf.shape(image)[-1], 3, message="image must have 3 color channels")
+        with tf.control_dependencies([assertion]):
+            image = tf.identity(image)
+
+        if image.get_shape().ndims not in (3, 4):
+            raise ValueError("image must be either 3 or 4 dimensions")
+
+        # make the last dimension 3 so that you can unstack the colors
+        shape = list(image.get_shape())
+        shape[-1] = 3
+        image.set_shape(shape)
+        return image
+    
+
 
 class ImagePlot(object):
 
