@@ -3,8 +3,10 @@ import cv2
 from PIL import Image
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 import math
 import numpy as np
+import sys
 
 
 class ImageReader(object):
@@ -42,16 +44,16 @@ class ImageReader(object):
 
         return img
 
-    def _read_image_bytes(self,image_file):
+    def _read_image_bytes(self, image_file):
         return tf.gfile.FastGFile(image_file, 'rb').read()
 
-    def decode_image_tf(self,image_file):
+    def decode_image_tf(self, image_file):
         image = self._read_image_bytes(image_file)
         return tf.image.decode_image(image, channels=3)
 
-
-    def check_image(self,image):
-        assertion = tf.assert_equal(tf.shape(image)[-1], 3, message="image must have 3 color channels")
+    def check_image(self, image):
+        assertion = tf.assert_equal(
+            tf.shape(image)[-1], 3, message="image must have 3 color channels")
         with tf.control_dependencies([assertion]):
             image = tf.identity(image)
 
@@ -63,25 +65,9 @@ class ImageReader(object):
         shape[-1] = 3
         image.set_shape(shape)
         return image
-    
 
 
 class ImagePlot(object):
-
-    def plot_multiple(self, tensor_list, subsample):
-        rows = subsample/2
-        cols = subsample/2
-
-        fig = plt.figure(figsize=(8, 8))
-
-        for i in range(1, subsample+1):
-            fig.add_subplot(rows, cols, i)
-            for j in range(1, subsample+1):
-                print(i)
-                print(j)
-                plt.imshow(tensor_list[i-1, j-1])
-
-        plt.show()
 
     def plot_patches(self, patches, fignum=None, low=0, high=0):
         """
@@ -110,3 +96,66 @@ class ImagePlot(object):
             plt.show()
         finally:
             plt.interactive(istate)
+
+    def plot_patches_tf(image_patches, sess, ksize_rows, ksize_cols):
+        #x = sess.run(image_patches)
+        #nr = x.shape[1]
+        #nc = x.shape[2]
+        #del x
+        a = sess.run(tf.shape(image_patches))
+        nr, nc = a[1], a[2]
+        print('\nwidth: {}; height: {}'.format(nr, nc), file=sys.stderr)
+
+        # figsize: width and height in inches. can be changed to make
+        # +output figure fit well. The default often works well.
+
+        fig = plt.figure()
+        gs = gridspec.GridSpec(nr, nc)
+        gs.update(wspace=0.01, hspace=0.01)
+
+        for i in range(nr):
+            for j in range(nc):
+                ax = plt.subplot(gs[i*nc+j])
+                plt.axis('off')
+                ax.set_xticklabels([])
+                ax.set_yticklabels([])
+                ax.set_aspect('auto')
+                patch = tf.reshape(image_patches[0, i, j, ], [
+                    ksize_rows, ksize_cols, 3])
+                #patch = tf.image.random_brightness(patch, 0.3)
+                #patch = tf.image.random_contrast(patch, 0.1, 0.9)
+                #patch = tf.image.random_saturation(patch, 0.1, 0.9)
+                #patch = tf.image.random_hue(patch, 0.4)
+                #patch = tf.image.random_flip_up_down(patch, 0.4)
+                plt.imshow(sess.run(patch))
+                print('processed {},{} patch, {}.'.format(
+                    i, j, i*nc+j), file=sys.stderr)
+        return fig
+
+
+    def show_images(images, cols = 1, titles = None):
+        """Display a list of images in a single figure with matplotlib.
+        
+        Parameters
+        ---------
+        images: List of np.arrays compatible with plt.imshow.
+        
+        cols (Default = 1): Number of columns in figure (number of rows is 
+                            set to np.ceil(n_images/float(cols))).
+        
+        titles: List of titles corresponding to each image. Must have
+                the same length as titles.
+        """
+        assert((titles is None)or (len(images) == len(titles)))
+        n_images = len(images)
+        if titles is None: titles = ['Image (%d)' % i for i in range(1,n_images + 1)]
+        fig = plt.figure()
+        for n, (image, title) in enumerate(zip(images, titles)):
+            a = fig.add_subplot(cols, np.ceil(n_images/float(cols)), n + 1)
+            if image.ndim == 2:
+                 plt.gray()
+            plt.imshow(image)
+            a.set_title(title)
+        fig.set_size_inches(np.array(fig.get_size_inches()) * n_images)
+
+        return fig
