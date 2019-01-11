@@ -1,16 +1,28 @@
 
-def JE(object):
-    def __init__(self):
-        self._patches = []
-        self._ordering = 0
+import numpy as np
+from pyitlib import discrete_random_variable as drv
+import tensorflow as tf
 
-    def sort(self,patches,ordering):
-        pass
 
-def je(patches, order=0):
-    print ("Entering joint entropy function...")
-    if not isinstance(patches,dict):
-        raise ValueError("Patches must contain patch_data and je rank!")
-    if len(patches) < 4:
-        raise ValueError("You must supply patch container with at least 4 patches")
+def JointEntropy(patch_1, patch_2):
+
+    assert patch_1.shape == patch_2.shape, "Patches must have similar tensor shapes of [p_w, p_h, c]"
+    assert patch_1 != patch_2, "Patches are binary equivalent, Distance = 0"
+
+    sess = tf.get_default_session()
+
+    #combine the two tensors into one 
+    patch_data = sess.run(
+        tf.concat([patch_1,patch_2],0))
+    #flatten the tensor into a sigle dimensinoal array 
+    patch_data = sess.run(tf.reshape(patch_data,[-1]))
+
+    je = round(drv.entropy_joint(patch_data), 4) #result x.xxxx 
+
+    return je
+
+
+    
+
+    
         

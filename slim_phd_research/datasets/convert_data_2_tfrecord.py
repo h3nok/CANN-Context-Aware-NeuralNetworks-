@@ -162,9 +162,6 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tra
                             image_data = tf.gfile.FastGFile(
                                 filenames[i], 'rb').read()
 
-                            # if normalize:
-                            # image_data2=tf.image.per_image_standardization(image_data)
-
                             height, width = image_reader.read_image_dims(
                                 sess, image_data)
 

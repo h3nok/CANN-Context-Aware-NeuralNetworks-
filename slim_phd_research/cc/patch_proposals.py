@@ -1,7 +1,10 @@
-import os
 import atexit
-import cv2
 import math
+import os
+import time
+from time import clock
+
+import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
@@ -9,18 +12,15 @@ import tensorflow.image as tfimage
 from keras.backend import tensorflow_backend as KTF
 from PIL import Image
 from sklearn.feature_extraction import image
-import time
 from sklearn.feature_extraction.image import extract_patches
 
 from cc_utils import ImagePlot as IMPLOT
-from cc_utils import ImageReader as CCIR
-from time import clock
+from reconstructor import reconstruct_from_patches
 from timer import endlog, log
-from PIL import Image
-from patches import patchify, unpatchify, _windowed_subdivs, _recreate_from_subdivs
+import map_measure
 
 
-def extract_patches(image_data, ksize_rows, ksize_cols, strides_rows, strides_cols, rates=[1, 1, 1, 1], padding='SAME'):
+def _patchify_tf(image_data, ksize_rows, ksize_cols, strides_rows, strides_cols, rates=[1, 1, 1, 1], padding='VALID'):
     """[summary]
 
     Arguments:
@@ -53,14 +53,21 @@ def _to_list(sess, tensor_patches, nr, nc):
     for i in range(nr):
         for j in range(nc):
             patch = tf.reshape(tensor_patches[0, i, j, ], [
-                ksize_rows, ksize_cols, 3])
+                patch_width, patch_height, 3])
 
             list_of_patches.append(sess.run(patch))
 
     return list_of_patches
 
 
-def generate_patches(sess, image_data_byes, ksize_rows, ksize_cols):
+def generate_patches_v1(sess, image_data_byes, ksize_rows, ksize_cols):
+    """[summary]
+    Arguments:
+        sess {[type]} -- [description]
+        image_data_byes {[type]} -- [description]
+        ksize_rows {[type]} -- [description]
+        ksize_cols {[type]} -- [description]
+    """
     start = clock()
     atexit.register(endlog, start)
     log("Start Program - func: generate_patches(...)")
@@ -71,8 +78,10 @@ def generate_patches(sess, image_data_byes, ksize_rows, ksize_cols):
 
     image = tf.image.decode_image(image_string, channels=3)
 
-    image_patches = extract_patches(
-        image, ksize_rows, ksize_cols, strides_rows, strides_cols)
+    image_patches = _patchify_tf(
+        image, ksize_rows,
+        ksize_cols, strides_rows,
+        strides_cols)
 
     p = sess.run(tf.shape(image_patches))
     number_patch_row = p[1]
@@ -81,62 +90,68 @@ def generate_patches(sess, image_data_byes, ksize_rows, ksize_cols):
     return image_patches, number_patch_row, number_patch_col
 
 
-def reconstruct(sess, image_patches, row, col, height, width, channels=3):
-    start = clock()
-    atexit.register(endlog, start)
-    log("Start Program - func: reconstruct(...)")
+def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w):
+    """
+    Splits an image into patches of size patch_h x patch_w
+    Input: image of shape [image_h, image_w, image_ch]
+    Output: batch of patches shape [n, patch_h, patch_w, image_ch]
 
-    patches = _to_list(sess, image_patches, row, col)
+    Arguments:
+        image_string {[type]} -- [description]
+        input_h {[type]} -- [description]
+        input_w {[type]} -- [description]
+        patch_h {[type]} -- [description]
+        patch_w {[type]} -- [description]
+    """
 
-    cx = 1
-    cy = 0
-    number_of_patches = len(patches)
-    image_size = math.sqrt(number_of_patches)
+    image = tf.image.decode_image(image_string, channels=3)
 
-    patch_w = patches[0].shape[0]
-    patch_h = patches[0].shape[1]
+    image = tf.reshape(image, [input_h, input_w, 3])
 
-    new_h = int(patch_h*image_size)
-    new_w = int(patch_w*image_size)
-    result_image = Image.new('RGB', (new_w, new_h))
+    assert image.shape.ndims == 3
 
-    for patch in patches:
-        print(patch.size)
-        print(type(patch))
-        result_image.paste(im=patch, box=(cx*patch_w, cy*patch_h))
-        cx += 1
-        if cx == width:
-            cy += 1
+    pad = [[0, 0], [0, 0]]
+    image_h = image.shape[0].value
+    image_w = image.shape[1].value
+    image_ch = image.shape[2].value
+    p_area = patch_h * patch_w
 
-    return result_image
+    assert image_h == image_w and patch_h == patch_w, "Traning sample and patches must be of square size!"
+
+    patches = tf.space_to_batch_nd([image], [patch_h, patch_w], pad)
+    patches = tf.split(patches, p_area, 0)
+    patches = tf.stack(patches, 3)
+    patches = tf.reshape(patches, [-1, patch_h, patch_w, image_ch])
+
+    return patches, image
 
 
-def verify(original, reconstructed):
-    pass
+def image_data_conserved(original, reconstructed):
+    return tf.reduce_all(tf.math.equal(original, reconstructed))
 
 
 if __name__ == '__main__':
-
     image_file = 'husky.jpg'
-    image_string = tf.gfile.FastGFile(image_file, 'rb').read()
-    im = np.array(Image.open(image_file))
-    ksize_rows = 64
-    ksize_cols = 64
+    patch_width = 32
+    patch_height = 32
+    channel = 3
+    input_size = (224, 224)
     image_patches = None
-    nr = 0
-    nc = 0
 
+    assert patch_height == patch_width, "CC doesn't support different sized patches!"
 
-    sdfsdf
     with tf.Session(config=tf.ConfigProto(allow_soft_placement=True,
                                           log_device_placement=False)) as sess:
-        image_patches, nr, nc = generate_patches(
-            sess, image_string, ksize_rows, ksize_cols)
 
-        # fig = IMPLOT.plot_patches_tf(
-        #     image_patches, sess, ksize_rows, ksize_cols)
-        # # plt.savefig('image_patches.png', bbox_inches='tight', dpi=120)
-        # # plt.show()
-        # # plt.close(fig)
-        # # plt.close()
-        reconstructed = reconstruct(sess, image_patches, nr, nc, 224, 224)
+        image_string = tf.gfile.FastGFile(image_file, 'rb').read()
+        patches, original = generate_patches_v2(
+            image_string, input_size[0], input_size[1], patch_width, patch_height)
+
+        reconstructed = reconstruct_from_patches(
+            patches, input_size[0], input_size[1])
+
+        data_conserved = sess.run(
+            image_data_conserved(original, reconstructed))
+
+        if not data_conserved:
+            print("Reconstruction data loss, skipping sample")
