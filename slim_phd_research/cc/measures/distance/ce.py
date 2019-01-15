@@ -13,12 +13,10 @@ def ConditionalEntropy(patch_1, patch_2):
 
     sess = tf.get_default_session()
 
-    #flatten the tensor into a sigle dimensinoal array 
-    patch_1= sess.run(tf.reshape(patch_1,[-1]))
-    patch_2= sess.run(tf.reshape(patch_2,[-1]))
+    # flatten the tensor into a sigle dimensinoal array
+    patch_1 = sess.run(tf.reshape(patch_1, [-1]))
+    patch_2 = sess.run(tf.reshape(patch_2, [-1]))
 
-    ce = round(drv.entropy_conditional(patch_1,patch_2), 4) #result x.xxxx 
+    ce = round(drv.entropy_conditional(patch_1, patch_2), 4)  # result x.xxxx
 
     return ce
-
-    

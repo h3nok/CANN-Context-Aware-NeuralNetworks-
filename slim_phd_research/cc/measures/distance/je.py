@@ -11,18 +11,12 @@ def JointEntropy(patch_1, patch_2):
 
     sess = tf.get_default_session()
 
-    #combine the two tensors into one 
+    # combine the two tensors into one
     patch_data = sess.run(
-        tf.concat([patch_1,patch_2],0))
-    #flatten the tensor into a sigle dimensinoal array 
-    patch_data = sess.run(tf.reshape(patch_data,[-1]))
+        tf.concat([patch_1, patch_2], 0))
+    # flatten the tensor into a sigle dimensinoal array
+    patch_data = sess.run(tf.reshape(patch_data, [-1]))
 
-    je = round(drv.entropy_joint(patch_data), 4) #result x.xxxx 
+    je = round(drv.entropy_joint(patch_data), 4)  # result x.xxxx
 
     return je
-
-
-    
-
-    
-        

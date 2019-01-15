@@ -63,10 +63,10 @@ def _to_list(sess, tensor_patches, nr, nc):
 def generate_patches_v1(sess, image_data_byes, ksize_rows, ksize_cols):
     """[summary]
     Arguments:
-        sess {[type]} -- [description]
-        image_data_byes {[type]} -- [description]
-        ksize_rows {[type]} -- [description]
-        ksize_cols {[type]} -- [description]
+        sess {tf.Session} -- tensorflow session to evaluate tensors 
+        image_data_byes {bytes} -- decode_image into tensorflow tensor 
+        ksize_rows {pixels} -- patch height  
+        ksize_cols {pixels} -- patch width 
     """
     start = clock()
     atexit.register(endlog, start)
@@ -97,11 +97,11 @@ def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w):
     Output: batch of patches shape [n, patch_h, patch_w, image_ch]
 
     Arguments:
-        image_string {[type]} -- [description]
-        input_h {[type]} -- [description]
-        input_w {[type]} -- [description]
-        patch_h {[type]} -- [description]
-        patch_w {[type]} -- [description]
+        image_string {sample} -- input string 
+        input_h {pixels} -- input height in pixels 
+        input_w {pixels} -- input width in pixels 
+        patch_h {pixels} -- patch height to extract 
+        patch_w {pixels} -- patch width to extract 
     """
 
     image = tf.image.decode_image(image_string, channels=3)

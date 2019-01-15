@@ -10,17 +10,11 @@ def MutualInformation(patch_1, patch_2):
 
     sess = tf.get_default_session()
 
-    #combine the two tensors into one 
-    #flatten the tensor into a sigle dimensinoal array 
-    patch_1= sess.run(tf.reshape(patch_1,[-1]))
-    patch_2= sess.run(tf.reshape(patch_2,[-1]))
+    # combine the two tensors into one
+    # flatten the tensor into a sigle dimensinoal array
+    patch_1 = sess.run(tf.reshape(patch_1, [-1]))
+    patch_2 = sess.run(tf.reshape(patch_2, [-1]))
 
-    mi = round(drv.information_mutual(patch_1,patch_2), 4) #result x.xxxx 
+    mi = round(drv.information_mutual(patch_1, patch_2), 4)  # result x.xxxx
 
     return mi
-
-
-    
-
-    
-        

@@ -13,6 +13,12 @@ class Measure(Enum):
     JE = "Joint Entropy"
     CE = "Conditional Entropy"
     E = "Standalone Entropy"
+    KL = ""
+    L1 = "L1-Norm"
+    L2 = "L2-Norm"
+    SSIM = "Structural Similarity Index"
+    PSNR = "Peak-Signal-to-Noise ratio"
+
 
 
 class MeasureType(Enum):
@@ -29,6 +35,7 @@ measure_map = {
 
 
 def map_measure_fn(m, measureType=MeasureType.Dist):
+
     if not isinstance(m, Measure):
         raise ValueError(
             "Supplied argument must be an instance of Measure Enum")
@@ -53,7 +60,6 @@ def map_measure_fn(m, measureType=MeasureType.Dist):
 
 def get_measure_fn_test(patches):
     m_func = map_measure_fn(Measure.JE, MeasureType.Dist)
-
     return m_func(patches)
 
 

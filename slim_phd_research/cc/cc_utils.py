@@ -69,7 +69,7 @@ class ImagePlot(object):
                     i, j, i*nc+j), file=sys.stderr)
         return fig
 
-    def show_images(images, cols=1, titles=None):
+    def show_images(self, images, cols=1, titles=None):
         """Display a list of images in a single figure with matplotlib.
 
         Parameters
