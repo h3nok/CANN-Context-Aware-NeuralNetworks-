@@ -13,12 +13,16 @@ class Measure(Enum):
     JE = "Joint Entropy"
     CE = "Conditional Entropy"
     E = "Standalone Entropy"
-    KL = ""
+    KL = "Kullback-Leibler Divergence"
     L1 = "L1-Norm"
     L2 = "L2-Norm"
     SSIM = "Structural Similarity Index"
     PSNR = "Peak-Signal-to-Noise ratio"
 
+
+class Ordering(Enum):
+    Ascending = "Sort patches in ascending rank order"
+    Descending = "Sort patches in descending rank order"
 
 
 class MeasureType(Enum):
@@ -26,7 +30,7 @@ class MeasureType(Enum):
     SA = "Standalone measure of a patch"
 
 
-measure_map = {
+MEASURE_MAP = {
     Measure.MI: mi.MutualInformation,
     Measure.JE: je.JointEntropy,
     Measure.CE: ce.ConditionalEntropy,
@@ -35,17 +39,28 @@ measure_map = {
 
 
 def map_measure_fn(m, measureType=MeasureType.Dist):
+    """[summary]
+
+    Arguments:
+        m {Measure} -- measure to use
+
+    Keyword Arguments:
+        measureType {MeasureType} -- measure type (default: {MeasureType.Dist})
+    """
 
     if not isinstance(m, Measure):
         raise ValueError(
             "Supplied argument must be an instance of Measure Enum")
+    if not isinstance(measureType, MeasureType):
+        raise ValueError(
+            "Supplied argument must be an instance of MeasureType Enum")
 
-    if m not in measure_map:
+    if m not in MEASURE_MAP:
         raise ValueError("Meaure function %s not found!" % m)
 
     assert isinstance(measureType, MeasureType), "Unknown measure type"
 
-    func = measure_map[m]
+    func = MEASURE_MAP[m]
 
     # Call functions by reflection
     @functools.wraps(func)

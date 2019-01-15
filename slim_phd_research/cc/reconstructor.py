@@ -1,6 +1,8 @@
 
 import tensorflow as tf
-from map_measure import measure_map, Measure, map_measure_fn, MeasureType
+
+from map_measure import (Measure, MeasureType, Ordering, map_measure_fn,
+                         measure_map)
 
 
 def _determine_measure_type(measure):
@@ -9,7 +11,7 @@ def _determine_measure_type(measure):
         return MeasureType.Dist
 
 
-def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measure.JE, ordering=0):
+def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measure.JE, ordering=Ordering.Ascending):
     # TODO - parallel implementation
 
     measure_type = _determine_measure_type(measure)
@@ -36,12 +38,12 @@ def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.JE):
     Output: image of shape [image_h, image_w, patch_ch]
 
     Arguments:
-        patches {[type]} -- [description]
-        image_h {[type]} -- [description]
-        image_w {[type]} -- [description]
+        patches {tftensor} -- a list of patches of a given image in tftensor or numpy.array format 
+        image_h {int} -- image width 
+        image_w {int} -- image height 
 
     Keyword Arguments:
-        measure {[type]} -- [description] (default: {None})
+        measure {Measure} -- measure to use to sort patches (default: {None})
     """
     assert patches.shape.ndims == 4, "Patches tensor must be of shape [total_patches, p_w,p_h,c]"
 
