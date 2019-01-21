@@ -61,7 +61,7 @@ def _to_list(sess, tensor_patches, nr, nc):
 
 
 def generate_patches_v1(sess, image_data_byes, ksize_rows, ksize_cols):
-    """[summary]
+    """Split image into patches usinf tensorflow 
     Arguments:
         sess {tf.Session} -- tensorflow session to evaluate tensors 
         image_data_byes {bytes} -- decode_image into tensorflow tensor 

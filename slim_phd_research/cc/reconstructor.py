@@ -2,7 +2,7 @@
 import tensorflow as tf
 
 from map_measure import (Measure, MeasureType, Ordering, map_measure_fn,
-                         measure_map)
+                         MEASURE_MAP)
 
 
 def _determine_measure_type(measure):
