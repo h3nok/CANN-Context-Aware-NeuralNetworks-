@@ -1,6 +1,6 @@
 
 import tensorflow as tf
-
+from pprint import pprint
 from map_measure import (Measure, MeasureType, Ordering, map_measure_fn,
                          MEASURE_MAP)
 
@@ -11,7 +11,27 @@ def _determine_measure_type(measure):
         return MeasureType.Dist
 
 
+def _swap(p1, p2):
+    return p2, p1
+
+
+def _print(patches):
+    for key, value in patches.items():
+        print("Current index: %i, Original index: %i, Rank: %f" %
+              (key, value[1], value[2]))
+
+
 def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measure.JE, ordering=Ordering.Ascending):
+    """[summary]
+
+    Arguments:
+        patches_data {tensor} -- tensor having shape [number_of_patches, height,width,channel]
+        total_patches {int} -- total number of patches 
+
+    Keyword Arguments:
+        measure {Measure} -- ranking measure to use for sorting (default: {Measure.JE})
+        ordering {Ordering} -- sort order (default: {Ordering.Ascending})
+    """
     # TODO - parallel implementation
 
     measure_type = _determine_measure_type(measure)
@@ -21,14 +41,33 @@ def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measu
     measure_fn = map_measure_fn(measure, measure_type)
     patches_to_compare = None
     ranked_patches = dict()
-    rank = None
+    closest_index = 1
 
+    # TODO- make configurable
+    reference_patch_data = patches_data[0]  # reference patch
+    reference_patch_index = 0
+    ranked_patches[reference_patch_index] = (reference_patch_data, 0, 0)
+
+    closest_rank = 10e100 if ordering == Ordering.Descending else 0  # determine ordering
+
+    print("Number of patches: %d" % total_patches)
+    i = 1
     for i in range(total_patches):
-        if measure_type == MeasureType.Dist:
-            patches_to_compare = (patches_data[i], patches_data[i+1])
-        else:
-            patches_to_compare = patches_data[i]
-    # measure_fn(patches_to_compare)
+        # for j in range(i+1, total_patches):
+        patches_to_compare = (reference_patch_data, patches_data[i])
+
+        # compute distance
+        distance = measure_fn(patches_to_compare)
+        if ordering == Ordering.Ascending and distance > closest_rank:
+            closest_index = i
+            closest_rank = distance
+            reference_patch_data = patches_data[i]
+
+            reference_patch_index += 1
+            ranked_patches[reference_patch_index] = (
+                reference_patch_data, closest_index, distance)
+
+    _print(ranked_patches)
 
 
 def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.JE):

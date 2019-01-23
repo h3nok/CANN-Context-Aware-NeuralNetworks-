@@ -17,7 +17,7 @@ from sklearn.feature_extraction.image import extract_patches
 from cc_utils import ImagePlot as IMPLOT
 from reconstructor import reconstruct_from_patches
 from timer import endlog, log
-import map_measure
+from map_measure import Measure
 
 
 def _patchify_tf(image_data, ksize_rows, ksize_cols, strides_rows, strides_cols, rates=[1, 1, 1, 1], padding='VALID'):
@@ -137,6 +137,7 @@ if __name__ == '__main__':
     channel = 3
     input_size = (224, 224)
     image_patches = None
+    rank_measure = Measure.JE
 
     assert patch_height == patch_width, "CC doesn't support different sized patches!"
 
@@ -148,7 +149,7 @@ if __name__ == '__main__':
             image_string, input_size[0], input_size[1], patch_width, patch_height)
 
         reconstructed = reconstruct_from_patches(
-            patches, input_size[0], input_size[1])
+            patches, input_size[0], input_size[1], measure=rank_measure)
 
         data_conserved = sess.run(
             image_data_conserved(original, reconstructed))
