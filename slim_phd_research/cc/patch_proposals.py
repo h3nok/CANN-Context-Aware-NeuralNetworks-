@@ -132,8 +132,8 @@ def image_data_conserved(original, reconstructed):
 
 if __name__ == '__main__':
     image_file = 'husky.jpg'
-    patch_width = 32
-    patch_height = 32
+    patch_width = 56
+    patch_height = 56
     channel = 3
     input_size = (224, 224)
     image_patches = None
