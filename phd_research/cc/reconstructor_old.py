@@ -6,7 +6,6 @@ from map_measure import (Measure, MeasureType, Ordering, map_measure_fn,
 import itertools
 import multiprocessing
 from joblib import Parallel, delayed
-import numpy as np
 
 
 def _determine_measure_type(measure):
@@ -21,8 +20,8 @@ def _swap(p1, p2):
 
 def _print(patches):
     for key, value in patches.items():
-        print("Current index: %i, Rank: %f" %
-              (key, value))
+        print("Current index: %i, Original index: %i, Rank: %f" %
+              (key, value[1], value[2]))
 
 
 def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measure.JE, ordering=Ordering.Ascending):
@@ -43,51 +42,45 @@ def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measu
     assert measure_type == MeasureType.Dist, "Supplied measure is not distance measure, please call _sort_patches_by_standalone_measure instead"
 
     measure_fn = map_measure_fn(measure, measure_type)
-    closest_patch_original_index = -1
+    patches_to_compare = None
+    sorted_patches = dict()
+    current_closest_index = 1
+    closest_patch_original_index = None
+
+    # TODO- make configurable
+    closest_distance = 100  # determine ordering
 
     print("Number of patches: {}".format(total_patches))
 
-    def _compare_numpy(reference_patch, patch):
+    def _compare(reference_patch, patch):
         patches_to_compare = (reference_patch, patch)
         distance = measure_fn(patches_to_compare)
         return distance
 
-    sess = tf.get_default_session()
-    patches_data = sess.run(patches_data)
-
     def _swap(i, j):
-        patches_data[[i, j]] = patches_data[[j, i]]
+        temp1 = patches_data[i]
+        temp2 = patches_data[j]
+        patches_data[j] = temp1
+        patches_data[i] = temp2
 
-    sorted_patches = []
-    debug_sorted_patches = dict()
-    distance = -100
-    reference_patch_data = patches_data[0]
-
-    _swap(0,1)
+    # num_cores = multiprocessing.cpu_count()
+    # results = Parallel(n_jobs=num_cores)(delayed(compare)(
+    #     reference_patch_data, patches_data[i]) for i in range(1, total_patches))
 
     for i in range(0, total_patches):
-        # TODO- make configurable
-        closest_distance = 100  # determine ordering
-        sorted_patches.append(reference_patch_data)
-        debug_sorted_patches[i] = distance
-        print("Closeses so far: %f" % closest_distance)
+        reference_patch_data = patches_data[i]
         for j in range(i+1, total_patches):
-            distance = _compare_numpy(reference_patch_data, patches_data[j])
-            print("\tDistance between %d and %d = %f" % (i, j, distance))
+            distance = _compare(reference_patch_data, patches_data[j])
             if distance < closest_distance:
-                print("Found smaller: %f < %f" % (distance, closest_distance))
                 closest_patch_original_index = j
                 closest_distance = distance
-                reference_patch_data = patches_data[j]
 
-        # print("=====>> Closest at j %d, distance = %f" %
-            #   (closest_patch_original_index, closest_distance))
-    print(len(sorted_patches))
-    _print(debug_sorted_patches)
+                # _swap(current_closest_index, closest_patch_original_index)
 
+            print("\tDistance between %d and %d = %f" % (i, j, distance))
 
-def _sort_patches_by_content_measure():
-    pass
+        print("=====>> Closest at j %d, distance = %f" %
+              (closest_patch_original_index, closest_distance))
 
 
 def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.JE):

@@ -4,7 +4,7 @@ from pyitlib import discrete_random_variable as drv
 import tensorflow as tf
 
 
-def JointEntropy(patch_1, patch_2):
+def JointEntropyTF(patch_1, patch_2):
 
     assert patch_1.shape == patch_2.shape, "Patches must have similar tensor shapes of [p_w, p_h, c]"
     assert patch_1 != patch_2, "Patches are binary equivalent, Distance = 0"
@@ -19,4 +19,21 @@ def JointEntropy(patch_1, patch_2):
 
     je = round(drv.entropy_joint(patch_data), 4)  # result x.xxxx
 
+    return je
+
+def JointEntropy(patch_1, patch_2):
+    
+    assert isinstance(patch_1,np.ndarray), "Patch data must be a numpy array."
+    assert isinstance(patch_2,np.ndarray), "Patch data must be a numpy array."
+    assert patch_1.shape == patch_2.shape, "Patches must have similar tensor shapes of [p_w, p_h, c]"
+    assert not np.array_equal(patch_1, patch_2), "Patches are binary equivalent, Distance = 0"
+
+
+    # combine the two tensors into one
+    #and flatten the tensor into a sigle dimensinoal array
+    patch_data = np.concatenate((patch_1,patch_2)).flatten()
+
+    je = round(drv.entropy_joint(patch_data), 4)  # result x.xxxx
+
+    print (je)
     return je

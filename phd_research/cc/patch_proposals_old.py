@@ -104,7 +104,7 @@ def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w):
         patch_w {pixels} -- patch width to extract 
     """
 
-    image = tf.image.decode_image(image_string, channels=3,dtype=tf.float32)
+    image = tf.image.decode_image(image_string, channels=3)
 
     image = tf.reshape(image, [input_h, input_w, 3])
 
