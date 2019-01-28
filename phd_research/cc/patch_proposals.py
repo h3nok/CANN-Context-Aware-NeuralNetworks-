@@ -129,6 +129,8 @@ def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w):
 def image_data_conserved(original, reconstructed):
     return tf.reduce_all(tf.math.equal(original, reconstructed))
 
+def reconstruction_conserves_data(original, reconstructed):
+    return np.all(np.equal(original,reconstructed))
 
 if __name__ == '__main__':
     image_file = 'cc/samples/husky.jpg'
