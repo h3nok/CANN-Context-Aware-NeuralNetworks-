@@ -9,7 +9,7 @@ import numpy as np
 import sys
 
 
-class ImagePlot(object):
+class ImageHelper(object):
 
     def plot_patches(self, patches, fignum=None, low=0, high=0):
         """
@@ -83,6 +83,7 @@ class ImagePlot(object):
                 the same length as titles.
         """
         assert((titles is None)or (len(images) == len(titles)))
+        plt.tight_layout()
         n_images = len(images)
         if titles is None:
             titles = ['Image (%d)' % i for i in range(1, n_images + 1)]

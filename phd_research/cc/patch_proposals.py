@@ -14,10 +14,10 @@ from PIL import Image
 from sklearn.feature_extraction import image
 from sklearn.feature_extraction.image import extract_patches
 
-from cc_utils import ImagePlot as IMPLOT
+from cc_utils import ImageHelper as IMPLOT
+from map_measure import Measure
 from reconstructor import reconstruct_from_patches
 from timer import endlog, log
-from map_measure import Measure
 
 
 def _patchify_tf(image_data, ksize_rows, ksize_cols, strides_rows, strides_cols, rates=[1, 1, 1, 1], padding='VALID'):
@@ -45,19 +45,6 @@ def _patchify_tf(image_data, ksize_rows, ksize_cols, strides_rows, strides_cols,
         image, ksizes, strides, rates, padding)
 
     return image_patches
-
-
-def _to_list(sess, tensor_patches, nr, nc):
-    # convert to tf tensor to numpy array and return a list of patche
-    list_of_patches = []
-    for i in range(nr):
-        for j in range(nc):
-            patch = tf.reshape(tensor_patches[0, i, j, ], [
-                patch_width, patch_height, 3])
-
-            list_of_patches.append(sess.run(patch))
-
-    return list_of_patches
 
 
 def generate_patches_v1(sess, image_data_byes, ksize_rows, ksize_cols):
@@ -90,7 +77,7 @@ def generate_patches_v1(sess, image_data_byes, ksize_rows, ksize_cols):
     return image_patches, number_patch_row, number_patch_col
 
 
-def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w):
+def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w, pad=False):
     """
     Splits an image into patches of size patch_h x patch_w
     Input: image of shape [image_h, image_w, image_ch]
@@ -104,7 +91,7 @@ def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w):
         patch_w {pixels} -- patch width to extract 
     """
 
-    image = tf.image.decode_image(image_string, channels=3,dtype=tf.float32)
+    image = tf.image.decode_image(image_string, channels=3, dtype=tf.float32)
 
     image = tf.reshape(image, [input_h, input_w, 3])
 
@@ -118,7 +105,11 @@ def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w):
 
     assert image_h == image_w and patch_h == patch_w, "Traning sample and patches must be of square size!"
 
-    patches = tf.space_to_batch_nd([image], [patch_h, patch_w], pad)
+    patches = None
+    if pad:
+        patches = tf.space_to_batch_nd([image], [patch_h, patch_w], pad)
+    else:
+        patches = tf.space_to_batch_nd([image], [patch_h, patch_w])
     patches = tf.split(patches, p_area, 0)
     patches = tf.stack(patches, 3)
     patches = tf.reshape(patches, [-1, patch_h, patch_w, image_ch])
@@ -129,17 +120,19 @@ def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w):
 def image_data_conserved(original, reconstructed):
     return tf.reduce_all(tf.math.equal(original, reconstructed))
 
-def reconstruction_conserves_data(original, reconstructed):
-    return np.all(np.equal(original,reconstructed))
 
-if __name__ == '__main__':
+def reconstruction_conserves_data(original, reconstructed):
+    return np.all(np.equal(original, reconstructed))
+
+
+def test():
     image_file = 'cc/samples/husky.jpg'
     patch_width = 56
     patch_height = 56
     channel = 3
     input_size = (224, 224)
     image_patches = None
-    rank_measure = Measure.JE
+    rank_measure = Measure.KL
 
     assert patch_height == patch_width, "CC doesn't support different sized patches!"
 
@@ -150,11 +143,36 @@ if __name__ == '__main__':
         patches, original = generate_patches_v2(
             image_string, input_size[0], input_size[1], patch_width, patch_height)
 
-        reconstructed = reconstruct_from_patches(
-            patches, input_size[0], input_size[1], measure=rank_measure)
+        ssim = reconstruct_from_patches(
+            patches, input_size[0], input_size[1], measure=Measure.SSIM)
+        kl = reconstruct_from_patches(
+            patches, input_size[0], input_size[1], measure=Measure.SSIM)
+        psnr = reconstruct_from_patches(
+            patches, input_size[0], input_size[1], measure=Measure.PSNR)
+        entropy = reconstruct_from_patches(
+            patches, input_size[0], input_size[1], measure=Measure.ENTROPY)
+        mi = reconstruct_from_patches(
+            patches, input_size[0], input_size[1], measure=Measure.MI)
+        ce = reconstruct_from_patches(
+            patches, input_size[0], input_size[1], measure=Measure.CE)
+        l1 = reconstruct_from_patches(
+            patches, input_size[0], input_size[1], measure=Measure.L1)
+        l2 = reconstruct_from_patches(
+            patches, input_size[0], input_size[1], measure=Measure.L2)
+        max = reconstruct_from_patches(
+            patches, input_size[0], input_size[1], measure=Measure.MAX_NORM)
+        je = reconstruct_from_patches(
+            patches, input_size[0], input_size[1], measure=Measure.JE)
 
-        data_conserved = sess.run(
-            image_data_conserved(original, reconstructed))
+        # assert original.shape == reconstructed.shape, "Reconstruction data loss, skipping sample"
+        reconstructed_samples = [original.eval(), kl.eval(), mi.eval(), ce.eval(),
+                                 l1.eval(), l2.eval(), max.eval(), je.eval(), entropy.eval(), ssim.eval(), psnr.eval()]
+        titles = ["Original", "KL", "MI", "CE", "L1",
+                  "L2", "MAX", "JE", "Entropy", "SSIM", "PSNR"]
+        plotter = IMPLOT()
+        fig = plotter.show_images(reconstructed_samples, 2, titles=titles)
+        plt.show()
 
-        if not data_conserved:
-            print("Reconstruction data loss, skipping sample")
+
+if __name__ == '__main__':
+    test()

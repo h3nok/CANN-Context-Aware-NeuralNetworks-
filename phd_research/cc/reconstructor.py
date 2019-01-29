@@ -11,8 +11,11 @@ import numpy as np
 
 def _determine_measure_type(measure):
     assert isinstance(measure, Measure)
-    if measure in [Measure.JE, Measure.MI, Measure.CE]:
+    if measure in [Measure.JE, Measure.MI, Measure.CE, Measure.L1, Measure.L2,
+                   Measure.MAX_NORM, Measure.KL, Measure.SSIM, Measure.PSNR]:
         return MeasureType.Dist
+    else:
+        return MeasureType.STA
 
 
 def _swap(p1, p2):
@@ -25,7 +28,7 @@ def _print(patches):
               (key, value))
 
 
-def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measure.JE, ordering=Ordering.Ascending):
+def _sort_patches(patches_data, total_patches, measure=Measure.JE, ordering=Ordering.Ascending):
     """[summary]
 
     Arguments:
@@ -40,12 +43,9 @@ def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measu
 
     measure_type = _determine_measure_type(measure)
 
-    assert measure_type == MeasureType.Dist, "Supplied measure is not distance measure, please call _sort_patches_by_standalone_measure instead"
-
     measure_fn = map_measure_fn(measure, measure_type)
-    closest_patch_index = -1
 
-    print("Number of patches: {}".format(total_patches))
+    # print("Number of patches: {}".format(total_patches))
 
     def _compare_numpy(reference_patch, patch):
         patches_to_compare = (reference_patch, patch)
@@ -55,45 +55,79 @@ def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measu
     sess = tf.get_default_session()
     patches_data = sess.run(patches_data)
 
+    if measure_type == MeasureType.STA:
+        return _sort_patches_by_content_measure(patches_data, measure_fn, ordering=Ordering.Ascending)
+
+    assert measure_type == MeasureType.Dist, "Supplied measure is not distance measure, please call _sort_patches_by_standalone_measure instead"
+
     def _swap(i, j):
+        # print("Swapping %d with %d" % (i, j))
         patches_data[[i, j]] = patches_data[[j, i]]
 
     sorted_patches = []
-    debug_sorted_patches = dict()
+    # debug_sorted_patches = dict()
     distance = -100
-    reference_patch_data = patches_data[0]
+    # reference_patch_data = patches_data[0]
 
     for i in range(0, total_patches):
         # TODO- make configurable
-        closest_distance_thus_far = 100  # determine ordering
-        sorted_patches.append(reference_patch_data)
-        debug_sorted_patches[i] = distance
-        # print("Closeses so far: %f" % closest_distance_thus_far)
+        closest_distance_thus_far = 100
+        # print("Closest patch index: %d" % i)
+        reference_patch_data = patches_data[i]  # set reference patch
+        # sorted_patches.append(reference_patch_data)
+
+        # compare the rest to reference patch
         for j in range(i+1, total_patches):
+            # print ("Comparing %d and %d" %(i,j))
             distance = _compare_numpy(reference_patch_data, patches_data[j])
-            # print("\tDistance between %d and %d = %f" % (i, j, distance))
-            if j < 2:
+            if j == 1:
                 closest_distance_thus_far = distance
-                closest_patch_index = j
                 continue
-            if distance < closest_distance_thus_far:
-                # print("Found smaller: %f < %f" % (distance, closest_distance_thus_far))
-                closest_patch_index = j
+            if ordering == Ordering.Ascending and distance < closest_distance_thus_far:
                 closest_distance_thus_far = distance
-                reference_patch_data = patches_data[j]
-                _swap(closest_patch_index, j)
+                _swap(i+1, j)
+                # reference_patch_data = patches_data[i]
+            elif ordering == Ordering.Descending and distance > closest_distance_thus_far:
+                closest_distance_thus_far = distance
+                _swap(i+1, j)
 
-    assert len(sorted_patches) == total_patches, ""
-    # _print(debug_sorted_patches)
-    print(len(sorted_patches))
-    # print(sorted_patches)
+    sorted_patches = tf.convert_to_tensor(patches_data, dtype=tf.float32)
+    assert sorted_patches.shape[0] == total_patches, "Sorted patches list contains more or less \
+    number of patches comparted to original"
+
+    return sorted_patches
 
 
-def _sort_patches_by_content_measure():
-    pass
+def _sort_patches_by_content_measure(patches_data, measure_fn, ordering=Ordering.Ascending):
+    """[summary]
+
+    Arguments:
+        patches_data {np.ndarray} -- the image patches in tensor format
+        measure_fn {Measure} -- STA measure function to apply for sorting
+
+    Keyword Arguments:
+        ordering {Ordering} -- [description] (default: {Ordering.Ascending})
+    """
+
+    assert isinstance(
+        patches_data, np.ndarray), "Supplied data must be instance of np.ndarray"
+
+    number_of_patches = patches_data.shape[0]
+
+    def _swap(i, j):
+        patches_data[[i, j]] = patches_data[[j, i]]
+
+    sorted_patches = np.array(
+        sorted(patches_data, key=lambda patch: measure_fn(patch)))
+
+    assert len(
+        sorted_patches) == number_of_patches, "Loss of data when sorting patches data"
+    assert patches_data.shape == sorted_patches.shape, "Orignal tensor and sorted tensor have different shapes"
+
+    return tf.convert_to_tensor(sorted_patches, dtype=tf.float32)
 
 
-def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.JE):
+def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI):
     """
     Reconstructs an image from patches of size patch_h x patch_w
     Input: batch of patches shape [n, patch_h, patch_w, patch_ch]
@@ -105,12 +139,12 @@ def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.JE):
         image_w {int} -- image height 
 
     Keyword Arguments:
-        measure {Measure} -- measure to use to sort patches (default: {None})
+        measure {Measure} -- measure to use to sort patches (default: MI)
     """
     assert patches.shape.ndims == 4, "Patches tensor must be of shape [total_patches, p_w,p_h,c]"
 
     number_of_patches = patches.shape[0]
-    patches = _sort_patches_by_distance_measure(
+    patches = _sort_patches(
         patches, number_of_patches, measure)
 
     pad = [[0, 0], [0, 0]]

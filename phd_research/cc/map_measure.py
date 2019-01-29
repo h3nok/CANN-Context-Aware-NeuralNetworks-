@@ -1,23 +1,23 @@
-from enum import Enum
-from measures.distance import mi
-from measures.distance import je
-from measures.distance import kl
-from measures.distance import ce
-from measures.standalone import entropy
 import functools
+from enum import Enum
+
 import tensorflow as tf
+
+from measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
+from measures.standalone import entropy
 
 
 class Measure(Enum):
     MI = "Mutual Information"
     JE = "Joint Entropy"
     CE = "Conditional Entropy"
-    E = "Standalone Entropy"
+    ENTROPY = "Standalone Entropy"
     KL = "Kullback-Leibler Divergence"
     L1 = "L1-Norm"
     L2 = "L2-Norm"
     SSIM = "Structural Similarity Index"
     PSNR = "Peak-Signal-to-Noise ratio"
+    MAX_NORM = "Max norm"
 
 
 class Ordering(Enum):
@@ -27,14 +27,20 @@ class Ordering(Enum):
 
 class MeasureType(Enum):
     Dist = "Distance measure between two patches"
-    SA = "Standalone measure of a patch"
+    STA = "Standalone measure of a patch"
 
 
 MEASURE_MAP = {
     Measure.MI: mi.MutualInformation,
     Measure.JE: je.JointEntropy,
     Measure.CE: ce.ConditionalEntropy,
-    Measure.E: entropy.Entropy
+    Measure.ENTROPY: entropy.Entropy,
+    Measure.KL: kl.KullbackLeiblerDivergence,
+    Measure.L1: l1_norm.L1Norm,
+    Measure.L2: l2_norm.L2Norm,
+    Measure.MAX_NORM: max_norm.MaxNorm,
+    Measure.PSNR: psnr.PSNR,
+    Measure.SSIM: ssim.SSIM
 }
 
 
