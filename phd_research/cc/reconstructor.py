@@ -43,7 +43,7 @@ def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measu
     assert measure_type == MeasureType.Dist, "Supplied measure is not distance measure, please call _sort_patches_by_standalone_measure instead"
 
     measure_fn = map_measure_fn(measure, measure_type)
-    closest_patch_original_index = -1
+    closest_patch_index = -1
 
     print("Number of patches: {}".format(total_patches))
 
@@ -63,27 +63,30 @@ def _sort_patches_by_distance_measure(patches_data, total_patches, measure=Measu
     distance = -100
     reference_patch_data = patches_data[0]
 
-    _swap(0,1)
-
     for i in range(0, total_patches):
         # TODO- make configurable
-        closest_distance = 100  # determine ordering
+        closest_distance_thus_far = 100  # determine ordering
         sorted_patches.append(reference_patch_data)
         debug_sorted_patches[i] = distance
-        print("Closeses so far: %f" % closest_distance)
+        # print("Closeses so far: %f" % closest_distance_thus_far)
         for j in range(i+1, total_patches):
             distance = _compare_numpy(reference_patch_data, patches_data[j])
-            print("\tDistance between %d and %d = %f" % (i, j, distance))
-            if distance < closest_distance:
-                print("Found smaller: %f < %f" % (distance, closest_distance))
-                closest_patch_original_index = j
-                closest_distance = distance
+            # print("\tDistance between %d and %d = %f" % (i, j, distance))
+            if j < 2:
+                closest_distance_thus_far = distance
+                closest_patch_index = j
+                continue
+            if distance < closest_distance_thus_far:
+                # print("Found smaller: %f < %f" % (distance, closest_distance_thus_far))
+                closest_patch_index = j
+                closest_distance_thus_far = distance
                 reference_patch_data = patches_data[j]
+                _swap(closest_patch_index, j)
 
-        # print("=====>> Closest at j %d, distance = %f" %
-            #   (closest_patch_original_index, closest_distance))
+    assert len(sorted_patches) == total_patches, ""
+    # _print(debug_sorted_patches)
     print(len(sorted_patches))
-    _print(debug_sorted_patches)
+    # print(sorted_patches)
 
 
 def _sort_patches_by_content_measure():
@@ -107,7 +110,8 @@ def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.JE):
     assert patches.shape.ndims == 4, "Patches tensor must be of shape [total_patches, p_w,p_h,c]"
 
     number_of_patches = patches.shape[0]
-    _sort_patches_by_distance_measure(patches, number_of_patches, measure)
+    patches = _sort_patches_by_distance_measure(
+        patches, number_of_patches, measure)
 
     pad = [[0, 0], [0, 0]]
     patch_h = patches.shape[1].value
