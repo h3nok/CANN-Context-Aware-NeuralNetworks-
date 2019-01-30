@@ -14,12 +14,9 @@
 # ==============================================================================
 """Provides utilities to preprocess images for the Inception networks."""
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
-
 from tensorflow.python.ops import control_flow_ops
 
 
@@ -241,7 +238,8 @@ def preprocess_for_train(image, height, width, bbox,
         distorted_image = tf.subtract(distorted_image, 0.5)
         distorted_image = tf.multiply(distorted_image, 2.0)
         return distorted_image
-        
+
+
 def preprocess_for_eval(image, height, width, central_fraction=0.875, scope=None):
     """Prepare one image for evaluation.
 
@@ -285,8 +283,9 @@ def preprocess_for_eval(image, height, width, central_fraction=0.875, scope=None
 
 def preprocess_image(image, height, width,
                      is_training=False,
-                     bbox=None,fast_mode=True,add_image_summaries=True):
-"""Pre-process one image for training or evaluation.
+                     bbox=None, fast_mode=True, add_image_summaries=True):
+  """
+    Pre-process one image for training or evaluation.
 
     Args:
       image: 3-D Tensor [height, width, channels] with the image. If dtype is
@@ -308,9 +307,10 @@ def preprocess_image(image, height, width,
       3-D float Tensor containing an appropriately scaled image
 
     Raises:
-      ValueError: if user does not provide bounding box
-    """
-    if is_training:
-        return preprocess_for_train(image, height, width, bbox, fast_mode, add_image_summaries=add_image_summaries)
-    else:
-        return preprocess_for_eval(image, height, width)
+      ValueError: if user does not provide bounding bo
+  """
+
+  if is_training:
+    return preprocess_for_train(image, height, width, bbox, fast_mode, add_image_summaries=add_image_summaries)
+  else:
+    return preprocess_for_eval(image, height, width)

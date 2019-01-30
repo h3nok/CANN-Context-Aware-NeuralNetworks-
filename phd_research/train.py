@@ -14,24 +14,22 @@
 # ==============================================================================
 """Generic training script that trains a model using a given dataset."""
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
+import datetime
+import os
+
+import numpy as np
 import tensorflow as tf
+from PIL import Image
 
+from cc import *
+# from cc.map_measure import Measursss
 from datasets import dataset_factory
 from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
-import numpy as np
-from cc.map_measure import Measure
-import cc.reconstructor as cc_recon
 
-import datetime
-from PIL import Image
-
-import os
 slim = tf.contrib.slim
 
 
@@ -195,7 +193,7 @@ tf.app.flags.DEFINE_string(
     'model_name', 'inception_v1', 'The name of the architecture to train.')
 
 tf.app.flags.DEFINE_string(
-    'preprocessing_name', 'cc_v2', 'The name of the preprocessing to use. If left '
+    'preprocessing_name', None, 'The name of the preprocessing to use. If left '
     'as `None`, then the model_name flag is used.')
 
 tf.app.flags.DEFINE_integer(
@@ -234,7 +232,7 @@ tf.app.flags.DEFINE_boolean(
 #####################
 
 tf.app.flags.DEFINE_boolean(
-    'measure', 
+    'measure',
     type=Measure,
     default=Measure.MI,
     help='When restoring a checkpoint would ignore missing variables.')

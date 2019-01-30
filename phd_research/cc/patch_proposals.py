@@ -13,14 +13,15 @@ from keras.backend import tensorflow_backend as KTF
 from PIL import Image
 from sklearn.feature_extraction import image
 from sklearn.feature_extraction.image import extract_patches
-
+import sys
 from cc_utils import ImageHelper as IMPLOT
 from map_measure import Measure
 from reconstructor import reconstruct_from_patches
 from timer import endlog, log
 
 
-def _patchify_tf(image_data, ksize_rows, ksize_cols, strides_rows, strides_cols, rates=[1, 1, 1, 1], padding='VALID'):
+def _patchify_tf(image_data, ksize_rows, ksize_cols, strides_rows, strides_cols,
+                 rates=[1, 1, 1, 1], padding='VALID'):
     """[summary]
 
     Arguments:
@@ -124,11 +125,15 @@ def image_data_conserved(original, reconstructed):
 def reconstruction_conserves_data(original, reconstructed):
     return np.all(np.equal(original, reconstructed))
 
-def cc_preprocesssing(image,height,width,measure,ordering,patch_h,patch_w):
-    patches, _ = generate_patches_v2(image,height,width,patch_h,patch_w)
-    reconstructed = reconstruct_from_patches(patches,height,width,measure=measure,ordering=ordering)
+
+def cc_preprocesssing(image, height, width, measure, ordering, patch_h, patch_w):
+    assert patch_h == patch_w, "CC V2 only supports equal sized patches!"
+    patches, _ = generate_patches_v2(image, height, width, patch_h, patch_w)
+    reconstructed = reconstruct_from_patches(
+        patches, height, width, measure=measure, ordering=ordering)
 
     return reconstructed
+
 
 def test():
     image_file = 'cc/samples/husky.jpg'
@@ -169,15 +174,15 @@ def test():
         je = reconstruct_from_patches(
             patches, input_size[0], input_size[1], measure=Measure.JE)
 
-        # assert original.shape == reconstructed.shape, "Reconstruction data loss, skipping sample"
-        reconstructed_samples = [original.eval(), kl.eval(), mi.eval(), ce.eval(),
-                                 l1.eval(), l2.eval(), max.eval(), je.eval(), entropy.eval(), ssim.eval(), psnr.eval()]
-        titles = ["Original", "KL", "MI", "CE", "L1",
-                  "L2", "MAX", "JE", "Entropy", "SSIM", "PSNR"]
-        plotter = IMPLOT()
-        fig = plotter.show_images(reconstructed_samples, 2, titles=titles)
-        plt.show()
+        # # assert original.shape == reconstructed.shape, "Reconstruction data loss, skipping sample"
+        # reconstructed_samples = [original.eval(), kl.eval(), mi.eval(), ce.eval(),
+        #                          l1.eval(), l2.eval(), max.eval(), je.eval(), entropy.eval(), ssim.eval(), psnr.eval()]
+        # titles = ["Original", "KL", "MI", "CE", "L1",
+        #           "L2", "MAX", "JE", "Entropy", "SSIM", "PSNR"]
+        # plotter = IMPLOT()
+        # fig = plotter.show_images(reconstructed_samples, 2, titles=titles)
+        # plt.show()
 
 
-if __name__ == '__main__':
-    test()
+# if __name__ == '__main__':
+#     test()
