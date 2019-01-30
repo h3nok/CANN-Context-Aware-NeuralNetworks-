@@ -124,6 +124,11 @@ def image_data_conserved(original, reconstructed):
 def reconstruction_conserves_data(original, reconstructed):
     return np.all(np.equal(original, reconstructed))
 
+def cc_preprocesssing(image,height,width,measure,ordering,patch_h,patch_w):
+    patches, _ = generate_patches_v2(image,height,width,patch_h,patch_w)
+    reconstructed = reconstruct_from_patches(patches,height,width,measure=measure,ordering=ordering)
+
+    return reconstructed
 
 def test():
     image_file = 'cc/samples/husky.jpg'

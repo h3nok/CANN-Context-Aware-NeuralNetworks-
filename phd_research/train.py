@@ -25,6 +25,8 @@ from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
 import numpy as np
+from cc.map_measure import Measure
+import cc.reconstructor as cc_recon
 
 import datetime
 from PIL import Image
@@ -193,7 +195,7 @@ tf.app.flags.DEFINE_string(
     'model_name', 'inception_v1', 'The name of the architecture to train.')
 
 tf.app.flags.DEFINE_string(
-    'preprocessing_name', None, 'The name of the preprocessing to use. If left '
+    'preprocessing_name', 'cc_v2', 'The name of the preprocessing to use. If left '
     'as `None`, then the model_name flag is used.')
 
 tf.app.flags.DEFINE_integer(
@@ -225,6 +227,17 @@ tf.app.flags.DEFINE_string(
 tf.app.flags.DEFINE_boolean(
     'ignore_missing_vars', False,
     'When restoring a checkpoint would ignore missing variables.')
+
+
+#####################
+# Controlling Convolution CC V2 #
+#####################
+
+tf.app.flags.DEFINE_boolean(
+    'measure', 
+    type=Measure,
+    default=Measure.MI,
+    help='When restoring a checkpoint would ignore missing variables.')
 
 FLAGS = tf.app.flags.FLAGS
 

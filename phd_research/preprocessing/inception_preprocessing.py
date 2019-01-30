@@ -241,12 +241,7 @@ def preprocess_for_train(image, height, width, bbox,
         distorted_image = tf.subtract(distorted_image, 0.5)
         distorted_image = tf.multiply(distorted_image, 2.0)
         return distorted_image
-
-
-def preprocess_por(image, height, width):
-    pass
-
-
+        
 def preprocess_for_eval(image, height, width, central_fraction=0.875, scope=None):
     """Prepare one image for evaluation.
 

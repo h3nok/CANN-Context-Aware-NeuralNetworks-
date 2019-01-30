@@ -28,7 +28,7 @@ def _print(patches):
               (key, value))
 
 
-def _sort_patches(patches_data, total_patches, measure=Measure.JE, ordering=Ordering.Ascending):
+def _sort_patches(patches_data, total_patches, measure, ordering):
     """[summary]
 
     Arguments:
@@ -56,7 +56,7 @@ def _sort_patches(patches_data, total_patches, measure=Measure.JE, ordering=Orde
     patches_data = sess.run(patches_data)
 
     if measure_type == MeasureType.STA:
-        return _sort_patches_by_content_measure(patches_data, measure_fn, ordering=Ordering.Ascending)
+        return _sort_patches_by_content_measure(patches_data, measure_fn, ordering=ordering)
 
     assert measure_type == MeasureType.Dist, "Supplied measure is not distance measure, please call _sort_patches_by_standalone_measure instead"
 
@@ -98,7 +98,7 @@ def _sort_patches(patches_data, total_patches, measure=Measure.JE, ordering=Orde
     return sorted_patches
 
 
-def _sort_patches_by_content_measure(patches_data, measure_fn, ordering=Ordering.Ascending):
+def _sort_patches_by_content_measure(patches_data, measure_fn, ordering):
     """[summary]
 
     Arguments:
@@ -127,7 +127,7 @@ def _sort_patches_by_content_measure(patches_data, measure_fn, ordering=Ordering
     return tf.convert_to_tensor(sorted_patches, dtype=tf.float32)
 
 
-def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI):
+def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI,ordering=Ordering.Ascending):
     """
     Reconstructs an image from patches of size patch_h x patch_w
     Input: batch of patches shape [n, patch_h, patch_w, patch_ch]
@@ -145,7 +145,7 @@ def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI):
 
     number_of_patches = patches.shape[0]
     patches = _sort_patches(
-        patches, number_of_patches, measure)
+        patches, number_of_patches, measure,ordering)
 
     pad = [[0, 0], [0, 0]]
     patch_h = patches.shape[1].value
