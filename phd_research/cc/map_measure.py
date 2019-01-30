@@ -3,8 +3,8 @@ from enum import Enum
 
 import tensorflow as tf
 
-from measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
-from measures.standalone import entropy
+from cc.measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
+from cc.measures.standalone import entropy
 
 
 class Measure(Enum):

@@ -1,7 +1,7 @@
 
 import tensorflow as tf
 from pprint import pprint
-from map_measure import (Measure, MeasureType, Ordering, map_measure_fn,
+from cc.map_measure import (Measure, MeasureType, Ordering, map_measure_fn,
                          MEASURE_MAP)
 import itertools
 import multiprocessing

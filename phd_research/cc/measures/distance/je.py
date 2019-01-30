@@ -1,6 +1,6 @@
 
 import numpy as np
-from pyitlib import discrete_random_variable as drv
+from cc.ITT import itt as itt
 import tensorflow as tf
 
 
@@ -18,7 +18,7 @@ def JointEntropyTF(patch_1, patch_2):
     # flatten the tensor into a sigle dimensinoal array
     patch_data = sess.run(tf.reshape(patch_data, [-1]))
 
-    je = round(drv.entropy_joint(patch_data), 4)  # result x.xxxx
+    je = round(itt.entropy_joint(patch_data), 4)  # result x.xxxx
 
     return je
 
@@ -35,6 +35,6 @@ def JointEntropy(patch_1, patch_2):
     # and flatten the tensor into a sigle dimensinoal array
     patch_data = np.concatenate((patch_1, patch_2)).flatten()
 
-    je = round(drv.entropy_joint(patch_data), 4)  # result x.xxxx
+    je = round(itt.entropy_joint(patch_data), 4)  # result x.xxxx
 
     return je

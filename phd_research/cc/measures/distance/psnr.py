@@ -93,4 +93,4 @@ def PSNR(patch_1, patch_2, maximumDataValue=255, ignore=None):
     meanSquaredError = numpy.sum(error**2) / error.size
 
     # Return the peak-signal-to-noise ratio
-    return round(10.0 * numpy.log10(maximumDataValue**2 / meanSquaredError),4)
+    return round(10.0 * numpy.log10(maximumDataValue**2 / meanSquaredError), 4)

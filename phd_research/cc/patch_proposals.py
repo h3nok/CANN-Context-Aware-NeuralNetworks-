@@ -14,10 +14,10 @@ from PIL import Image
 from sklearn.feature_extraction import image
 from sklearn.feature_extraction.image import extract_patches
 import sys
-from cc_utils import ImageHelper as IMPLOT
-from map_measure import Measure
-from reconstructor import reconstruct_from_patches
-from timer import endlog, log
+from cc.cc_utils import ImageHelper as IMPLOT
+from cc.map_measure import Measure
+from cc.reconstructor import reconstruct_from_patches
+from cc.timer import endlog, log
 
 
 def _patchify_tf(image_data, ksize_rows, ksize_cols, strides_rows, strides_cols,
@@ -78,7 +78,7 @@ def generate_patches_v1(sess, image_data_byes, ksize_rows, ksize_cols):
     return image_patches, number_patch_row, number_patch_col
 
 
-def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w, pad=False):
+def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False,debug=False):
     """
     Splits an image into patches of size patch_h x patch_w
     Input: image of shape [image_h, image_w, image_ch]
@@ -92,7 +92,8 @@ def generate_patches_v2(image_string, input_h, input_w, patch_h, patch_w, pad=Fa
         patch_w {pixels} -- patch width to extract 
     """
 
-    image = tf.image.decode_image(image_string, channels=3, dtype=tf.float32)
+    if debug:
+        image = tf.image.decode_image(image, channels=3, dtype=tf.float32)
 
     image = tf.reshape(image, [input_h, input_w, 3])
 

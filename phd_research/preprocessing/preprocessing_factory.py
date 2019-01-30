@@ -75,9 +75,9 @@ def get_preprocessing(name, is_training=False):
   if name not in preprocessing_fn_map:
     raise ValueError('Preprocessing name [%s] was not recognized' % name)
 
-  def preprocessing_fn(image, output_height, output_width, measure=None,ordering=None,patch_size=56, **kwargs):
+  def preprocessing_fn(image, output_height, output_width, **kwargs):
     if name == 'cc_v2':
-          return preprocessing_fn_map[name].preprocess_image(image,output_height,output_width,measure,ordering,patch_size)
+          return preprocessing_fn_map[name].preprocess_image(image,output_height,output_width,is_training=is_training,**kwargs)
     return preprocessing_fn_map[name].preprocess_image(
         image, output_height, output_width, is_training=is_training, **kwargs)
 

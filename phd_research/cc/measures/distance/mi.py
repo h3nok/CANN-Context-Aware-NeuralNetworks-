@@ -1,5 +1,5 @@
 import numpy as np
-from ITT import itt as itt
+from cc.ITT import itt as itt
 import tensorflow as tf
 
 

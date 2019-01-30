@@ -1,5 +1,5 @@
 import numpy as np
-from pyitlib import discrete_random_variable as drv
+from cc.ITT import itt as itt
 import tensorflow as tf
 
 
@@ -16,5 +16,5 @@ def KullbackLeiblerDivergence(patch_1, patch_2):
     patch_1 = patch_1.flatten()
     patch_2 = patch_2.flatten()
 
-    je = round(drv.divergence_kullbackleibler(patch_1, patch_2), 4)  # result x.xxxx
+    je = round(itt.divergence_kullbackleibler(patch_1, patch_2), 4)  # result x.xxxx
     return je

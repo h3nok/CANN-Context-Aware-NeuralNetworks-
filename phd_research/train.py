@@ -18,26 +18,27 @@ from __future__ import absolute_import, division, print_function
 
 import datetime
 import os
+import sys
 
 import numpy as np
 import tensorflow as tf
 from PIL import Image
 
 from cc import *
-# from cc.map_measure import Measursss
+# from cc.map_measure import Measurss
 from datasets import dataset_factory
 from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
+from cc.map_measure import Measure
 
 slim = tf.contrib.slim
-
 
 tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
 tf.app.flags.DEFINE_string(
-    'train_dir', 'E:\\Thesis\\summaries',
+    'train_dir', 'E:\\Thesis\\CC_V2\\summaries',
     'Directory where checkpoints and event logs are written to.')
 
 tf.app.flags.DEFINE_string(
@@ -181,7 +182,8 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', "E:\\DATA\\cifar\\cifar10\\tfrecord\\train-original", 'The directory where the dataset files are stored.')
+    'dataset_dir', "E:\\Datasets\\cifar\\cifar10\\tfrecord\\train-original",
+    'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
@@ -192,14 +194,10 @@ tf.app.flags.DEFINE_integer(
 tf.app.flags.DEFINE_string(
     'model_name', 'inception_v1', 'The name of the architecture to train.')
 
-tf.app.flags.DEFINE_string(
-    'preprocessing_name', None, 'The name of the preprocessing to use. If left '
-    'as `None`, then the model_name flag is used.')
-
 tf.app.flags.DEFINE_integer(
     'batch_size', 1, 'The number of samples in each batch.')
 tf.app.flags.DEFINE_integer(
-    'train_image_size', 224, 'Train image size')
+    'train_image_size', 32, 'Train image size')
 
 tf.app.flags.DEFINE_integer('max_number_of_steps',
                             10000, 'The maximum number of training steps.')
@@ -231,23 +229,28 @@ tf.app.flags.DEFINE_boolean(
 # Controlling Convolution CC V2 #
 #####################
 
-tf.app.flags.DEFINE_boolean(
-    'measure',
-    type=Measure,
-    default=Measure.MI,
-    help='When restoring a checkpoint would ignore missing variables.')
+tf.app.flags.DEFINE_string(
+    'measure', None,
+    'When restoring a checkpoint would ignore missing variables.')
+
+tf.app.flags.DEFINE_string(
+    'preprocessing_name', 'cc_v2', 'The name of the preprocessing to use. If left '
+    'as `None`, then the model_name flag is used.')
+
 
 FLAGS = tf.app.flags.FLAGS
 
 
-def _write_out_config():
-    file = os.path.join(FLAGS.train_dir, FLAGS.model_name + ".config")
-    print("Writing network and training configuration to " + file)
+def _write_config():
+
     if not os.path.exists(FLAGS.train_dir):
         print("Creating train_dir " + FLAGS.train_dir)
         os.makedirs(FLAGS.train_dir)
     if not os.path.exists(FLAGS.train_dir):
-        print("Unable to create train_dir")
+        raise ValueError("Unable to create train_dir")
+    file = os.path.join(FLAGS.train_dir,
+                        FLAGS.model_name + "__"+FLAGS.measure + ".config")
+    print("Writing network and training configuration to " + file)
     f = open(file, 'w+')
     time = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M%S")
     f.write("Training Time: {}\n".format(time))
@@ -421,11 +424,12 @@ def main(_):
             'You must supply the dataset directory with --dataset_dir')
 
     tf.logging.set_verbosity(tf.logging.INFO)
-    FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name + "_"+FLAGS.dataset_name +
-                                   "_"+str(FLAGS.max_number_of_steps) +
-                                   "iters_"+str(FLAGS.batch_size)+"batch"
-                                   + "_"+FLAGS.optimizer+"_"+datetime.datetime.now().strftime("%Y%m%d%H"))
-    _write_out_config()
+    if FLAGS.measure == None:
+        FLAGS.measure = 'baseline'
+    FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name, FLAGS.dataset_name,
+                                   FLAGS.measure,
+                                   str(FLAGS.max_number_of_steps))
+    _write_config()
     with tf.Graph().as_default():
         #######################
         # Config model_deploy #
@@ -459,7 +463,8 @@ def main(_):
         #####################################
         # Select the preprocessing function #
         #####################################
-        preprocessing_name = FLAGS.preprocessing_name or FLAGS.model_name
+        # preprocessing_name = FLAGS.preprocessing_name or FLAGS.model_name
+        preprocessing_name = FLAGS.preprocessing_name
         image_preprocessing_fn = preprocessing_factory.get_preprocessing(
             preprocessing_name,
             is_training=True)
@@ -480,6 +485,7 @@ def main(_):
 
             image = image_preprocessing_fn(
                 image, train_image_size, train_image_size)
+            return
 
             # Image.fromarray(np.asarray(image)).show()
 
