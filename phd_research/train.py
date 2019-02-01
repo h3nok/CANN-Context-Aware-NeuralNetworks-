@@ -34,6 +34,8 @@ from cc.map_measure import Measure
 
 slim = tf.contrib.slim
 
+tf.enable_eager_execution()
+
 tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
@@ -463,8 +465,8 @@ def main(_):
         #####################################
         # Select the preprocessing function #
         #####################################
-        # preprocessing_name = FLAGS.preprocessing_name or FLAGS.model_name
-        preprocessing_name = FLAGS.preprocessing_name
+        preprocessing_name = FLAGS.preprocessing_name or FLAGS.model_name
+        # preprocessing_name = FLAGS.preprocessing_name
         image_preprocessing_fn = preprocessing_factory.get_preprocessing(
             preprocessing_name,
             is_training=True)
@@ -485,7 +487,8 @@ def main(_):
 
             image = image_preprocessing_fn(
                 image, train_image_size, train_image_size)
-            return
+
+            # return
 
             # Image.fromarray(np.asarray(image)).show()
 

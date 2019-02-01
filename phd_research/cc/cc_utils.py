@@ -7,67 +7,10 @@ import matplotlib.gridspec as gridspec
 import math
 import numpy as np
 import sys
-
+import logging
+import os
 
 class ImageHelper(object):
-
-    def plot_patches(self, patches, fignum=None, low=0, high=0):
-        """
-        Given a stack of 2D patches indexed by the first dimension, plot the
-        patches in subplots. 
-
-        'low' and 'high' are optional arguments to control which patches
-        actually get plotted. 'fignum' chooses the figure to plot in.
-        """
-        try:
-            istate = plt.isinteractive()
-            plt.ioff()
-            if fignum is None:
-                fig = plt.gcf()
-            else:
-                fig = plt.figure(fignum)
-            if high == 0:
-                high = len(patches)
-            pmin, pmax = patches.min(), patches.max()
-            dims = np.ceil(np.sqrt(high - low))
-            for idx in range(high - low):
-                spl = plt.subplot(dims, dims, idx + 1)
-                ax = plt.axis('off')
-                im = plt.imshow(patches[idx], cmap=matplotlib.cm.gray)
-                cl = plt.clim(pmin, pmax)
-            plt.show()
-        finally:
-            plt.interactive(istate)
-
-    def plot_patches_tf(image_patches, sess, ksize_rows, ksize_cols):
-        #x = sess.run(image_patches)
-        #nr = x.shape[1]
-        #nc = x.shape[2]
-        #del x
-        a = sess.run(tf.shape(image_patches))
-        nr, nc = a[1], a[2]
-        print('\nwidth: {}; height: {}'.format(nr, nc), file=sys.stderr)
-
-        # figsize: width and height in inches. can be changed to make
-        # +output figure fit well. The default often works well.
-
-        fig = plt.figure()
-        gs = gridspec.GridSpec(nr, nc)
-        gs.update(wspace=0.01, hspace=0.01)
-
-        for i in range(nr):
-            for j in range(nc):
-                ax = plt.subplot(gs[i*nc+j])
-                plt.axis('off')
-                ax.set_xticklabels([])
-                ax.set_yticklabels([])
-                ax.set_aspect('auto')
-                patch = tf.reshape(image_patches[0, i, j, ], [
-                    ksize_rows, ksize_cols, 3])
-                plt.imshow(sess.run(patch))
-                print('processed {},{} patch, {}.'.format(
-                    i, j, i*nc+j), file=sys.stderr)
-        return fig
 
     def show_images(self, images, cols=1, titles=None):
         """Display a list of images in a single figure with matplotlib.
@@ -97,3 +40,26 @@ class ImageHelper(object):
         fig.set_size_inches(np.array(fig.get_size_inches()) * n_images)
 
         return fig
+
+
+def ConfigureLogger(module, logfile_dir='.', console=True):
+    logger = logging.getLogger(module)
+    logger.setLevel(logging.DEBUG)
+    fh = logging.FileHandler(os.path.join(logfile_dir, 'cc.log'))
+    fh.setLevel(logging.DEBUG)
+
+    # create console hadler
+    ch = None
+    if console:
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh.setFormatter(formatter)
+    ch.setFormatter(formatter)
+    # add the handlers to the logger
+    logger.addHandler(fh)
+    logger.addHandler(ch)
+
+    return logger

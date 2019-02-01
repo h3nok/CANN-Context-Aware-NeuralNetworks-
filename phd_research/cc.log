@@ -1,0 +1,183 @@
+2019-01-31 12:07:40,567 - c:/phd/Trainer/phd_research/cc/patch_proposals.py - INFO - Entering generate_patches_v2
+2019-01-31 12:12:08,898 - c:/phd/Trainer/phd_research/cc/patch_proposals.py - INFO - Entering generate_patches_v2
+2019-01-31 12:13:57,126 - c:/phd/Trainer/phd_research/cc/patch_proposals.py - INFO - Entering generate_patches_v2
+2019-01-31 12:17:08,196 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2
+2019-01-31 13:40:53,583 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2
+2019-01-31 14:07:03,305 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 14:07:03,305 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 14:07:03,305 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches, number of patches: 
+2019-01-31 14:10:57,944 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 14:10:57,944 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 14:10:57,944 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 14:10:57,944 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 14:16:09,692 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 14:16:09,692 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 14:16:09,708 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 14:16:09,708 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 14:16:09,708 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Mutual Information
+2019-01-31 14:16:09,708 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 14:19:52,292 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 14:19:52,292 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 14:19:52,292 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 14:19:52,292 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 14:19:52,292 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Mutual Information
+2019-01-31 14:19:52,292 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 14:26:14,584 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 14:26:14,584 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 14:26:14,584 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 14:26:14,584 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 14:26:14,584 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Standalone Entropy
+2019-01-31 14:26:14,584 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 14:34:38,827 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 14:34:38,827 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 14:34:38,843 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 14:34:38,843 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 14:34:38,843 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Standalone Entropy
+2019-01-31 14:34:38,843 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 14:58:33,965 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 14:58:33,965 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 14:58:33,981 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 14:58:33,981 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 14:58:33,981 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Standalone Entropy
+2019-01-31 14:58:33,981 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:05:36,520 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:05:36,520 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:05:36,535 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:05:36,535 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:05:36,535 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Standalone Entropy
+2019-01-31 15:05:36,535 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:10:57,953 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:10:57,968 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:10:57,968 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:10:57,968 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:10:57,968 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:10:57,968 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Standalone Entropy
+2019-01-31 15:10:57,968 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:10:57,968 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Grabbed default session
+2019-01-31 15:13:13,641 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:13:13,641 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:13:13,641 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:13:13,641 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:13:14,795 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:13:14,795 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Standalone Entropy
+2019-01-31 15:13:14,795 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:13:14,795 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Grabbed default session
+2019-01-31 15:16:45,568 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:16:45,568 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:16:45,568 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:16:45,568 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:16:46,699 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:16:46,699 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Standalone Entropy
+2019-01-31 15:16:46,699 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:22:03,028 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:22:03,028 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:22:03,028 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:22:03,028 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:22:03,028 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:22:04,200 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 15:22:04,200 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:28:33,912 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:28:33,912 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:28:33,928 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:28:33,943 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:28:33,943 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:28:35,099 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 15:28:35,099 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:28:35,099 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Reconstructing sample ...
+2019-01-31 15:29:03,019 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:29:03,021 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:29:03,032 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:29:03,032 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:29:03,033 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:29:04,151 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 15:29:04,151 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:36:16,157 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:36:16,157 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:36:16,173 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:36:16,173 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:36:16,173 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:36:17,251 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 15:36:17,251 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:43:45,024 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:43:45,024 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:43:45,040 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:43:45,040 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:43:45,040 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:43:46,257 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 15:43:46,257 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:43:46,397 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Reconstructing sample ...
+2019-01-31 15:44:20,924 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:44:20,924 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:44:20,924 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:44:20,924 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:44:20,924 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:44:22,097 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 15:44:22,097 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:44:22,198 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Sorting patches by distance measure, measure: Joint Entropy
+2019-01-31 15:44:22,198 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 0
+2019-01-31 15:44:22,230 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 1
+2019-01-31 15:44:22,245 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 2
+2019-01-31 15:44:22,245 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 3
+2019-01-31 15:44:22,260 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 4
+2019-01-31 15:44:22,260 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 5
+2019-01-31 15:44:22,276 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 6
+2019-01-31 15:44:22,276 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 7
+2019-01-31 15:44:22,292 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 8
+2019-01-31 15:44:22,292 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 9
+2019-01-31 15:44:22,292 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 10
+2019-01-31 15:44:22,307 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 11
+2019-01-31 15:44:22,307 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 12
+2019-01-31 15:44:22,307 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 13
+2019-01-31 15:44:22,307 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 14
+2019-01-31 15:44:22,307 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Comparing against: 15
+2019-01-31 15:44:22,307 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Successfully sorted patches, exiting
+2019-01-31 15:44:22,354 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Reconstructing sample ...
+2019-01-31 15:44:22,370 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Successfully reconstructed image, measure: Joint Entropy
+2019-01-31 15:52:13,415 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:52:13,415 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:52:13,415 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:52:13,415 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:52:13,415 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:53:21,940 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:53:21,940 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:53:21,955 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:53:21,955 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:53:21,955 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:53:23,221 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 15:53:23,221 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 15:58:34,431 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 15:58:34,431 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 15:58:34,431 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 15:58:34,431 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 15:58:34,431 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 15:58:34,431 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 15:58:34,431 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 16:00:51,165 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 16:00:51,165 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 16:00:51,165 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 16:00:51,165 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 16:00:51,165 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 16:00:51,165 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 16:00:51,165 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 16:04:35,814 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 16:04:35,814 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 16:04:35,814 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 16:04:35,814 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 16:04:35,814 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 16:04:37,017 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 16:04:37,017 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 16:04:37,095 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Sorting patches by distance measure, measure: Joint Entropy
+2019-01-31 16:04:37,188 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Successfully sorted patches, exiting
+2019-01-31 16:04:37,220 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Reconstructing sample ...
+2019-01-31 16:04:37,235 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Successfully reconstructed image, measure: Joint Entropy
+2019-01-31 16:35:02,864 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-01-31 16:35:02,864 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-01-31 16:35:02,864 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-01-31 16:35:02,864 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-01-31 16:35:02,864 - c:\phd\Trainer\phd_research\cc\reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-01-31 16:35:04,099 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-01-31 16:35:04,099 - c:\phd\Trainer\phd_research\cc\map_measure.py - INFO - Successfully mapped measure function
+2019-01-31 16:35:04,162 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Sorting patches by distance measure, measure: Joint Entropy
+2019-01-31 16:35:04,255 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Successfully sorted patches, exiting
+2019-01-31 16:35:04,286 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Reconstructing sample ...
+2019-01-31 16:35:04,302 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Successfully reconstructed image, measure: Joint Entropy

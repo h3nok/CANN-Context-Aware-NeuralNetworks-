@@ -3,8 +3,17 @@ from enum import Enum
 
 import tensorflow as tf
 
-from cc.measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
-from cc.measures.standalone import entropy
+try:
+    from cc.measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
+    from cc.measures.standalone import entropy
+    from cc.cc_utils import ConfigureLogger
+except (Exception, ImportError) as error:
+    print(error)
+    from measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
+    from measures.standalone import entropy
+    from cc_utils import ConfigureLogger
+
+_logger = ConfigureLogger(__file__, '.')
 
 
 class Measure(Enum):
@@ -54,6 +63,7 @@ def map_measure_fn(m, measureType=MeasureType.Dist):
         measureType {MeasureType} -- measure type (default: {MeasureType.Dist})
     """
 
+    _logger.info("Entering map_measure_fn, measure: {}".format(m.value))
     if not isinstance(m, Measure):
         raise ValueError(
             "Supplied argument must be an instance of Measure Enum")
@@ -76,6 +86,8 @@ def map_measure_fn(m, measureType=MeasureType.Dist):
         else:
             return func(patches)
 
+    _logger.info("Successfully mapped measure function")
+
     return measure_fn
 
 
@@ -84,6 +96,6 @@ def get_measure_fn_test(patches):
     return m_func(patches)
 
 
-if __name__ == '__main__':
-    patches = {}
-    get_measure_fn_test(patches)
+# if __name__ == '__main__':
+#     patches = {}
+#     get_measure_fn_test(patches)

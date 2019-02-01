@@ -14,10 +14,20 @@ from PIL import Image
 from sklearn.feature_extraction import image
 from sklearn.feature_extraction.image import extract_patches
 import sys
-from cc.cc_utils import ImageHelper as IMPLOT
-from cc.map_measure import Measure
-from cc.reconstructor import reconstruct_from_patches
-from cc.timer import endlog, log
+try:
+    from cc.cc_utils import ImageHelper as IMPLOT, ConfigureLogger
+    from cc.map_measure import Measure
+    from cc.reconstructor import reconstruct_from_patches
+    from cc.timer import endlog, log
+except (Exception, ImportError) as error:
+    print(error)
+    from cc.cc_utils import ImageHelper as IMPLOT, ConfigureLogger
+    from cc.map_measure import Measure
+    from cc.reconstructor import reconstruct_from_patches
+    from cc.timer import endlog, log
+
+
+_logger = ConfigureLogger(__file__, '.')
 
 
 def _patchify_tf(image_data, ksize_rows, ksize_cols, strides_rows, strides_cols,
@@ -78,7 +88,7 @@ def generate_patches_v1(sess, image_data_byes, ksize_rows, ksize_cols):
     return image_patches, number_patch_row, number_patch_col
 
 
-def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False,debug=False):
+def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False, debug=False):
     """
     Splits an image into patches of size patch_h x patch_w
     Input: image of shape [image_h, image_w, image_ch]
@@ -92,12 +102,16 @@ def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False,deb
         patch_w {pixels} -- patch width to extract 
     """
 
+    _logger.info("Entering generate_patches_v2, image: ({},{}), patch: ({},{})".format(
+        input_h, input_w, patch_h, patch_w))
+
     if debug:
         image = tf.image.decode_image(image, channels=3, dtype=tf.float32)
 
     image = tf.reshape(image, [input_h, input_w, 3])
 
-    assert image.shape.ndims == 3
+    assert image.shape.ndims == 3, _logger.error(
+        "Assertion failed, image channel != 3")
 
     pad = [[0, 0], [0, 0]]
     image_h = image.shape[0].value
@@ -105,17 +119,21 @@ def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False,deb
     image_ch = image.shape[2].value
     p_area = patch_h * patch_w
 
-    assert image_h == image_w and patch_h == patch_w, "Traning sample and patches must be of square size!"
+    assert image_h == image_w and patch_h == patch_w, _logger.error(
+        "Traning sample and patches must be of square size!")
 
     patches = None
     if pad:
+        _logger.info("Creating patches with [0] padding ...")
         patches = tf.space_to_batch_nd([image], [patch_h, patch_w], pad)
     else:
+        _logger.info("Creating patches ...")
         patches = tf.space_to_batch_nd([image], [patch_h, patch_w])
     patches = tf.split(patches, p_area, 0)
     patches = tf.stack(patches, 3)
     patches = tf.reshape(patches, [-1, patch_h, patch_w, image_ch])
 
+    _logger.info("Successfully generated patches ")
     return patches, image
 
 
@@ -127,7 +145,7 @@ def reconstruction_conserves_data(original, reconstructed):
     return np.all(np.equal(original, reconstructed))
 
 
-def cc_preprocesssing(image, height, width, measure, ordering, patch_h, patch_w):
+def p_por(image, height, width, measure, ordering, patch_h, patch_w):
     assert patch_h == patch_w, "CC V2 only supports equal sized patches!"
     patches, _ = generate_patches_v2(image, height, width, patch_h, patch_w)
     reconstructed = reconstruct_from_patches(
@@ -152,12 +170,12 @@ def test():
 
         image_string = tf.gfile.FastGFile(image_file, 'rb').read()
         patches, original = generate_patches_v2(
-            image_string, input_size[0], input_size[1], patch_width, patch_height)
+            image_string, input_size[0], input_size[1], patch_width, patch_height, debug=True)
 
         ssim = reconstruct_from_patches(
             patches, input_size[0], input_size[1], measure=Measure.SSIM)
         kl = reconstruct_from_patches(
-            patches, input_size[0], input_size[1], measure=Measure.SSIM)
+            patches, input_size[0], input_size[1], measure=Measure.KL)
         psnr = reconstruct_from_patches(
             patches, input_size[0], input_size[1], measure=Measure.PSNR)
         entropy = reconstruct_from_patches(
@@ -176,13 +194,13 @@ def test():
             patches, input_size[0], input_size[1], measure=Measure.JE)
 
         # # assert original.shape == reconstructed.shape, "Reconstruction data loss, skipping sample"
-        # reconstructed_samples = [original.eval(), kl.eval(), mi.eval(), ce.eval(),
-        #                          l1.eval(), l2.eval(), max.eval(), je.eval(), entropy.eval(), ssim.eval(), psnr.eval()]
-        # titles = ["Original", "KL", "MI", "CE", "L1",
-        #           "L2", "MAX", "JE", "Entropy", "SSIM", "PSNR"]
-        # plotter = IMPLOT()
-        # fig = plotter.show_images(reconstructed_samples, 2, titles=titles)
-        # plt.show()
+        reconstructed_samples = [original.eval(), kl.eval(), mi.eval(), ce.eval(),
+                                 l1.eval(), l2.eval(), max.eval(), je.eval(), entropy.eval(), ssim.eval(), psnr.eval()]
+        titles = ["Original", "KL", "MI", "CE", "L1",
+                  "L2", "MAX", "JE", "Entropy", "SSIM", "PSNR"]
+        plotter = IMPLOT()
+        fig = plotter.show_images(reconstructed_samples, 2, titles=titles)
+        plt.show()
 
 
 # if __name__ == '__main__':

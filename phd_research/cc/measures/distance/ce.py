@@ -1,7 +1,11 @@
 
 import numpy as np
-from cc.ITT import itt as itt
 import tensorflow as tf
+try:
+    from cc.ITT import itt as itt
+except(Exception, ImportError) as error:
+    print (error)
+    from ITT import itt as itt
 
 
 def ConditionalEntropy(patch_1, patch_2):
