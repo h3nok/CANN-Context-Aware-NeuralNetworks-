@@ -158,10 +158,7 @@ def test():
     image_file = 'cc/samples/husky.jpg'
     patch_width = 56
     patch_height = 56
-    channel = 3
     input_size = (224, 224)
-    image_patches = None
-    rank_measure = Measure.KL
 
     assert patch_height == patch_width, "CC doesn't support different sized patches!"
 

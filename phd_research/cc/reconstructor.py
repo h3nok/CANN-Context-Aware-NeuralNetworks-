@@ -2,8 +2,6 @@
 import tensorflow as tf
 from pprint import pprint
 import itertools
-import multiprocessing
-from joblib import Parallel, delayed
 import numpy as np
 from tqdm import tqdm
 
