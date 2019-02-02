@@ -21,12 +21,12 @@ try:
     from cc.timer import endlog, log
 except (Exception, ImportError) as error:
     print(error)
-    from cc.cc_utils import ImageHelper as IMPLOT, ConfigureLogger
-    from cc.map_measure import Measure
-    from cc.reconstructor import reconstruct_from_patches
-    from cc.timer import endlog, log
+    from cc_utils import ImageHelper as IMPLOT, ConfigureLogger
+    from map_measure import Measure
+    from reconstructor import reconstruct_from_patches
+    from timer import endlog, log
 
-
+tf.enable_eager_execution()
 _logger = ConfigureLogger(__file__, '.')
 
 
@@ -203,5 +203,5 @@ def test():
         plt.show()
 
 
-# if __name__ == '__main__':
-#     test()
+if __name__ == '__main__':
+    test()

@@ -44,79 +44,84 @@ def _sort_patches(patches_data, total_patches, measure, ordering):
 
     Arguments:
         patches_data {tensor} -- tensor having shape [number_of_patches, height,width,channel]
-        total_patches {int} -- total number of patches 
+        total_patches {int} -- total number of patches
 
     Keyword Arguments:
         measure {Measure} -- ranking measure to use for sorting (default: {Measure.JE})
         ordering {Ordering} -- sort order (default: {Ordering.Ascending})
     """
+    coord = tf.train.Coordinator()
     # TODO - parallel implementation
-
     _logger.debug("Entering _sort_patches ... ")
-    with tf.Session() as sess:
-        tf.train.start_queue_runners(sess)
-        measure_type = _determine_measure_type(measure)
+    # tf.initialize_all_variables()
+    measure_type = _determine_measure_type(measure)
 
-        measure_fn = map_measure_fn(measure, measure_type)
+    measure_fn = map_measure_fn(measure, measure_type)
 
-        # print("Number of patches: {}".format(total_patches))
-        patches_data = sess.run(patches_data)
+    # print("Number of patches: {}".format(total_patches))
 
-        if measure_type == MeasureType.STA:
-            _logger.debug(
-                'Measure type is standalone, calling _sort_patches_by_content_measure ...')
-            return _sort_patches_by_content_measure(patches_data, measure_fn, ordering=ordering)
+    sess = tf.Session()
+    tf.train.start_queue_runners(sess=sess, coord=coord)
+    patches_data = sess.run(patches_data)
+    sess.close()
 
-        if measure_type != MeasureType.Dist:
-            _logger.error(
-                "Supplied measure is not distance measure, please call _sort_patches_by_standalone_measure instead")
+    if measure_type == MeasureType.STA:
+        _logger.debug(
+            'Measure type is standalone, calling _sort_patches_by_content_measure ...')
+        return _sort_patches_by_content_measure(patches_data, measure_fn, ordering=ordering)
 
-        _logger.info(
-            "Sorting patches by distance measure, measure: {}".format(measure.value))
+    if measure_type != MeasureType.Dist:
+        _logger.error(
+            "Supplied measure is not distance measure, please call _sort_patches_by_standalone_measure instead")
 
-        def _compare_numpy(reference_patch, patch):
-            patches_to_compare = (reference_patch, patch)
-            distance = measure_fn(patches_to_compare)
-            return distance
+    _logger.info(
+        "Sorting patches by distance measure, measure: {}".format(measure.value))
 
-        def _swap(i, j):
-            # print("Swapping %d with %d" % (i, j))
-            patches_data[[i, j]] = patches_data[[j, i]]
+    def _compare_numpy(reference_patch, patch):
+        patches_to_compare = (reference_patch, patch)
+        distance = measure_fn(patches_to_compare)
+        return distance
 
-        sorted_patches = []
-        # debug_sorted_patches = dict()
-        distance = -100
-        # reference_patch_data = patches_data[0]
+    def _swap(i, j):
+        # print("Swapping %d with %d" % (i, j))
+        patches_data[[i, j]] = patches_data[[j, i]]
 
-        for i in tqdm(range(0, total_patches)):
+    sorted_patches = []
+    # debug_sorted_patches = dict()
+    distance = -100
+    # reference_patch_data = patches_data[0]
+
+    for i in range(0, total_patches):
             # TODO- make configurable
-            closest_distance_thus_far = 100
-            # print("Closest patch index: %d" % i)
-            reference_patch_data = patches_data[i]  # set reference patch
-            # sorted_patches.append(reference_patch_data)
+        closest_distance_thus_far = 100
+        # print("Closest patch index: %d" % i)
+        reference_patch_data = patches_data[i]  # set reference patch
+        # sorted_patches.append(reference_patch_data)
 
-            # compare the rest to reference patch
-            for j in range(i+1, total_patches):
+        # compare the rest to reference patch
+        for j in range(i+1, total_patches):
                 # print ("Comparing %d and %d" %(i,j))
-                distance = _compare_numpy(
-                    reference_patch_data, patches_data[j])
-                if j == 1:
-                    closest_distance_thus_far = distance
-                    continue
-                if ordering == Ordering.Ascending and distance < closest_distance_thus_far:
-                    closest_distance_thus_far = distance
-                    _swap(i+1, j)
-                    # reference_patch_data = patches_data[i]
-                elif ordering == Ordering.Descending and distance > closest_distance_thus_far:
-                    closest_distance_thus_far = distance
-                    _swap(i+1, j)
+            distance = _compare_numpy(
+                reference_patch_data, patches_data[j])
+            if j == 1:
+                closest_distance_thus_far = distance
+                continue
+            if ordering == Ordering.Ascending and distance < closest_distance_thus_far:
+                closest_distance_thus_far = distance
+                _swap(i+1, j)
+                # reference_patch_data = patches_data[i]
+            elif ordering == Ordering.Descending and distance > closest_distance_thus_far:
+                closest_distance_thus_far = distance
+                _swap(i+1, j)
 
-        sorted_patches = tf.convert_to_tensor(patches_data, dtype=tf.float32)
-        assert sorted_patches.shape[0] == total_patches, _logger.error("Sorted patches list contains more or less \
+    sorted_patches = tf.convert_to_tensor(patches_data, dtype=tf.float32)
+    assert sorted_patches.shape[0] == total_patches, _logger.error("Sorted patches list contains more or less \
         number of patches comparted to original")
 
-        _logger.info("Successfully sorted patches, exiting")
-        return sorted_patches
+    _logger.info(
+        "Successfully sorted patches, closing session and exiting ...")
+
+    return sorted_patches
 
 
 def _sort_patches_by_content_measure(patches_data, measure_fn, ordering):
@@ -132,26 +137,25 @@ def _sort_patches_by_content_measure(patches_data, measure_fn, ordering):
 
     _logger.info("Entering sort patches by content measure ...")
 
-    with tf.get_default_session():
-        assert isinstance(
-            patches_data, np.ndarray), "Supplied data must be instance of np.ndarray"
+    assert isinstance(
+        patches_data, np.ndarray), "Supplied data must be instance of np.ndarray"
 
-        number_of_patches = patches_data.shape[0]
+    number_of_patches = patches_data.shape[0]
 
-        def _swap(i, j):
-            patches_data[[i, j]] = patches_data[[j, i]]
+    def _swap(i, j):
+        patches_data[[i, j]] = patches_data[[j, i]]
 
-        sorted_patches = np.array(
-            sorted(patches_data, key=lambda patch: measure_fn(patch)))
+    sorted_patches = np.array(
+        sorted(patches_data, key=lambda patch: measure_fn(patch)))
 
-        assert len(
-            sorted_patches) == number_of_patches, _logger.error("Loss of data when sorting patches data")
-        assert patches_data.shape == sorted_patches.shape, _logger.error(
-            "Orignal tensor and sorted tensor have different shapes")
+    assert len(
+        sorted_patches) == number_of_patches, _logger.error("Loss of data when sorting patches data")
+    assert patches_data.shape == sorted_patches.shape, _logger.error(
+        "Orignal tensor and sorted tensor have different shapes")
 
-        _logger.info("Successfully sorte patches")
+    _logger.info("Successfully sorte patches")
 
-        return tf.convert_to_tensor(sorted_patches, dtype=tf.float32)
+    return tf.convert_to_tensor(sorted_patches, dtype=tf.float32)
 
 
 def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI, ordering=Ordering.Ascending):

@@ -31,10 +31,8 @@ from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
 from cc.map_measure import Measure
-
 slim = tf.contrib.slim
 
-tf.enable_eager_execution()
 
 tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
@@ -194,12 +192,12 @@ tf.app.flags.DEFINE_integer(
     'class for the ImageNet dataset.')
 
 tf.app.flags.DEFINE_string(
-    'model_name', 'inception_v1', 'The name of the architecture to train.')
+    'model_name', 'inception_v2', 'The name of the architecture to train.')
 
 tf.app.flags.DEFINE_integer(
     'batch_size', 1, 'The number of samples in each batch.')
 tf.app.flags.DEFINE_integer(
-    'train_image_size', 32, 'Train image size')
+    'train_image_size', 224, 'Train image size')
 
 tf.app.flags.DEFINE_integer('max_number_of_steps',
                             10000, 'The maximum number of training steps.')
@@ -236,9 +234,11 @@ tf.app.flags.DEFINE_string(
     'When restoring a checkpoint would ignore missing variables.')
 
 tf.app.flags.DEFINE_string(
-    'preprocessing_name', 'cc_v2', 'The name of the preprocessing to use. If left '
+    'preprocessing_name', None, 'The name of the preprocessing to use. If left '
     'as `None`, then the model_name flag is used.')
 
+tf.app.flags.DEFINE_integer(
+    'patch_size', 8, 'Train image size')
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -488,12 +488,9 @@ def main(_):
             image = image_preprocessing_fn(
                 image, train_image_size, train_image_size)
 
-            # return
-
             # Image.fromarray(np.asarray(image)).show()
 
-            prompt = input("Press some key to continue...")
-
+            # prompt = input("Press some key to continue...")
             images, labels = tf.train.batch(
                 [image, label],
                 batch_size=FLAGS.batch_size,
