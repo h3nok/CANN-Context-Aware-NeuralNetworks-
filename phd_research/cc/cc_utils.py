@@ -10,6 +10,7 @@ import sys
 import logging
 import os
 
+
 class ImageHelper(object):
 
     def show_images(self, images, cols=1, titles=None):

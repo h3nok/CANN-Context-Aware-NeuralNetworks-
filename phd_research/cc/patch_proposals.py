@@ -26,7 +26,6 @@ except (Exception, ImportError) as error:
     from reconstructor import reconstruct_from_patches
     from timer import endlog, log
 
-tf.enable_eager_execution()
 _logger = ConfigureLogger(__file__, '.')
 
 
