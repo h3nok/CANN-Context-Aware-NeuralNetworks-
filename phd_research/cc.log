@@ -1026,3 +1026,6 @@
 2019-02-05 17:09:25,756 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
 2019-02-05 17:09:25,821 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
 2019-02-05 17:09:25,826 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-02-05 17:18:55,218 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-02-05 17:18:55,282 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-02-05 17:18:55,282 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
