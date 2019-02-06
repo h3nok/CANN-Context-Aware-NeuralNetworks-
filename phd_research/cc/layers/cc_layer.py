@@ -9,3 +9,5 @@ class CCLayer(TFKLayer):
 
     def __init__(self, num_outputs):
         self.num_outputs = num_outputs
+
+    

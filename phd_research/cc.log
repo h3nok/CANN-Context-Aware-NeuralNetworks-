@@ -1013,3 +1013,16 @@
 2019-02-02 14:45:31,587 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Successfully sorted patches, closing session and exiting ...
 2019-02-02 14:45:31,588 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Reconstructing sample ...
 2019-02-02 14:45:31,709 - c:\phd\Trainer\phd_research\cc\reconstructor.py - INFO - Successfully reconstructed image, measure: Joint Entropy
+2019-02-05 16:52:05,201 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-02-05 16:57:04,387 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-02-05 16:58:55,314 - c:/phd/Trainer/phd_research/cc/patch_proposals.py - INFO - Entering generate_patches_v2, image: (224,224), patch: (56,56)
+2019-02-05 16:58:55,345 - c:/phd/Trainer/phd_research/cc/patch_proposals.py - ERROR - Assertion failed, image channel != 3
+2019-02-05 16:59:07,388 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-02-05 17:08:05,270 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-02-05 17:08:05,270 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - ERROR - Assertion failed, image channel != 3
+2019-02-05 17:09:00,918 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-02-05 17:09:00,975 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-02-05 17:09:00,980 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 
+2019-02-05 17:09:25,756 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Entering generate_patches_v2, image: (32,32), patch: (8,8)
+2019-02-05 17:09:25,821 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Creating patches with [0] padding ...
+2019-02-05 17:09:25,826 - c:\phd\Trainer\phd_research\cc\patch_proposals.py - INFO - Successfully generated patches 

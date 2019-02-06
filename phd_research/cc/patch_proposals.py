@@ -107,10 +107,10 @@ def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False, de
     if debug:
         image = tf.image.decode_image(image, channels=3, dtype=tf.float32)
 
-    image = tf.reshape(image, [input_h, input_w, 3])
-
     assert image.shape.ndims == 3, _logger.error(
         "Assertion failed, image channel != 3")
+        
+    image = tf.reshape(image, [input_h, input_w, 3])
 
     pad = [[0, 0], [0, 0]]
     image_h = image.shape[0].value
