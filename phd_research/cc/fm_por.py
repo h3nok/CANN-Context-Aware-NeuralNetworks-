@@ -43,8 +43,8 @@ class FM_POR(object):
 
 
 def fm_por(name, input, input_size, patch_size, measure=Measure.MI, order=Ordering.Ascending):
-    op = FM_POR(name,input,input_size,patch_size,measure,order)
-    return tf_func(op.Apply,input,tf.float32,name=name)
+    op = FM_POR(name, input, input_size, patch_size, measure, order)
+    return tf_func(op.Apply, input, tf.float32, name=name)
 
 
 def test():
@@ -52,7 +52,7 @@ def test():
     formatted = (slice56 * 255 / np.max(slice56)).astype('uint8')
     # fm_por_layer_1 = FM_POR('fm_por_1', formatted, 32, 8)
     # fm_por_layer_1.Apply()
-    fm_por('fm_por_1',formatted,32,8)
+    fm_por('fm_por_1', formatted, 32, 8)
 
     # img = Image.fromarray(formatted)
     # img.show()
