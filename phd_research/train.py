@@ -33,7 +33,7 @@ from preprocessing import preprocessing_factory
 from cc.map_measure import Measure
 slim = tf.contrib.slim
 
-HERACLES_DATA_DIR = '/home/deeplearning/data' 
+HERACLES_DATA_DIR = '/home/deeplearning/data'
 
 
 tf.app.flags.DEFINE_string(

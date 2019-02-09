@@ -100,7 +100,7 @@ def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False, de
         patch_w {pixels} -- patch width to extract 
     """
 
-    _logger.info("Entering generate_patches_v2, image: ({},{}), patch: ({},{})".format(
+    _logger.debug("Entering generate_patches_v2, image: ({},{}), patch: ({},{})".format(
         input_h, input_w, patch_h, patch_w))
 
     if debug:
@@ -108,7 +108,7 @@ def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False, de
 
     assert image.shape.ndims == 3, _logger.error(
         "Assertion failed, image channel != 3")
-        
+
     image = tf.reshape(image, [input_h, input_w, 3])
 
     pad = [[0, 0], [0, 0]]
@@ -122,17 +122,18 @@ def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False, de
 
     patches = None
     if pad:
-        _logger.info("Creating patches with [0] padding ...")
+        _logger.debug("Creating patches with [0] padding ...")
         patches = tf.space_to_batch_nd([image], [patch_h, patch_w], pad)
     else:
-        _logger.info("Creating patches ...")
+        _logger.debug("Creating patches ...")
         patches = tf.space_to_batch_nd([image], [patch_h, patch_w])
     patches = tf.split(patches, p_area, 0)
     patches = tf.stack(patches, 3)
     patches = tf.reshape(patches, [-1, patch_h, patch_w, image_ch])
 
-    _logger.info("Successfully generated patches ")
-    return patches, image
+    _logger.debug("Successfully generated patches ")
+
+    return patches
 
 
 def image_data_conserved(original, reconstructed):
