@@ -7,4 +7,5 @@ import numpy as np
 
 
 def preprocess_image(image, height, width, is_training=True, measure=Measure.JE, ordering=Ordering.Ascending, patch_size=56):
+    print (type(image))
     return p_por(image, height, width, measure, ordering, patch_size, patch_size)
