@@ -199,7 +199,7 @@ tf.app.flags.DEFINE_string(
 tf.app.flags.DEFINE_integer(
     'batch_size', 1, 'The number of samples in each batch.')
 tf.app.flags.DEFINE_integer(
-    'train_image_size', 224, 'Train image size')
+    'train_image_size', None, 'Train image size')
 
 tf.app.flags.DEFINE_integer('max_number_of_steps',
                             10000, 'The maximum number of training steps.')
@@ -232,15 +232,17 @@ tf.app.flags.DEFINE_boolean(
 #####################
 
 tf.app.flags.DEFINE_string(
-    'measure', None,
+    'measure', 'mi',
     'When restoring a checkpoint would ignore missing variables.')
 
 tf.app.flags.DEFINE_string(
-    'preprocessing_name', None, 'The name of the preprocessing to use. If left '
+    'preprocessing_name', 'cc_v2', 'The name of the preprocessing to use. If left '
     'as `None`, then the model_name flag is used.')
 
 tf.app.flags.DEFINE_integer(
     'patch_size', 8, 'Train image size')
+tf.app.flags.DEFINE_integer('ordering', 0, 'Patch ordering, 0=asc, 1=dec')
+
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -468,10 +470,9 @@ def main(_):
         # Select the preprocessing function #
         #####################################
         preprocessing_name = FLAGS.preprocessing_name or FLAGS.model_name
-        # preprocessing_name = FLAGS.preprocessing_name
         image_preprocessing_fn = preprocessing_factory.get_preprocessing(
-            preprocessing_name,
-            is_training=True)
+            				preprocessing_name,
+            				is_training=True)
 
         ##############################################################
         # Create a dataset provider that loads data from the dataset #
@@ -488,7 +489,7 @@ def main(_):
             train_image_size = FLAGS.train_image_size or network_fn.default_image_size
 
             image = image_preprocessing_fn(
-                image, train_image_size, train_image_size)
+                image, train_image_size, train_image_size, FLAGS.measure,FLAGS.ordering,FLAGS.patch_size)
 
             # Image.fromarray(np.asarray(image)).show()
 
