@@ -29,7 +29,7 @@ from preprocessing import cc_preprocessing
 slim = tf.contrib.slim
 
 
-def get_preprocessing(name, is_training=False):
+def get_preprocessing(name, is_training=False, measure='',ordering=0,patch_size=8):
     """Returns preprocessing_fn(image, height, width, **kwargs).
 
     Args:
@@ -74,10 +74,13 @@ def get_preprocessing(name, is_training=False):
 
     if name not in preprocessing_fn_map:
         raise ValueError('Preprocessing name [%s] was not recognized' % name)
+    def cc_preproc(image, output_height, output_width, measure,ordering,patch_size):
+        return preprocessing_fn_map[name].preprocess_image(image, output_height, output_width, is_training=is_training)
+	
 
     def preprocessing_fn(image, output_height, output_width, **kwargs):
         if name == 'cc_v2':
-            return preprocessing_fn_map[name].preprocess_image(image, output_height, output_width, is_training=is_training, **kwargs)
+	    return cc_preproc(image,outptu_height,output_with,measure,ordering,patch_size
         return preprocessing_fn_map[name].preprocess_image(
             image, output_height, output_width, is_training=is_training, **kwargs)
 
