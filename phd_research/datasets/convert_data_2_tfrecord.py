@@ -234,10 +234,10 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
 
 
 if __name__ == '__main__':
-    DATASET_DIR = "E:\\DATA\\caltech\\caltech256\\original"
-    OUTPUT_DIR = 'E:\DATA\caltech\caltech256'
-    NAME = "caltech256"
-    TYPE = 'train-original'
-    PREFIX = "train-original"
+    DATASET_DIR = "/home/deeplearning/data/cifar/train"
+    OUTPUT_DIR = '/home/deeplearning/data/cifar10'
+    NAME = "cifar10"
+    TYPE = ''
+    PREFIX = "train"
     run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE, False,
-        subsample=False, normalize=False, prefix=PREFIX, ppor='mi')
+        subsample=False, normalize=False, prefix=PREFIX, ppor='')

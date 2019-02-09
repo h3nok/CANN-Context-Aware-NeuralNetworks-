@@ -33,12 +33,14 @@ from preprocessing import preprocessing_factory
 from cc.map_measure import Measure
 slim = tf.contrib.slim
 
+HERACLES_DATA_DIR = '/home/deeplearning/data' 
+
 
 tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
 tf.app.flags.DEFINE_string(
-    'train_dir', 'E:\\Thesis\\CC_V2\\summaries',
+    'train_dir', '/home/deeplearning/train_log',
     'Directory where checkpoints and event logs are written to.')
 
 tf.app.flags.DEFINE_string(
@@ -182,7 +184,7 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', "E:\\Datasets\\cifar\\cifar10\\tfrecord\\train-original",
+    'dataset_dir', "/home/deeplearning/data/cifar10",
     'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(

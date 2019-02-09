@@ -28,7 +28,7 @@ from datasets import dataset_utils
 
 slim = tf.contrib.slim
 
-_FILE_PATTERN = 'cifar10_%s_*.tfrecord'
+_FILE_PATTERN = 'cifar100_%s_*.tfrecord'
 
 SPLITS_TO_SIZES = {'train': 50000, 'test': 10000}
 
