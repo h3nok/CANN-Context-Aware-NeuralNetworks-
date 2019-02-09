@@ -1111,3 +1111,4 @@
 2019-02-09 13:09:03,196 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - INFO - Entering generate_patches_v2, image: (224,224), patch: (8,8)
 2019-02-09 13:16:41,316 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - INFO - Entering generate_patches_v2, image: (224,224), patch: (56,56)
 >>>>>>> b40be89f25539b794b62f2c5dee2ba3614ef2785
+2019-02-09 13:53:30,510 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Entering generate_patches_v2, image: (224,224), patch: (56,56)

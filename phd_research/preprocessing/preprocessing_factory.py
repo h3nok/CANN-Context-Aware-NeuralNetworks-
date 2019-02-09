@@ -78,7 +78,7 @@ def get_preprocessing(name, is_training=False, measure='', ordering=0, patch_siz
     def cc_preproc(image, output_height, output_width, measure, ordering, patch_size):
         return preprocessing_fn_map[name].preprocess_image(image, output_height, output_width, is_training=is_training)
 
-    def preprocessing_fn(image, output_height, output_width, **kwargs):
+    def preprocessing_fn(image, output_height, output_width, measure, ordering,patch_size, **kwargs):
         if name == 'cc_v2':
 	        return cc_preproc(image, output_height, output_width, measure, ordering, patch_size)
         

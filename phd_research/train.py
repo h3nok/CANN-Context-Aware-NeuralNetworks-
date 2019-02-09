@@ -488,10 +488,10 @@ def main(_):
 
             train_image_size = FLAGS.train_image_size or network_fn.default_image_size
             print (train_image_size)
-            return 
             image = image_preprocessing_fn(
                 image, train_image_size, train_image_size, FLAGS.measure,FLAGS.ordering,FLAGS.patch_size)
 
+            return 
             # Image.fromarray(np.asarray(image)).show()
 
             # prompt = input("Press some key to continue...")
