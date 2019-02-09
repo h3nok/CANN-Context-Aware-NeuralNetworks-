@@ -50,7 +50,7 @@ def _sort_patches(patches_data, total_patches, measure, ordering):
     """
     coord = tf.train.Coordinator()
     # TODO - parallel implementation
-    _logger.debug("Entering _sort_patches ... ")
+    _logger.info("Entering _sort_patches ... ")
     # tf.initialize_all_variables()
     measure_type = _determine_measure_type(measure)
 
@@ -64,7 +64,7 @@ def _sort_patches(patches_data, total_patches, measure, ordering):
     sess.close()
 
     if measure_type == MeasureType.STA:
-        _logger.debug(
+        _logger.info(
             'Measure type is standalone, calling _sort_patches_by_content_measure ...')
         return _sort_patches_by_content_measure(patches_data, measure_fn, ordering=ordering)
 

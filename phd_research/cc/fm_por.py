@@ -1,9 +1,10 @@
 import tensorflow as tf
 import numpy as np
-from patch_proposals import generate_patches_v2
+from patch_proposals import generate_patches_v2, p_por
 from map_measure import Measure, MeasureType, Ordering
 from reconstructor import reconstruct_from_patches
 from PIL import Image
+import matplotlib.pyplot as plt
 from cc_utils import ImageHelper as IMPLOT
 tf_func = tf.py_func
 tf_contrib = tf.contrib
@@ -31,35 +32,43 @@ class FM_POR(object):
         self.Input = input_feature_map
         self.InputSize = input_size
         self.PatchSize = patch_size
-        self.Ranker = measure 
+        self.Ranker = measure
+        self.RankOrder = order
 
-    def Apply(self,input, dummy=''):
+    def Apply(self, input, dummy=''):
         self.Input = tf.convert_to_tensor(input)
-        self.Patches = generate_patches_v2(self.Input, self.InputSize,
-                                           self.InputSize, self.PatchSize, self.PatchSize)
-        print (self.Patches)
-        self.Output = reconstruct_from_patches(
-            self.Patches, self.InputSize, self.InputSize, self.Ranker)
-        return sess.run(self.Output)
+        output = p_por(self.Input, self.InputSize, self.InputSize,
+                       self.Ranker, self.RankOrder, self.PatchSize, self.PatchSize)
+        # sess = tf.Session()
+        # output = sess.run(output)
+        # sess.close()
+
+        return output
 
 
-def fm_por(name, input, input_size, patch_size, measure=Measure.MI, order=Ordering.Ascending):
+def fm_por(name, input, input_size, patch_size, measure=Measure.JE, order=Ordering.Ascending):
     op = FM_POR(name, input, input_size, patch_size, measure, order)
     inputs = [input, '']
-    return tf_func(op.Apply, inputs, tf.float32, name=name)
+    return op.Apply(input)
+    # return tf_func(op.Apply, inputs, tf.float32, name=name)
 
 
 def test():
-    slice56 = np.random.random((32, 32, 3))
-    formatted = (slice56 * 255 / np.max(slice56)).astype('uint8')
-    # fm_por_layer_1 = FM_POR('fm_por_1', formatted, 32, 8)
-    # fm_por_layer_1.Apply()
+    # slice56 = np.random.random((32, 32, 3))
+    # formatted = (slice56 * 255 / np.max(slice56)).astype('uint8')
+    image_file = 'cc/samples/husky.jpg'
+    patch_width = 56
+    patch_height = 56
+    input_size = (224, 224)
 
     with tf.Session():
-        output =  fm_por('fm_por_1', formatted, 32, 8)
+        image = tf.gfile.FastGFile(image_file, 'rb').read()
+        image = tf.image.decode_image(image, channels=3, dtype=tf.float32)
+        output = fm_por('fm_por_1', image.eval(), input_size[0], patch_width)
         output = output.eval()
         plotter = IMPLOT()
-        plotter.show_images([output,output],2,['output','output'])
+        plotter.show_images([image.eval(), output], 2, ['input', 'output'])
+        plt.show()
     # img = Image.fromarray(formatted)
     # img.show()
 

@@ -104,14 +104,15 @@ def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False, de
         input_h, input_w, patch_h, patch_w))
 
     if debug:
+        _logger.debug("Decoding image for debugging ...")
         image = tf.image.decode_image(image, channels=3, dtype=tf.float32)
 
-    assert image.shape.ndims == 3, _logger.error(
-        "Assertion failed, image channel != 3")
+    # assert image.shape.ndims == 3, _logger.error(
+    #     "Assertion failed, image channel != 3")
 
     image = tf.reshape(image, [input_h, input_w, 3])
 
-    pad = [[0, 0], [0, 0]]
+    padding = [[0, 0], [0, 0]]
     image_h = image.shape[0].value
     image_w = image.shape[1].value
     image_ch = image.shape[2].value
@@ -121,12 +122,13 @@ def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False, de
         "Traning sample and patches must be of square size!")
 
     patches = None
+
     if pad:
         _logger.debug("Creating patches with [0] padding ...")
-        patches = tf.space_to_batch_nd([image], [patch_h, patch_w], pad)
+        patches = tf.space_to_batch_nd([image], [patch_h, patch_w], padding)
     else:
         _logger.debug("Creating patches ...")
-        patches = tf.space_to_batch_nd([image], [patch_h, patch_w])
+        patches = tf.space_to_batch_nd([image], [patch_h, patch_w],padding)
     patches = tf.split(patches, p_area, 0)
     patches = tf.stack(patches, 3)
     patches = tf.reshape(patches, [-1, patch_h, patch_w, image_ch])
@@ -165,7 +167,8 @@ def test():
                                           log_device_placement=False)) as sess:
 
         image_string = tf.gfile.FastGFile(image_file, 'rb').read()
-        patches, original = generate_patches_v2(
+
+        patches = generate_patches_v2(
             image_string, input_size[0], input_size[1], patch_width, patch_height, debug=True)
 
         ssim = reconstruct_from_patches(
@@ -190,14 +193,17 @@ def test():
             patches, input_size[0], input_size[1], measure=Measure.JE)
 
         # # assert original.shape == reconstructed.shape, "Reconstruction data loss, skipping sample"
-        reconstructed_samples = [original.eval(), kl.eval(), mi.eval(), ce.eval(),
-                                 l1.eval(), l2.eval(), max.eval(), je.eval(), entropy.eval(), ssim.eval(), psnr.eval()]
-        titles = ["Original", "KL", "MI", "CE", "L1",
+        reconstructed_samples = [kl.eval(), 
+                                 mi.eval(), ce.eval(),
+                                 l1.eval(), l2.eval(), max.eval(), je.eval(), 
+                                 entropy.eval(), ssim.eval(), psnr.eval()]
+
+        titles = ["KL", "MI", "CE", "L1",
                   "L2", "MAX", "JE", "Entropy", "SSIM", "PSNR"]
         plotter = IMPLOT()
         fig = plotter.show_images(reconstructed_samples, 2, titles=titles)
         plt.show()
 
 
-#if __name__ == '__main__':
-#    test()
+if __name__ == '__main__':
+    test()
