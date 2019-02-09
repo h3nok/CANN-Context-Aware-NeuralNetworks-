@@ -1112,3 +1112,34 @@
 2019-02-09 13:16:41,316 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - INFO - Entering generate_patches_v2, image: (224,224), patch: (56,56)
 >>>>>>> b40be89f25539b794b62f2c5dee2ba3614ef2785
 2019-02-09 13:53:30,510 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Entering generate_patches_v2, image: (224,224), patch: (56,56)
+2019-02-09 13:57:55,108 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Entering generate_patches_v2, image: (224,224), patch: (56,56)
+2019-02-09 13:58:47,234 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Entering generate_patches_v2, image: (224,224), patch: (56,56)
+2019-02-09 14:00:00,761 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Entering generate_patches_v2, image: (224,224), patch: (56,56)
+2019-02-09 14:38:55,260 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Entering generate_patches_v2, image: (224,224), patch: (56,56)
+2019-02-09 14:38:55,262 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Creating patches with [0] padding ...
+2019-02-09 14:38:55,493 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Successfully generated patches 
+2019-02-09 14:42:11,253 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Entering generate_patches_v2, image: (224,224), patch: (56,56)
+2019-02-09 14:42:11,255 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Creating patches with [0] padding ...
+2019-02-09 14:42:11,476 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Successfully generated patches 
+2019-02-09 14:42:56,076 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Entering generate_patches_v2, image: (224,224), patch: (56,56)
+2019-02-09 14:42:56,078 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Creating patches with [0] padding ...
+2019-02-09 14:42:56,311 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Successfully generated patches 
+2019-02-09 14:42:56,311 - /home/henok/Thesis/phd_research/cc/reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-02-09 14:42:56,312 - /home/henok/Thesis/phd_research/cc/reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-02-09 14:42:56,312 - /home/henok/Thesis/phd_research/cc/map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-02-09 14:42:56,312 - /home/henok/Thesis/phd_research/cc/map_measure.py - INFO - Successfully mapped measure function
+2019-02-09 14:42:59,493 - /home/henok/Thesis/phd_research/cc/reconstructor.py - INFO - Sorting patches by distance measure, measure: Joint Entropy
+2019-02-09 14:43:03,736 - /home/henok/Thesis/phd_research/cc/reconstructor.py - INFO - Successfully sorted patches, closing session and exiting ...
+2019-02-09 14:43:03,736 - /home/henok/Thesis/phd_research/cc/reconstructor.py - INFO - Reconstructing sample ...
+2019-02-09 14:43:03,925 - /home/henok/Thesis/phd_research/cc/reconstructor.py - INFO - Successfully reconstructed image, measure: Joint Entropy
+2019-02-09 14:44:20,560 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Entering generate_patches_v2, image: (224,224), patch: (56,56)
+2019-02-09 14:44:20,562 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Creating patches with [0] padding ...
+2019-02-09 14:44:20,808 - /home/henok/Thesis/phd_research/cc/patch_proposals.py - DEBUG - Successfully generated patches 
+2019-02-09 14:44:20,808 - /home/henok/Thesis/phd_research/cc/reconstructor.py - INFO - Entering reconstruct_from_patches, number of patches: 16
+2019-02-09 14:44:20,809 - /home/henok/Thesis/phd_research/cc/reconstructor.py - DEBUG - Entering _sort_patches ... 
+2019-02-09 14:44:20,809 - /home/henok/Thesis/phd_research/cc/map_measure.py - INFO - Entering map_measure_fn, measure: Joint Entropy
+2019-02-09 14:44:20,809 - /home/henok/Thesis/phd_research/cc/map_measure.py - INFO - Successfully mapped measure function
+2019-02-09 14:44:24,000 - /home/henok/Thesis/phd_research/cc/reconstructor.py - INFO - Sorting patches by distance measure, measure: Joint Entropy
+2019-02-09 14:44:28,350 - /home/henok/Thesis/phd_research/cc/reconstructor.py - INFO - Successfully sorted patches, closing session and exiting ...
+2019-02-09 14:44:28,351 - /home/henok/Thesis/phd_research/cc/reconstructor.py - INFO - Reconstructing sample ...
+2019-02-09 14:44:28,544 - /home/henok/Thesis/phd_research/cc/reconstructor.py - INFO - Successfully reconstructed image, measure: Joint Entropy

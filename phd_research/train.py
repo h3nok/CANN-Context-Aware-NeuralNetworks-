@@ -240,7 +240,7 @@ tf.app.flags.DEFINE_string(
     'as `None`, then the model_name flag is used.')
 
 tf.app.flags.DEFINE_integer(
-    'patch_size', 8, 'Train image size')
+    'patch_size', 56, 'Train image size')
 tf.app.flags.DEFINE_integer('ordering', 0, 'Patch ordering, 0=asc, 1=dec')
 
 
@@ -487,14 +487,9 @@ def main(_):
             label -= FLAGS.labels_offset
 
             train_image_size = FLAGS.train_image_size or network_fn.default_image_size
-            print (train_image_size)
             image = image_preprocessing_fn(
                 image, train_image_size, train_image_size, FLAGS.measure,FLAGS.ordering,FLAGS.patch_size)
 
-            return 
-            # Image.fromarray(np.asarray(image)).show()
-
-            # prompt = input("Press some key to continue...")
             images, labels = tf.train.batch(
                 [image, label],
                 batch_size=FLAGS.batch_size,

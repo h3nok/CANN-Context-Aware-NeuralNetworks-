@@ -146,7 +146,7 @@ def reconstruction_conserves_data(original, reconstructed):
 
 def p_por(image, height, width, measure, ordering, patch_h, patch_w):
     assert patch_h == patch_w, "CC V2 only supports equal sized patches!"
-    patches, _ = generate_patches_v2(image, height, width, patch_h, patch_w)
+    patches = generate_patches_v2(image, height, width, patch_h, patch_w)
     reconstructed = reconstruct_from_patches(
         patches, height, width, measure=measure, ordering=ordering)
 
