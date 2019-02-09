@@ -8,7 +8,6 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-import tensorflow.image as tfimage
 from keras.backend import tensorflow_backend as KTF
 from PIL import Image
 from sklearn.feature_extraction import image
