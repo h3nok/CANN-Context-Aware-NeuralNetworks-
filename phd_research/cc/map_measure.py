@@ -4,8 +4,8 @@ from enum import Enum
 import tensorflow as tf
 
 try:
-    from cc.measures import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
-    from cc.cc_utils import ConfigureLogger
+	from cc.measures import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
+	from cc.cc_utils import ConfigureLogger
 except (Exception, ImportError) as error:
     print(error)
     from measures import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy

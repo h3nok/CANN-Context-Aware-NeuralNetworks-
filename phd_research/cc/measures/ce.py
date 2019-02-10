@@ -4,7 +4,6 @@ import tensorflow as tf
 try:
     from cc.ITT import itt as itt
 except(Exception, ImportError) as error:
-    print(error)
     from ITT import itt as itt
 
 
