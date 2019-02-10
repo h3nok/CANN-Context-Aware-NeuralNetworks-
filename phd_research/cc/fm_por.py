@@ -39,9 +39,14 @@ class FM_POR(object):
         self.Input = tf.convert_to_tensor(input)
         output = p_por(self.Input, self.InputSize, self.InputSize,
                        self.Ranker, self.RankOrder, self.PatchSize, self.PatchSize)
-        # sess = tf.Session()
-        # output = sess.run(output)
-        # sess.close()
+
+        plotter = IMPLOT()
+        with tf.Session() as sess:
+            plotter.show_images([input, output.eval()], 2, [
+                                'input', "output"])
+            plt.show()
+            output = output.eval()
+        sess.close()
 
         return output
 
@@ -49,8 +54,9 @@ class FM_POR(object):
 def fm_por(name, input, input_size, patch_size, measure=Measure.JE, order=Ordering.Ascending):
     op = FM_POR(name, input, input_size, patch_size, measure, order)
     inputs = [input, '']
-    return op.Apply(input)
-    # return tf_func(op.Apply, inputs, tf.float32, name=name)
+    # return op.Apply(input)
+    # output = np.array([input_size,input_size, 3],np.float32)
+    return tf_func(op.Apply, inputs, tf.float32, name=name)
 
 
 def test():
@@ -61,7 +67,8 @@ def test():
     patch_height = 56
     input_size = (224, 224)
 
-    with tf.Session():
+    with tf.Session() as sess:
+        sess.run(tf.global_variables_initializer())
         image = tf.gfile.FastGFile(image_file, 'rb').read()
         image = tf.image.decode_image(image, channels=3, dtype=tf.float32)
         output = fm_por('fm_por_1', image.eval(), input_size[0], patch_width)

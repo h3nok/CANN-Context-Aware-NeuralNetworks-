@@ -26,6 +26,7 @@ class ImageHelper(object):
         titles: List of titles corresponding to each image. Must have
                 the same length as titles.
         """
+        # assert isinstance(images, np.ndarray), "images must be of type np.array"
         assert((titles is None)or (len(images) == len(titles)))
         plt.tight_layout()
         n_images = len(images)
