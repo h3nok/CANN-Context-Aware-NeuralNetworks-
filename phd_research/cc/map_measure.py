@@ -2,16 +2,13 @@ import functools
 from enum import Enum
 
 import tensorflow as tf
-from cc.measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
 
 try:
-    from cc.measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
-    from cc.measures.standalone import entropy
+    from cc.measures import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
     from cc.cc_utils import ConfigureLogger
 except (Exception, ImportError) as error:
     print(error)
-    from measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
-    from measures.standalone import entropy
+    from measures import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
     from cc_utils import ConfigureLogger
 
 _logger = ConfigureLogger(__file__, '.')

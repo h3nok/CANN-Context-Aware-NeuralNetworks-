@@ -184,7 +184,7 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-   # 'dataset_dir', "E:\\Datasets\cifar\cifar10\\tfrecord\\train-original",
+    # 'dataset_dir', "E:\\Datasets\cifar\cifar10\\tfrecord\\train-original",
     'dataset_dir', "/home/deeplearning/data/cifar10",
     'The directory where the dataset files are stored.')
 

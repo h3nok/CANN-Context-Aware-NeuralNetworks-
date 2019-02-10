@@ -25,6 +25,7 @@ from preprocessing import inception_preprocessing
 from preprocessing import lenet_preprocessing
 from preprocessing import vgg_preprocessing
 from preprocessing import cc_preprocessing
+from preprocessing.cc_preprocessing import decode_measure
 
 slim = tf.contrib.slim
 
