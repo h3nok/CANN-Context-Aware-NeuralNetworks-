@@ -26,6 +26,7 @@ ORDERING_MAP = {
 
 def preprocess_image(image, height, width, is_training=True, measure=Measure.JE, ordering=Ordering.Ascending, patch_size=56):
     assert patch_size <= width
+    measure, ordering = decode_measure(measure, ordering)
     assert isinstance(measure, Measure)
     assert isinstance(ordering, Ordering)
     image = tf.image.resize_images(image, [height, width], align_corners=False)

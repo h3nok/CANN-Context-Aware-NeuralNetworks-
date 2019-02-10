@@ -25,7 +25,6 @@ from preprocessing import inception_preprocessing
 from preprocessing import lenet_preprocessing
 from preprocessing import vgg_preprocessing
 from preprocessing import cc_preprocessing
-from preprocessing.cc_preprocessing import decode_measure
 
 slim = tf.contrib.slim
 
@@ -77,8 +76,7 @@ def get_preprocessing(name, is_training=False, measure='', ordering=0, patch_siz
         raise ValueError('Preprocessing name [%s] was not recognized' % name)
 
     def preprocessing_fn(image, output_height, output_width, measure=None, ordering=None, patch_size=None, **kwargs):
-        if name == 'cc_v2' or name = 'ppor':
-            measure, ordering = decode_measure(measure, ordering)
+        if name == 'cc_v2' or name == 'ppor':
             return preprocessing_fn_map[name].preprocess_image(image, output_height, output_width, True, measure, ordering, patch_size)
 
         return preprocessing_fn_map[name].preprocess_image(

@@ -184,8 +184,8 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', "E:\\Datasets\cifar\cifar10\\tfrecord\\train-original",
-    # 'dataset_dir', "/home/deeplearning/data/cifar10",
+   # 'dataset_dir', "E:\\Datasets\cifar\cifar10\\tfrecord\\train-original",
+    'dataset_dir', "/home/deeplearning/data/cifar10",
     'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
@@ -490,8 +490,6 @@ def main(_):
             train_image_size = FLAGS.train_image_size or network_fn.default_image_size
             image = image_preprocessing_fn(
                 image, train_image_size, train_image_size, FLAGS.measure, FLAGS.ordering, FLAGS.patch_size)
-
-            return
 
             images, labels = tf.train.batch(
                 [image, label],
