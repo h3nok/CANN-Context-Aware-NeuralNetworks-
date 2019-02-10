@@ -2,6 +2,7 @@ import functools
 from enum import Enum
 
 import tensorflow as tf
+from cc.measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
 
 try:
     from cc.measures.distance import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr
