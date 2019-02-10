@@ -128,7 +128,7 @@ def generate_patches_v2(image, input_h, input_w, patch_h, patch_w, pad=False, de
         patches = tf.space_to_batch_nd([image], [patch_h, patch_w], padding)
     else:
         _logger.debug("Creating patches ...")
-        patches = tf.space_to_batch_nd([image], [patch_h, patch_w],padding)
+        patches = tf.space_to_batch_nd([image], [patch_h, patch_w], padding)
     patches = tf.split(patches, p_area, 0)
     patches = tf.stack(patches, 3)
     patches = tf.reshape(patches, [-1, patch_h, patch_w, image_ch])
@@ -193,9 +193,9 @@ def test():
             patches, input_size[0], input_size[1], measure=Measure.JE)
 
         # # assert original.shape == reconstructed.shape, "Reconstruction data loss, skipping sample"
-        reconstructed_samples = [kl.eval(), 
+        reconstructed_samples = [kl.eval(),
                                  mi.eval(), ce.eval(),
-                                 l1.eval(), l2.eval(), max.eval(), je.eval(), 
+                                 l1.eval(), l2.eval(), max.eval(), je.eval(),
                                  entropy.eval(), ssim.eval(), psnr.eval()]
 
         titles = ["KL", "MI", "CE", "L1",

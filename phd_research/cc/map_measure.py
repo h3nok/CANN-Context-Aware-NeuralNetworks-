@@ -17,16 +17,16 @@ _logger = ConfigureLogger(__file__, '.')
 
 
 class Measure(Enum):
-    MI = "Mutual Information"
-    JE = "Joint Entropy"
-    CE = "Conditional Entropy"
-    ENTROPY = "Standalone Entropy"
-    KL = "Kullback-Leibler Divergence"
-    L1 = "L1-Norm"
-    L2 = "L2-Norm"
-    SSIM = "Structural Similarity Index"
-    PSNR = "Peak-Signal-to-Noise ratio"
-    MAX_NORM = "Max norm"
+    MI = ('mi', "Mutual Information")
+    JE = ('je', "Joint Entropy")
+    CE = ('ce', "Conditional Entropy")
+    ENTROPY = ('e',"Standalone Entropy")
+    KL = ('kl',"Kullback-Leibler Divergence")
+    L1 = ('l1',"L1-Norm")
+    L2 = ('l2', "L2-Norm")
+    SSIM = ('ssim',"Structural Similarity Index")
+    PSNR = ('psnr',"Peak-Signal-to-Noise ratio")
+    MAX_NORM = ('mn',"Max norm")
 
 
 class Ordering(Enum):
