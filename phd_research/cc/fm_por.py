@@ -76,8 +76,6 @@ def test():
         plotter = IMPLOT()
         plotter.show_images([image.eval(), output], 2, ['input', 'output'])
         plt.show()
-    # img = Image.fromarray(formatted)
-    # img.show()
 
 
 if __name__ == '__main__':
