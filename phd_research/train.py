@@ -496,6 +496,7 @@ def main(_):
                 capacity=5 * FLAGS.batch_size)
             labels = slim.one_hot_encoding(
                 labels, dataset.num_classes - FLAGS.labels_offset)
+            # TODO- insert curriculum learning here
             batch_queue = slim.prefetch_queue.prefetch_queue(
                 [images, labels], capacity=2 * deploy_config.num_clones)
 
