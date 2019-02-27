@@ -8,10 +8,7 @@ class Curriculum(object):
     def Propose(self, batch):
         self.batch = batch
 
-
     def _Assess(self):
-
-
-    pass
+        pass
 class Syllabus(object):
     pass
