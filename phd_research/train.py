@@ -229,7 +229,7 @@ tf.app.flags.DEFINE_boolean(
 
 
 #####################
-# Controlling Convolution CC V2 #
+# Controlling Convolution CC V2 FLAGS #
 #####################
 
 tf.app.flags.DEFINE_string(
@@ -243,6 +243,13 @@ tf.app.flags.DEFINE_string(
 tf.app.flags.DEFINE_integer(
     'patch_size', 56, 'Train image size')
 tf.app.flags.DEFINE_integer('ordering', 0, 'Patch ordering, 0=asc, 1=dec')
+
+##################################
+# Curriculum Learning FLAGS
+#################################
+
+tf.app.flags.DEFINE_boolean('curriculum', False,'Train using curriculum')
+tf.app.flags.DEFINE_string('ordering', 'asc','Train using curriculum')
 
 
 FLAGS = tf.app.flags.FLAGS
@@ -499,7 +506,7 @@ def main(_):
             labels = slim.one_hot_encoding(
                 labels, dataset.num_classes - FLAGS.labels_offset)
             
-            curriculum = curriculum_learning.Curriculum(images)
+            curriculum = curriculum_learning.Curriculum(images,)
             images = curriculum.Propose()
             print(type(images))
             print(images)
