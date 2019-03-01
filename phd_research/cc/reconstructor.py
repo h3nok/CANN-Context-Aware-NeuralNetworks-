@@ -122,11 +122,10 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, label
                     _swap_labels(i+1,j)
 
     sorted_patches = tf.convert_to_tensor(patches_data, dtype=tf.float32)
+    sorted_labels = tf.convert_to_tensor(labels_data,tf.int32)
     assert sorted_patches.shape[0] == total_patches, _logger.error("Sorted patches list contains more or less \
         number of patches comparted to original")
-
-    assert labels_data[0] = total_patches 
-
+    assert sorted_labels.shape[0] == total_patches
     _logger.info(
         "Successfully sorted patches, closing session and exiting ...")
 
