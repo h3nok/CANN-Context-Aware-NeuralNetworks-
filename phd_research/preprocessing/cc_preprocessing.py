@@ -20,7 +20,9 @@ MEASURE_MAP = {
 
 ORDERING_MAP = {
     1: Ordering.Ascending,
-    0: Ordering.Descending
+    0: Ordering.Descending,
+    'asc': Ordering.Ascending,
+    'des': Ordering.Descending
 }
 
 
