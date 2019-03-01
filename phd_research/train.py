@@ -24,12 +24,12 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image
 
-from cc import *
 from datasets import dataset_factory
 from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
 from cc.map_measure import Measure
+import curriculum_learning
 slim = tf.contrib.slim
 
 HERACLES_DATA_DIR = '/home/deeplearning/data'
@@ -196,7 +196,7 @@ tf.app.flags.DEFINE_string(
     'model_name', 'inception_v2', 'The name of the architecture to train.')
 
 tf.app.flags.DEFINE_integer(
-    'batch_size', 1, 'The number of samples in each batch.')
+    'batch_size', 8, 'The number of samples in each batch.')
 tf.app.flags.DEFINE_integer(
     'train_image_size', None, 'Train image size')
 
@@ -497,7 +497,7 @@ def main(_):
             labels = slim.one_hot_encoding(
                 labels, dataset.num_classes - FLAGS.labels_offset)
             
-            curriculum = curriculum_learning.Curriculum(images)
+            curriculum = curriculum_learning.Curriculum(images,FLAGS.batch_size)
             images = curriculum.Propose()
             print(type(images))
             print(images)

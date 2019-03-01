@@ -1,7 +1,6 @@
-from map_measure import Measure, MeasureType, Ordering
-from reconstructor import sort_patches_or_images
+from cc.map_measure import Measure, MeasureType, Ordering
+from cc.reconstructor import sort_patches_or_images
 import tensorflow as tf
-import logger
 
 class Curriculum(object):
     def __init__(self, training_batch, batch_size):
