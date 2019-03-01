@@ -436,7 +436,7 @@ def main(_):
             'You must supply the dataset directory with --dataset_dir')
 
     tf.logging.set_verbosity(tf.logging.INFO)
-    if FLAGS.measure == None or FLAGS.preprocessing_name is None:
+    if FLAGS.measure == None or FLAGS.preprocessing_name is None and FLAGS.curriculum is None:
         FLAGS.measure = 'baseline'
     FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name, FLAGS.dataset_name,
                                    FLAGS.measure,
