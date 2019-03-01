@@ -508,8 +508,6 @@ def main(_):
                 curriculum = curriculum_learning.Curriculum(
                     images, labels, FLAGS.batch_size)
                 images = curriculum.Propose(FLAGS.measure, FLAGS.ordering)
-            print(type(images))
-            print(images)
             labels = slim.one_hot_encoding(
                 labels, dataset.num_classes - FLAGS.labels_offset)
 
