@@ -37,7 +37,7 @@ def _print(patches):
               (key, value))
 
 
-def sort_patches_or_images(patches_data, total_patches, measure, ordering):
+def sort_patches_or_images(patches_data, total_patches, measure, ordering, labels=None):
     """[summary]
 
     Arguments:
@@ -61,6 +61,7 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering):
     sess = tf.Session()
     tf.train.start_queue_runners(sess=sess, coord=coord)
     patches_data = sess.run(patches_data)
+    labels_data = sess.run(labels)
     sess.close()
 
     if measure_type == MeasureType.STA:
@@ -83,6 +84,9 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering):
     def _swap(i, j):
         # print("Swapping %d with %d" % (i, j))
         patches_data[[i, j]] = patches_data[[j, i]]
+
+    def _swap_labels(i, j):
+        labels_data[[i, j]] = labels_data[[j, i]]
 
     sorted_patches = []
     # debug_sorted_patches = dict()
@@ -107,10 +111,12 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering):
             if ordering == Ordering.Ascending and distance < closest_distance_thus_far:
                 closest_distance_thus_far = distance
                 _swap(i+1, j)
+                _swap_labels(i+1,j)
                 # reference_patch_data = patches_data[i]
             elif ordering == Ordering.Descending and distance > closest_distance_thus_far:
                 closest_distance_thus_far = distance
                 _swap(i+1, j)
+                _swap_labels(i+1,j)
 
     sorted_patches = tf.convert_to_tensor(patches_data, dtype=tf.float32)
     assert sorted_patches.shape[0] == total_patches, _logger.error("Sorted patches list contains more or less \
