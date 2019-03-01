@@ -37,7 +37,7 @@ def _print(patches):
               (key, value))
 
 
-def _sort_patches(patches_data, total_patches, measure, ordering):
+def sort_patches_or_images(patches_data, total_patches, measure, ordering):
     """[summary]
 
     Arguments:
@@ -66,7 +66,7 @@ def _sort_patches(patches_data, total_patches, measure, ordering):
     if measure_type == MeasureType.STA:
         _logger.info(
             'Measure type is standalone, calling _sort_patches_by_content_measure ...')
-        return _sort_patches_by_content_measure(patches_data, measure_fn, ordering=ordering)
+        return sort_by_content_measure(patches_data, measure_fn, ordering=ordering)
 
     if measure_type != MeasureType.Dist:
         _logger.error(
@@ -122,7 +122,7 @@ def _sort_patches(patches_data, total_patches, measure, ordering):
     return sorted_patches
 
 
-def _sort_patches_by_content_measure(patches_data, measure_fn, ordering):
+def sort_by_content_measure(patches_data, measure_fn, ordering):
     """[summary]
 
     Arguments:
@@ -176,7 +176,7 @@ def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI, orde
     number_of_patches = patches.shape[0]
     _logger.info("Entering reconstruct_from_patches, number of patches: {}".format(
         number_of_patches))
-    patches = _sort_patches(
+    patches = sort_patches_or_images(
         patches, number_of_patches, measure, ordering)
 
     _logger.info("Reconstructing sample ...")
