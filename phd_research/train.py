@@ -498,7 +498,7 @@ def main(_):
                 labels, dataset.num_classes - FLAGS.labels_offset)
             
             curriculum = curriculum_learning.Curriculum(images)
-            curriculum.Propose()
+            images = curriculum.Propose()
             print(type(images))
             print(images)
             rewerw
