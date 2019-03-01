@@ -111,12 +111,14 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, label
             if ordering == Ordering.Ascending and distance < closest_distance_thus_far:
                 closest_distance_thus_far = distance
                 _swap(i+1, j)
-                _swap_labels(i+1,j)
+                if labels:
+                    _swap_labels(i+1,j)
                 # reference_patch_data = patches_data[i]
             elif ordering == Ordering.Descending and distance > closest_distance_thus_far:
                 closest_distance_thus_far = distance
                 _swap(i+1, j)
-                _swap_labels(i+1,j)
+                if labels:
+                    _swap_labels(i+1,j)
 
     sorted_patches = tf.convert_to_tensor(patches_data, dtype=tf.float32)
     assert sorted_patches.shape[0] == total_patches, _logger.error("Sorted patches list contains more or less \
