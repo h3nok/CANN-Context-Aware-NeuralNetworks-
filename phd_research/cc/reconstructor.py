@@ -58,11 +58,13 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, label
 
     # print("Number of patches: {}".format(total_patches))
 
+    print(type(labels))
+    print (labels)
     sess = tf.Session()
     tf.train.start_queue_runners(sess=sess, coord=coord)
     patches_data = sess.run(patches_data)
-    labels_data = sess.run(labels)
     sess.close()
+    labels_data = labels
 
     if measure_type == MeasureType.STA:
         _logger.info(
