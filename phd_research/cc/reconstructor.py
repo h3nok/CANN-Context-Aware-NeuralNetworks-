@@ -61,7 +61,7 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, label
     sess = tf.Session()
     tf.train.start_queue_runners(sess=sess, coord=coord)
     patches_data = sess.run(patches_data)
-    if labels:
+    if labels is not None:
         labels_data = sess.run(labels)
     sess.close()
 
