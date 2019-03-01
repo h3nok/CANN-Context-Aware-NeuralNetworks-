@@ -58,13 +58,12 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, label
 
     # print("Number of patches: {}".format(total_patches))
 
-    print(type(labels))
-    print (labels)
     sess = tf.Session()
     tf.train.start_queue_runners(sess=sess, coord=coord)
     patches_data = sess.run(patches_data)
+    if labels:
+        labels_data = sess.run(labels)
     sess.close()
-    labels_data = labels
 
     if measure_type == MeasureType.STA:
         _logger.info(
@@ -126,10 +125,12 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, label
     assert sorted_patches.shape[0] == total_patches, _logger.error("Sorted patches list contains more or less \
         number of patches comparted to original")
 
+    assert labels_data[0] = total_patches 
+
     _logger.info(
         "Successfully sorted patches, closing session and exiting ...")
 
-    return sorted_patches
+    return sorted_patches, labels_data
 
 
 def sort_by_content_measure(patches_data, measure_fn, ordering):

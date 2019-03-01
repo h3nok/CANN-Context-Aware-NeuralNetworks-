@@ -22,7 +22,7 @@ class Curriculum(object):
         assert isinstance(measure, Measure)
         assert isinstance(ordering, Ordering)
         syllabus = sort_patches_or_images(
-            self.batch, self.batch_size, measure, ordering)
+            self.batch, self.batch_size, measure, ordering,self.labels)
 
         return syllabus
 
