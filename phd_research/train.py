@@ -501,18 +501,20 @@ def main(_):
                 batch_size=FLAGS.batch_size,
                 num_threads=FLAGS.num_preprocessing_threads,
                 capacity=5 * FLAGS.batch_size)
-            labels = slim.one_hot_encoding(
-                labels, dataset.num_classes - FLAGS.labels_offset)
 
+            #curriculum learning based on image content 
             curriculum = None
-
             if FLAGS.curriculum:
                 curriculum = curriculum_learning.Curriculum(
                     images, labels, FLAGS.batch_size)
                 images = curriculum.Propose(FLAGS.measure, FLAGS.ordering)
             print(type(images))
             print(images)
+            labels = slim.one_hot_encoding(
+                labels, dataset.num_classes - FLAGS.labels_offset)
+
             rewerw
+
             # TODO- insert curriculum learning here
             batch_queue = slim.prefetch_queue.prefetch_queue(
                 [images, labels], capacity=2 * deploy_config.num_clones)
