@@ -4,7 +4,7 @@ from preprocessing.cc_preprocessing import decode_measure
 import tensorflow as tf
 import logger
 
-_logger = logger.Configure(__file__, '.')
+_logger = logger.Configure(__file__, 'cc.log')
 
 class Curriculum(object):
     def __init__(self, training_batch, labels, batch_size):

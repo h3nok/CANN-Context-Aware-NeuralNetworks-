@@ -507,7 +507,7 @@ def main(_):
             if FLAGS.curriculum:
                 curriculum = curriculum_learning.Curriculum(
                     images, labels, FLAGS.batch_size)
-                images = curriculum.Propose(FLAGS.measure, FLAGS.ordering)
+                images = curriculum.ProposeSyllabus(FLAGS.measure, FLAGS.ordering)
             labels = slim.one_hot_encoding(
                 labels, dataset.num_classes - FLAGS.labels_offset)
 
