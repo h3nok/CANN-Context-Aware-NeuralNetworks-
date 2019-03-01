@@ -24,7 +24,7 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image
 
-from cc import curriculum_learning
+import curriculum_learning
 from cc import *
 from datasets import dataset_factory
 from deployment import model_deploy
@@ -249,7 +249,6 @@ tf.app.flags.DEFINE_integer('ordering', 0, 'Patch ordering, 0=asc, 1=dec')
 #################################
 
 tf.app.flags.DEFINE_boolean('curriculum', False,'Train using curriculum')
-tf.app.flags.DEFINE_string('ordering', 'asc','Train using curriculum')
 
 
 FLAGS = tf.app.flags.FLAGS
