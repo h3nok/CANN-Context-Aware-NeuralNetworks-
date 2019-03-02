@@ -439,7 +439,7 @@ def main(_):
     if FLAGS.measure == None or FLAGS.preprocessing_name is None and FLAGS.curriculum is None:
         FLAGS.measure = 'baseline'
 
-	if FLAGS.curriculum:
+    if FLAGS.curriculum:
         FLAGS.train_dir = os.path.join(FLAGS.train_dir, 'curriculum', FLAGS.model_name, FLAGS.dataset_name,
                                    FLAGS.measure,
                                    str(FLAGS.max_number_of_steps))
