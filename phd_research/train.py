@@ -513,7 +513,7 @@ def main(_):
             #curriculum learning based on image content 
             curriculum = None
             if FLAGS.curriculum:
-	            if FLAGS.measure is None:
+                if FLAGS.measure is None:
                     raise RuntimeError("Must supply measure for curriculum learning")
                 curriculum = curriculum_learning.Curriculum(images, labels, FLAGS.batch_size)
                 images, labels = curriculum.ProposeSyllabus(FLAGS.measure, FLAGS.ordering)
