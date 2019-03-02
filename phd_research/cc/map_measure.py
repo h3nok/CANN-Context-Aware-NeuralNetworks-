@@ -4,11 +4,14 @@ from enum import Enum
 import tensorflow as tf
 
 try:
-	from cc.measures import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
+	from cc.measures import (ce, je, kl, l1_norm, l2_norm,
+                             max_norm, mi, ssim, psnr, entropy)
 	from cc.cc_utils import ConfigureLogger
 except (Exception, ImportError) as error:
     print(error)
-    from measures import ce, je, kl, l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
+    from measures import (ce, je, kl, l1_norm,
+                          l2_norm,max_norm, mi,
+                          ssim, psnr, entropy)
     from cc_utils import ConfigureLogger
 
 _logger = ConfigureLogger(__file__, '.')
@@ -25,6 +28,7 @@ class Measure(Enum):
     SSIM = ('ssim',"Structural Similarity Index")
     PSNR = ('psnr',"Peak-Signal-to-Noise ratio")
     MAX_NORM = ('mn',"Max norm")
+    MI_NORMALIZED = ('min',"Normalized mutual information ")
 
 
 class Ordering(Enum):
@@ -47,7 +51,8 @@ MEASURE_MAP = {
     Measure.L2: l2_norm.L2Norm,
     Measure.MAX_NORM: max_norm.MaxNorm,
     Measure.PSNR: psnr.PSNR,
-    Measure.SSIM: ssim.SSIM
+    Measure.SSIM: ssim.SSIM,
+    Measure.MI_NORMALIZED:mi.MutualInformationNormalized
 }
 
 

@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/phd_research/cc/patch_proposals.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/cc/patch_proposals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phd_research/curriculum_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/curriculum_learning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phd_research/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/train.py" afterDir="false" />
+    <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="Curriculum learning">
+      <change afterPath="$PROJECT_DIR$/phd_research/cc/measures/binding_information.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phd_research/cc/measures/co_information.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phd_research/cc/measures/conditional_mutual_information.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phd_research/cc/measures/enigmatic_information.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phd_research/cc/measures/exogenous_local_information.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phd_research/cc/measures/information_interaction.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phd_research/cc/measures/lautum_information.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phd_research/cc/measures/multi_information.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phd_research/cc/measures/residual_entropy.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phd_research/datasets/prepare_cifar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Trainer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Trainer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phd_research/cc/map_measure.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/cc/map_measure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phd_research/cc/measures/mi.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/cc/measures/mi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phd_research/datasets/convert_data_2_tfrecord.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/datasets/convert_data_2_tfrecord.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phd_research/datasets/dataset_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/datasets/dataset_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phd_research/eval_image_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/eval_image_classifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phd_research/evaluate.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,43 +31,34 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phd_research/cc/patch_proposals.py">
+        <entry file="file://$PROJECT_DIR$/phd_research/cc/ITT/itt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" column="53" selection-start-line="34" selection-start-column="53" selection-end-line="34" selection-end-column="53" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="941">
+              <caret line="1782" column="41" lean-forward="true" selection-start-line="1782" selection-start-column="41" selection-end-line="1782" selection-end-column="41" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phd_research/cc/reconstructor.py">
+        <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/mi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1720">
-              <caret line="131" column="37" selection-start-line="131" selection-start-column="37" selection-end-line="131" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phd_research/train.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="520" column="32" lean-forward="true" selection-start-line="520" selection-start-column="32" selection-end-line="520" selection-end-column="32" />
+            <state relative-caret-position="873">
+              <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
               <folding>
-                <element signature="e#759#823#0" expanded="true" />
+                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/phd_research/curriculum_learning.py">
+        <entry file="file://$PROJECT_DIR$/phd_research/cc/map_measure.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="29" column="31" lean-forward="true" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+            <state relative-caret-position="-623">
+              <caret line="16" column="40" lean-forward="true" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,8 +78,14 @@
       <list>
         <option value="$PROJECT_DIR$/phd_research/cc/curriculum_learning.py" />
         <option value="$PROJECT_DIR$/phd_research/cc/patch_proposals.py" />
-        <option value="$PROJECT_DIR$/phd_research/curriculum_learning.py" />
         <option value="$PROJECT_DIR$/phd_research/train.py" />
+        <option value="$PROJECT_DIR$/phd_research/curriculum_learning.py" />
+        <option value="$PROJECT_DIR$/phd_research/eval_image_classifier.py" />
+        <option value="$PROJECT_DIR$/phd_research/datasets/dataset_utils.py" />
+        <option value="$PROJECT_DIR$/phd_research/datasets/prepare_cifar.py" />
+        <option value="$PROJECT_DIR$/phd_research/datasets/convert_data_2_tfrecord.py" />
+        <option value="$PROJECT_DIR$/phd_research/cc/measures/mi.py" />
+        <option value="$PROJECT_DIR$/phd_research/cc/map_measure.py" />
       </list>
     </option>
   </component>
@@ -81,6 +94,9 @@
     <option name="y" value="-20" />
     <option name="width" value="1918" />
     <option name="height" value="1078" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -106,6 +122,26 @@
               <item name="phd_research" type="462c0819:PsiDirectoryNode" />
               <item name="cc" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Trainer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Trainer" type="462c0819:PsiDirectoryNode" />
+              <item name="phd_research" type="462c0819:PsiDirectoryNode" />
+              <item name="cc" type="462c0819:PsiDirectoryNode" />
+              <item name="ITT" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Trainer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Trainer" type="462c0819:PsiDirectoryNode" />
+              <item name="phd_research" type="462c0819:PsiDirectoryNode" />
+              <item name="cc" type="462c0819:PsiDirectoryNode" />
+              <item name="measures" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Trainer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Trainer" type="462c0819:PsiDirectoryNode" />
+              <item name="phd_research" type="462c0819:PsiDirectoryNode" />
+              <item name="datasets" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -114,7 +150,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -127,6 +163,78 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager" selected="Python.convert_data_2_tfrecord">
+    <configuration name="convert_data_2_tfrecord" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Trainer" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/phd_research/datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/phd_research/datasets/convert_data_2_tfrecord.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="dataset_utils" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Trainer" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/phd_research/datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/phd_research/datasets/dataset_utils.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="prepare_cifar" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Trainer" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/phd_research/datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/phd_research/datasets/prepare_cifar.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.convert_data_2_tfrecord" />
+        <item itemvalue="Python.prepare_cifar" />
+        <item itemvalue="Python.dataset_utils" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -151,8 +259,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1155914" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16897655" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" weight="0.32995737" />
@@ -161,16 +270,16 @@
       <window_info anchor="bottom" id="Python Console" order="2" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.32986766" />
-      <window_info anchor="bottom" id="Run" order="6" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="10" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.22704837" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="9" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" id="Terminal" order="3" visible="true" weight="0.52311826" />
+      <window_info anchor="right" id="Terminal" order="3" visible="true" weight="0.32675907" />
+      <window_info anchor="right" id="Run" order="4" weight="0.45469084" />
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
@@ -193,6 +302,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://C:/Anaconda3/envs/tensorflow/Lib/site-packages/tflearn/helpers/trainer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="137" column="69" selection-start-line="137" selection-start-column="69" selection-end-line="137" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/phd_research/cc/patch_proposals.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
@@ -205,25 +321,131 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/phd_research/cc/reconstructor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1720">
+        <state relative-caret-position="360">
           <caret line="131" column="37" selection-start-line="131" selection-start-column="37" selection-end-line="131" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phd_research/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="520" column="32" lean-forward="true" selection-start-line="520" selection-start-column="32" selection-end-line="520" selection-end-column="32" />
+        <state relative-caret-position="243">
+          <caret line="515" column="16" selection-start-line="515" selection-start-column="16" selection-end-line="515" selection-end-column="16" />
           <folding>
             <element signature="e#759#823#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/datasets/dataset_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="131" column="61" selection-start-line="131" selection-start-column="61" selection-end-line="131" selection-end-column="61" />
+          <folding>
+            <element signature="e#755#793#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/datasets/prepare_cifar.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="39" lean-forward="true" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/cc.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/datasets/convert_data_2_tfrecord.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="706">
+          <caret line="243" lean-forward="true" selection-start-line="243" selection-end-line="243" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3925">
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/eval_image_classifier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-619">
+          <caret line="34" column="60" lean-forward="true" selection-start-line="34" selection-start-column="60" selection-end-line="34" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/residual_entropy.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/exogenous_local_information.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/phd_research/curriculum_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="29" column="31" lean-forward="true" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+        <state relative-caret-position="476">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="e#0#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/enigmatic_information.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/information_interaction.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/co_information.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/binding_information.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/multi_information.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/conditional_mutual_information.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/lautum_information.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/ITT/itt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="941">
+          <caret line="1782" column="41" lean-forward="true" selection-start-line="1782" selection-start-column="41" selection-end-line="1782" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/mi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="873">
+          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/map_measure.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-623">
+          <caret line="16" column="40" lean-forward="true" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -50,7 +50,7 @@ tf.app.flags.DEFINE_integer(
     'The number of threads used to create the batches.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_name', 'vinet', 'The name of the dataset to load.')
+    'dataset_name', 'cifar10', 'The name of the dataset to load.')
 
 tf.app.flags.DEFINE_string(
     'dataset_split_name', 'validation', 'The name of the train/test split.')

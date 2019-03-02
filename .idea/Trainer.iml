@@ -5,8 +5,9 @@
       <sourceFolder url="file://$MODULE_DIR$/phd_research/cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/phd_research" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/phd_research/datasets" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.6 (venv)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestRunnerService">

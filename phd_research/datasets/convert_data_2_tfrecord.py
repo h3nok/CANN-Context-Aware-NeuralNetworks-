@@ -191,7 +191,7 @@ def _dataset_exists(dataset_dir, prefix):
     return True
 
 
-def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, subsample=False, normalize=False, prefix=None, ppor='mi'):
+def run(dataset_dir, output_dir, dataset_name, set_type='validation', tracks=False, subsample=False, normalize=False, prefix=None, ppor='mi'):
     """Runs the download and conversion operation.
 
     Args:
@@ -211,19 +211,28 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
     # Divide into train and test:
     random.seed(_RANDOM_SEED)
     random.shuffle(training_filenames)
-    _NUM_VALIDATION = 0
-    if tracks:
-        _NUM_VALIDATION = 0
+    _NUM_VALIDATION = 6121
+
     training_filenames = training_filenames[_NUM_VALIDATION:]
     validation_filenames = training_filenames[:_NUM_VALIDATION]
-    output_dir = os.path.join(output_dir, 'tfrecord', dataset_name, set_type)
+
+    output_dir = os.path.join(output_dir, dataset_name, set_type)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
+
     # First, convert the training and validation sets.
     _convert_dataset('train', training_filenames,
-                     class_names_to_ids, output_dir, tracks, normalize, prefix)
-    # _convert_dataset('validation', validation_filenames,
-    # class_names_to_ids, output_dir, False, normalize,prefix)
+                     class_names_to_ids,
+                     output_dir,
+                     tracks,
+                     normalize,
+                     prefix)
+    _convert_dataset('validation', validation_filenames,
+                     class_names_to_ids,
+                     output_dir,
+                     False,
+                     normalize,
+                     prefix)
 
     # Finally, write the labels file:
     labels_to_class_names = dict(zip(range(len(class_names)), class_names))
@@ -234,10 +243,10 @@ def run(dataset_dir, output_dir, dataset_name, set_type='train', tracks=False, s
 
 
 if __name__ == '__main__':
-    DATASET_DIR = "/home/deeplearning/data/cifar/train"
-    OUTPUT_DIR = '/home/deeplearning/data/cifar10'
-    NAME = "cifar10"
-    TYPE = ''
-    PREFIX = "train"
+    DATASET_DIR = "E:\\Datasets\\caltech\\caltech256\\original"
+    OUTPUT_DIR = 'E:\\Datasets\\caltech\\caltech256'
+    NAME = "caltech256"
+    TYPE = 'validation'
+    PREFIX = "caltech101"
     run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE, False,
         subsample=False, normalize=False, prefix=PREFIX, ppor='')

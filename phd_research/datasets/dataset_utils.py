@@ -22,6 +22,7 @@ import sys
 import tarfile
 
 from six.moves import urllib
+from glob import glob
 import tensorflow as tf
 
 LABELS_FILENAME = 'labels.txt'
@@ -148,3 +149,14 @@ def read_label_file(dataset_dir, filename=LABELS_FILENAME):
         index = line.index(':')
         labels_to_class_names[int(line[:index])] = line[index + 1:]
     return labels_to_class_names
+
+
+def count_files(path):
+    content = []
+    folders = ([name for name in os.listdir(path)
+                if os.path.isdir(os.path.join(path, name))])
+    print (folders)
+    for folder in folders:
+        content.extend(glob(os.path.join(path,folder,"*.jpg")))
+
+    return len(content)
