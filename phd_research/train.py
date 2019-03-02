@@ -438,10 +438,18 @@ def main(_):
     tf.logging.set_verbosity(tf.logging.INFO)
     if FLAGS.measure == None or FLAGS.preprocessing_name is None and FLAGS.curriculum is None:
         FLAGS.measure = 'baseline'
-    FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name, FLAGS.dataset_name,
+
+	if FLAGS.curriculum:
+        FLAGS.train_dir = os.path.join(FLAGS.train_dir, 'curriculum', FLAGS.model_name, FLAGS.dataset_name,
                                    FLAGS.measure,
                                    str(FLAGS.max_number_of_steps))
+    else:
+        FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name, FLAGS.dataset_name,
+                                   FLAGS.measure,
+                                   str(FLAGS.max_number_of_steps))
+
     _write_config()
+
     with tf.Graph().as_default():
         #######################
         # Config model_deploy #
@@ -505,13 +513,13 @@ def main(_):
             #curriculum learning based on image content 
             curriculum = None
             if FLAGS.curriculum:
+	            if FLAGS.measure is None:
+                    raise RuntimeError("Must supply measure for curriculum learning")
                 curriculum = curriculum_learning.Curriculum(
                     images, labels, FLAGS.batch_size)
                 images = curriculum.ProposeSyllabus(FLAGS.measure, FLAGS.ordering)
             labels = slim.one_hot_encoding(
                 labels, dataset.num_classes - FLAGS.labels_offset)
-
-            rewerw
 
             # TODO- insert curriculum learning here
             batch_queue = slim.prefetch_queue.prefetch_queue(

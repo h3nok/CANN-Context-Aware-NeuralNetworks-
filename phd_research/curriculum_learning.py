@@ -7,6 +7,9 @@ import logger
 _logger = logger.Configure(__file__, 'cc.log')
 
 class Curriculum(object):
+	"""
+        Curriculum builder
+	"""
     def __init__(self, training_batch, labels, batch_size):
         assert labels is not None, "Must supply labels tensor with matching dimensions"
         _logger.debug("Constructing training curriculum")
@@ -26,5 +29,3 @@ class Curriculum(object):
 
         return syllabus
 
-    def _Assess(self):
-        pass
