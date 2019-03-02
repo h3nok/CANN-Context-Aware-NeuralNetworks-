@@ -24,8 +24,8 @@ class Curriculum(object):
         measure, ordering = decode_measure(measure, ordering)
         assert isinstance(measure, Measure)
         assert isinstance(ordering, Ordering)
-        syllabus = sort_patches_or_images(
+        syllabus, labels = sort_patches_or_images(
             self.batch, self.batch_size, measure, ordering,self.labels)
 
-        return syllabus
+        return syllabus, labels
 

@@ -515,13 +515,13 @@ def main(_):
             if FLAGS.curriculum:
 	            if FLAGS.measure is None:
                     raise RuntimeError("Must supply measure for curriculum learning")
-                curriculum = curriculum_learning.Curriculum(
-                    images, labels, FLAGS.batch_size)
-                images = curriculum.ProposeSyllabus(FLAGS.measure, FLAGS.ordering)
+                curriculum = curriculum_learning.Curriculum(images, labels, FLAGS.batch_size)
+                images, labels = curriculum.ProposeSyllabus(FLAGS.measure, FLAGS.ordering)
+            #curriculum learning
+
             labels = slim.one_hot_encoding(
                 labels, dataset.num_classes - FLAGS.labels_offset)
 
-            # TODO- insert curriculum learning here
             batch_queue = slim.prefetch_queue.prefetch_queue(
                 [images, labels], capacity=2 * deploy_config.num_clones)
 

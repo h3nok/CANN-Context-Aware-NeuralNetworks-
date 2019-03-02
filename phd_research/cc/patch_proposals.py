@@ -1,18 +1,10 @@
 import atexit
-import math
-import os
-import time
 from time import clock
 
-import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-from keras.backend import tensorflow_backend as KTF
-from PIL import Image
-from sklearn.feature_extraction import image
-from sklearn.feature_extraction.image import extract_patches
-import sys
+
 try:
     from cc.cc_utils import ImageHelper as IMPLOT, ConfigureLogger
     from cc.map_measure import Measure
