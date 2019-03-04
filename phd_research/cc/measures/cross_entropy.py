@@ -27,7 +27,7 @@ def cross_entropy_pmf(patch_1, patch_2):
     assert not np.array_equal(
         patch_1, patch_2), "Patches are binary equivalent, Distance = 0"
 
-    # flatten the tensor into a sigle dimensinoal array
+    # flatten the tensor into a single dimensional array
     patch_1 = patch_1.flatten()
     patch_2 = patch_2.flatten()
     ce = itt.entropy_cross_pmf(patch_1, patch_2)
