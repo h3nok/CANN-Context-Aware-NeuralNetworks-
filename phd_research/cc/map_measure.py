@@ -1,17 +1,19 @@
 import functools
 from enum import Enum
 
-import tensorflow as tf
-
 try:
 	from cc.measures import (ce, je, kl, l1_norm, l2_norm,
-                             max_norm, mi, ssim, psnr, entropy)
+                             max_norm, mi, ssim, psnr, entropy,
+                             exogenous_local_information,
+                             binding_information)
 	from cc.cc_utils import ConfigureLogger
 except (Exception, ImportError) as error:
     print(error)
     from measures import (ce, je, kl, l1_norm,
-                          l2_norm,max_norm, mi,
-                          ssim, psnr, entropy)
+                          l2_norm, max_norm, mi,
+                          ssim, psnr, entropy,
+                          exogenous_local_information,
+                          binding_information)
     from cc_utils import ConfigureLogger
 
 _logger = ConfigureLogger(__file__, '.')

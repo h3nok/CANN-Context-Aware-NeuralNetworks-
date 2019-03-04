@@ -191,7 +191,8 @@ def test():
                                  entropy.eval(), ssim.eval(), psnr.eval()]
 
         titles = ["KL", "MI", "CE", "L1",
-                  "L2", "MAX", "JE", "Entropy", "SSIM", "PSNR"]
+                  "L2", "MAX", "JE", "Entropy",
+                  "SSIM", "PSNR"]
         plotter = IMPLOT()
         fig = plotter.show_images(reconstructed_samples, 2, titles=titles)
         plt.show()
