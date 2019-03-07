@@ -1,9 +1,6 @@
 
 import tensorflow as tf
-from pprint import pprint
-import itertools
 import numpy as np
-from tqdm import tqdm
 
 try:
     from cc.map_measure import (Measure, MeasureType, Ordering, map_measure_fn,
@@ -21,7 +18,9 @@ _logger = ConfigureLogger(__file__, '.')
 def _determine_measure_type(measure):
     assert isinstance(measure, Measure)
     if measure in [Measure.JE, Measure.MI, Measure.CE, Measure.L1, Measure.L2,
-                   Measure.MAX_NORM, Measure.KL, Measure.SSIM, Measure.PSNR]:
+                   Measure.MAX_NORM, Measure.KL, Measure.SSIM, Measure.PSNR,
+                   Measure.MI_NORMALIZED, Measure.LI, Measure.IV]:
+
         return MeasureType.Dist
     else:
         return MeasureType.STA
