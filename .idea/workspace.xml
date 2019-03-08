@@ -4,10 +4,10 @@
     <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="Curriculum learning">
       <change beforePath="$PROJECT_DIR$/.idea/Trainer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Trainer.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phd_research/cc/cc.log" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/cc/cc.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phd_research/cc/fm_por.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/cc/fmpor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phd_research/cc/measures/mi.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/cc/measures/mi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phd_research/cc/reconstructor.py" beforeDir="false" afterPath="$PROJECT_DIR$/phd_research/cc/reconstructor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/Deepdream/deepdream.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/Deepdream/deepdream_hires.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/curriculum_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/curriculum_learning.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,62 +17,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/mi.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1092">
-              <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phd_research/cc/fmpor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="40" column="47" lean-forward="true" selection-start-line="40" selection-start-column="47" selection-end-line="40" selection-end-column="47" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/entropy.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="924">
-              <caret line="121" selection-start-line="121" selection-end-line="121" />
-              <folding>
-                <element signature="e#128#146#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phd_research/cc/map_measure.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="496">
-              <caret line="31" column="53" selection-start-line="31" selection-start-column="53" selection-end-line="31" selection-end-column="53" />
-              <folding>
-                <element signature="e#0#16#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/phd_research/cc/reconstructor.py">
+        <entry file="file://$PROJECT_DIR$/research/curriculum_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+            <state relative-caret-position="493">
+              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
               <folding>
-                <element signature="e#1#24#0" expanded="true" />
+                <element signature="e#0#70#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/research/cc/reconstructor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="148">
+              <caret line="39" column="22" lean-forward="true" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -112,6 +73,7 @@
         <option value="$PROJECT_DIR$/phd_research/cc/fm_por.py" />
         <option value="$PROJECT_DIR$/phd_research/cc/fmpor.py" />
         <option value="$PROJECT_DIR$/phd_research/cc/reconstructor.py" />
+        <option value="$PROJECT_DIR$/research/curriculum_learning.py" />
       </list>
     </option>
   </component>
@@ -139,27 +101,7 @@
             <path>
               <item name="Trainer" type="b2602c69:ProjectViewProjectNode" />
               <item name="Trainer" type="462c0819:PsiDirectoryNode" />
-              <item name="phd_research" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Trainer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Trainer" type="462c0819:PsiDirectoryNode" />
-              <item name="phd_research" type="462c0819:PsiDirectoryNode" />
-              <item name="cc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Trainer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Trainer" type="462c0819:PsiDirectoryNode" />
-              <item name="phd_research" type="462c0819:PsiDirectoryNode" />
-              <item name="cc" type="462c0819:PsiDirectoryNode" />
-              <item name="ITT" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Trainer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Trainer" type="462c0819:PsiDirectoryNode" />
-              <item name="phd_research" type="462c0819:PsiDirectoryNode" />
-              <item name="cc" type="462c0819:PsiDirectoryNode" />
-              <item name="measures" type="462c0819:PsiDirectoryNode" />
+              <item name="research" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -269,7 +211,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest in fmpor.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest in C:/phd/Trainer/phd_research/cc/fmpor.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="Trainer" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -289,7 +231,7 @@
         <item itemvalue="Python.fmpor" />
         <item itemvalue="Python.reconstructor" />
         <item itemvalue="Python.fm_por" />
-        <item itemvalue="Python tests.pytest in fmpor.py" />
+        <item itemvalue="Python tests.pytest in C:/phd/Trainer/phd_research/cc/fmpor.py" />
         <item itemvalue="Python.convert_data_2_tfrecord" />
       </list>
     </recent_temporary>
@@ -333,7 +275,7 @@
     <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1433902" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14498934" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" weight="0.32995737" />
@@ -342,7 +284,7 @@
       <window_info anchor="bottom" id="Python Console" order="2" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.2268431" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.22606121" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
@@ -453,9 +395,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/conditional_mutual_information.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/conditional_mutual_information.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/ITT/itt.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
@@ -463,83 +403,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/lautum_information.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/residual_entropy.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/multi_information.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/enigmatic_information.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/exogenous_local_information.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/information_interaction.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/information_variation.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/binding_information.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/co_information.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/cross_entropy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/ce.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/je.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/kl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/entropy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="924">
-          <caret line="121" selection-start-line="121" selection-end-line="121" />
-          <folding>
-            <element signature="e#128#146#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/lautum_information.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/residual_entropy.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/multi_information.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/enigmatic_information.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/exogenous_local_information.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/information_interaction.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/information_variation.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/binding_information.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/co_information.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/cross_entropy.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/ce.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/je.py" />
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/kl.py" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
@@ -550,9 +426,19 @@
     <entry file="file://$PROJECT_DIR$/phd_research/cc/cc.log">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pycharm/_jb_pytest_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+          <folding>
+            <element signature="e#15#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/mi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1092">
+        <state relative-caret-position="357">
           <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -560,12 +446,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pycharm/_jb_pytest_runner.py">
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/fmpor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+        <state relative-caret-position="561">
+          <caret line="40" column="47" selection-start-line="40" selection-start-column="47" selection-end-line="40" selection-end-column="47" />
           <folding>
-            <element signature="e#15#24#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/entropy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2040">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
+          <folding>
+            <element signature="e#128#146#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -580,22 +476,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/fmpor.py">
+    <entry file="file://$PROJECT_DIR$/phd_research/cc/reconstructor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="40" column="47" lean-forward="true" selection-start-line="40" selection-start-column="47" selection-end-line="40" selection-end-column="47" />
+        <state relative-caret-position="442">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#1#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/reconstructor.py">
+    <entry file="file://$PROJECT_DIR$/research/cc/reconstructor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        <state relative-caret-position="148">
+          <caret line="39" column="22" lean-forward="true" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/curriculum_learning.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
           <folding>
-            <element signature="e#1#24#0" expanded="true" />
+            <element signature="e#0#70#0" expanded="true" />
           </folding>
         </state>
       </provider>

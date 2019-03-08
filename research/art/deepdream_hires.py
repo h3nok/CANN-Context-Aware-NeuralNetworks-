@@ -74,8 +74,8 @@ def calc_grad_tiled(img, t_grad, tile_size=512):
     sx, sy = np.random.randint(sz, size=2)
     img_shift = np.roll(np.roll(img, sx, 1), sy, 0)
     grad = np.zeros_like(img)
-    for y in xrange(0, max(h-sz//2, sz),sz):
-        for x in xrange(0, max(w-sz//2, sz),sz):
+    for y in range(0, max(h-sz//2, sz),sz):
+        for x in range(0, max(w-sz//2, sz),sz):
             sub = img_shift[y:y+sz,x:x+sz]
             g = sess.run(t_grad, {t_input:sub})
             grad[y:y+sz,x:x+sz] = g

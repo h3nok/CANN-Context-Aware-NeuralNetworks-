@@ -6,6 +6,7 @@ import logger
 
 _logger = logger.Configure(__file__, 'cc.log')
 
+
 class Curriculum(object):
     def __init__(self, training_batch, labels, batch_size):
         assert labels is not None, "Must supply labels tensor with matching dimensions"
@@ -15,14 +16,14 @@ class Curriculum(object):
         self.batch_size = batch_size
         self.labels = labels
 
-    def ProposeSyllabus(self, measure, ordering):
+    def propose_syllabus(self, measure, ordering):
         _logger.debug("Proposing syllabus using content measure: {} and ordering: {}".format(measure, ordering))
         assert tf.contrib.framework.is_tensor(self.batch)
         measure, ordering = decode_measure(measure, ordering)
         assert isinstance(measure, Measure)
         assert isinstance(ordering, Ordering)
         syllabus, labels = sort_patches_or_images(
-            self.batch, self.batch_size, measure, ordering,curriculum=True,self.labels)
+            self.batch, self.batch_size, measure, ordering, curriculum=True, labels=self.labels)
 
         return syllabus, labels
 
