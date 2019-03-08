@@ -166,7 +166,6 @@ def main(_):
             op = tf.Print(op, [value], summary_name)
             tf.add_to_collection(tf.GraphKeys.SUMMARIES, op)
 
-
         if FLAGS.max_num_batches:
             num_batches = FLAGS.max_num_batches
         else:
@@ -188,6 +187,7 @@ def main(_):
             num_evals=num_batches,
             eval_op=list(names_to_updates.values()),
             variables_to_restore=variables_to_restore)
+
 
 if __name__ == '__main__':
     tf.app.run()
