@@ -43,7 +43,8 @@ tf.app.flags.DEFINE_string(
     'checkpoint file.')
 
 tf.app.flags.DEFINE_string(
-    'eval_dir', 'D:\\viNet\RnD\\results\\eval_' + datetime.datetime.now().strftime("%Y_%m_%d_%H_%M%S"), 'Directory where the results are saved to.')
+    'eval_dir', 'D:\\viNet\RnD\\results\\eval_' + datetime.datetime.now().strftime("%Y_%m_%d_%H_%M%S"),
+    'Directory where the results are saved to.')
 
 tf.app.flags.DEFINE_integer(
     'num_preprocessing_threads', 4,
@@ -56,7 +57,8 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'validation', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', 'D:\\viNet\RnD\data\stage\\tfrecord\e3_augmented\\train', 'The directory where the dataset files are stored.')
+    'dataset_dir', 'D:\\viNet\RnD\data\stage\\tfrecord\e3_augmented\\train',
+    "The directory where the dataset files are stored.")
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,

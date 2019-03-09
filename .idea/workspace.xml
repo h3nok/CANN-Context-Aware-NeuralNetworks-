@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="Curriculum learning">
-      <change beforePath="$PROJECT_DIR$/research/cc/reconstructor.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/cc/reconstructor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/datasets/cifar10.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/datasets/cifar10.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/eval_image_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/eval_image_classifier.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +29,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/research/preprocessing/cc_preprocessing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="425">
               <caret line="30" selection-start-line="30" selection-end-line="30" />
               <folding>
                 <element signature="e#0#57#0" expanded="true" />
@@ -36,11 +38,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/research/cc/reconstructor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="155" column="125" lean-forward="true" selection-start-line="155" selection-start-column="125" selection-end-line="155" selection-end-column="125" />
+            <state relative-caret-position="3315">
+              <caret line="196" column="26" selection-start-line="196" selection-start-column="26" selection-end-line="196" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/research/export_inference_graph.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/research/eval_image_classifier.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="377">
+              <caret line="50" column="56" lean-forward="true" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -48,8 +64,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/research/cc/map_measure.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="95" column="25" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
+            <state relative-caret-position="1122">
+              <caret line="67" column="48" selection-start-line="67" selection-start-column="48" selection-end-line="67" selection-end-column="48" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -60,7 +76,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/research/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="2448">
               <caret line="160" column="31" selection-start-line="160" selection-start-column="31" selection-end-line="160" selection-end-column="31" />
             </state>
           </provider>
@@ -102,17 +118,18 @@
         <option value="$PROJECT_DIR$/phd_research/cc/fmpor.py" />
         <option value="$PROJECT_DIR$/phd_research/cc/reconstructor.py" />
         <option value="$PROJECT_DIR$/research/curriculum_learning.py" />
-        <option value="$PROJECT_DIR$/research/eval_image_classifier.py" />
         <option value="$PROJECT_DIR$/research/preprocessing/cc_preprocessing.py" />
         <option value="$PROJECT_DIR$/research/cc/map_measure.py" />
         <option value="$PROJECT_DIR$/research/train.py" />
         <option value="$PROJECT_DIR$/research/cc/reconstructor.py" />
+        <option value="$PROJECT_DIR$/research/eval_image_classifier.py" />
+        <option value="$PROJECT_DIR$/research/datasets/cifar10.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="86" />
-    <option name="y" value="-24" />
+    <option name="x" value="-1826" />
+    <option name="y" value="-15" />
     <option name="width" value="1920" />
     <option name="height" value="1080" />
   </component>
@@ -171,8 +188,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.fmpor">
-    <configuration name="convert_data_2_tfrecord" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.eval_image_classifier">
+    <configuration name="eval_image_classifier" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Trainer" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -180,11 +197,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/phd_research/datasets" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/research" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/phd_research/datasets/convert_data_2_tfrecord.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/research/eval_image_classifier.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -273,11 +290,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.eval_image_classifier" />
         <item itemvalue="Python.fmpor" />
         <item itemvalue="Python.reconstructor" />
         <item itemvalue="Python.fm_por" />
         <item itemvalue="Python tests.pytest in C:/phd/Trainer/phd_research/cc/fmpor.py" />
-        <item itemvalue="Python.convert_data_2_tfrecord" />
       </list>
     </recent_temporary>
   </component>
@@ -317,10 +334,9 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
+    <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12260128" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.123667374" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" weight="0.32995737" />
@@ -403,17 +419,20 @@
     <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/entropy.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/map_measure.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/reconstructor.py" />
-    <entry file="file://$PROJECT_DIR$/research/eval_image_classifier.py">
+    <entry file="file://$PROJECT_DIR$/research/preprocessing/cc_preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1045">
-          <caret line="81" column="25" selection-start-line="81" selection-start-column="25" selection-end-line="81" selection-end-column="25" />
+        <state relative-caret-position="425">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="e#0#57#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/research/cc/map_measure.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="95" column="25" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
+        <state relative-caret-position="1122">
+          <caret line="67" column="48" selection-start-line="67" selection-start-column="48" selection-end-line="67" selection-end-column="48" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
@@ -422,18 +441,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/research/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="2448">
           <caret line="160" column="31" selection-start-line="160" selection-start-column="31" selection-end-line="160" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/research/preprocessing/cc_preprocessing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-          <folding>
-            <element signature="e#0#57#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -449,8 +458,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/research/cc/reconstructor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="155" column="125" lean-forward="true" selection-start-line="155" selection-start-column="125" selection-end-line="155" selection-end-column="125" />
+        <state relative-caret-position="3315">
+          <caret line="196" column="26" selection-start-line="196" selection-start-column="26" selection-end-line="196" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/export_inference_graph.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/datasets/cifar10.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-113">
+          <caret line="39" column="1" lean-forward="true" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/eval_image_classifier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="50" column="56" lean-forward="true" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
         </state>
       </provider>
     </entry>
