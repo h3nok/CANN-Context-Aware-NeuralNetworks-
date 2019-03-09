@@ -15,7 +15,19 @@ MEASURE_MAP = {
     'l2': Measure.L2,
     'mn': Measure.MAX_NORM,
     'psnr': Measure.PSNR,
-    'ssim': Measure.SSIM
+    'ssim': Measure.SSIM,
+    'min':Measure.MI_NORMALIZED,
+    'ei':Measure.EI,
+    'li':Measure.LI,
+    're': Measure.RE,
+    'mui':Measure.MULTI_I,
+    'bi':Measure.BI,
+    'coi':Measure.COI,
+    'cross_entropy':Measure.CROSS_ENTROPY,
+    'cep': Measure.CROSS_ENTROPY_PMF,
+    'eli':Measure.ELI,
+    'ii':Measure.II,
+    'iv':Measure.IV
 }
 
 ORDERING_MAP = {
