@@ -165,8 +165,12 @@ def sort_by_content_measure(patches_data, measure_fn, labels, curriculum=False):
     _logger.info("Successfully sorted patches")
 
     sorted_labels = tf.convert_to_tensor(sorted_labels, dtype=tf.int8)
+    sorted_patches = tf.convert_to_tensor(sorted_patches, dtype=tf.float32)
 
-    return tf.convert_to_tensor(sorted_patches, dtype=tf.float32), sorted_labels
+    if curriculum:
+        return sorted_patches, sorted_labels
+    else:
+        return sorted_patches
 
 
 def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI, ordering=Ordering.Ascending):
@@ -209,4 +213,5 @@ def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI, orde
 
     _logger.info(
         "Successfully reconstructed image, measure: {}".format(measure.value))
+
     return image[0]
