@@ -436,7 +436,7 @@ def main(_):
             'You must supply the dataset directory with --dataset_dir')
 
     tf.logging.set_verbosity(tf.logging.INFO)
-    if FLAGS.measure == None or FLAGS.preprocessing_name is None and FLAGS.curriculum is None:
+    if FLAGS.measure is None or FLAGS.preprocessing_name is None and FLAGS.curriculum is None:
         FLAGS.measure = 'baseline'
 
     if FLAGS.curriculum:
@@ -510,15 +510,14 @@ def main(_):
                 num_threads=FLAGS.num_preprocessing_threads,
                 capacity=5 * FLAGS.batch_size)
 
-            #curriculum learning based on image content 
+            # curriculum learning based on image content
             curriculum = None
             if FLAGS.curriculum:
                 if FLAGS.measure is None:
                     raise RuntimeError("Must supply measure for curriculum learning")
                 curriculum = curriculum_learning.Curriculum(images, labels, FLAGS.batch_size)
                 images, labels = curriculum.propose_syllabus(FLAGS.measure, FLAGS.ordering)
-            #curriculum learning
-
+            # curriculum learning
             labels = slim.one_hot_encoding(
                 labels, dataset.num_classes - FLAGS.labels_offset)
 

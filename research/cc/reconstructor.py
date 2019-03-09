@@ -52,12 +52,9 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, curri
     coord = tf.train.Coordinator()
     # TODO - parallel implementation
     _logger.info("Entering _sort_patches ... ")
-    # tf.initialize_all_variables()
     measure_type = _determine_measure_type(measure)
 
     measure_fn = map_measure_fn(measure, measure_type)
-
-    # print("Number of patches: {}".format(total_patches))
 
     sess = tf.Session()
     tf.train.start_queue_runners(sess=sess, coord=coord)
@@ -71,7 +68,7 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, curri
     if measure_type == MeasureType.STA:
         _logger.info(
             'Measure type is standalone, calling _sort_patches_by_content_measure ...')
-        return sort_by_content_measure(patches_data, measure_fn, ordering=ordering)
+        return sort_by_content_measure(patches_data, measure_fn, labels)
 
     if measure_type != MeasureType.Dist:
         _logger.error(
@@ -92,15 +89,9 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, curri
     def _swap_labels(i, j):
         labels_data[[i, j]] = labels_data[[j, i]]
 
-    sorted_patches = []
-    # debug_sorted_patches = dict()
-    distance = -100
-    # reference_patch_data = patches_data[0]
-
     for i in range(0, total_patches):
             # TODO- make configurable
         closest_distance_thus_far = 100
-        # print("Closest patch index: %d" % i)
         reference_patch_data = patches_data[i]  # set reference patch
         # sorted_patches.append(reference_patch_data)
 
@@ -127,18 +118,18 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, curri
     sorted_patches = tf.convert_to_tensor(patches_data, dtype=tf.float32)
     sorted_labels = None
     if curriculum:
-        sorted_labels = tf.convert_to_tensor(labels_data,tf.int32)
+        sorted_labels = tf.convert_to_tensor(labels_data, tf.int8)
         assert sorted_labels.shape[0] == total_patches
 
     assert sorted_patches.shape[0] == total_patches, _logger.error("Sorted patches list contains more or less \
-        number of patches comparted to original")
+        number of patches compared to original")
     _logger.info(
         "Successfully sorted patches, closing session and exiting ...")
 
     return sorted_patches, labels_data
 
 
-def sort_by_content_measure(patches_data, measure_fn, ordering):
+def sort_by_content_measure(patches_data, measure_fn, labels, curriculum=False):
     """[summary]
 
     Arguments:
@@ -156,20 +147,26 @@ def sort_by_content_measure(patches_data, measure_fn, ordering):
 
     number_of_patches = patches_data.shape[0]
 
-    def _swap(i, j):
-        patches_data[[i, j]] = patches_data[[j, i]]
-
-    sorted_patches = np.array(
-        sorted(patches_data, key=lambda patch: measure_fn(patch)))
+    sorted_patches = None
+    sorted_labels = None
+    if not curriculum:
+        sorted_patches = np.array(
+            sorted(patches_data, key=lambda patch: measure_fn(patch)))
+    else:
+        sorted_patches, sorted_labels = np.array(zip(*sorted(zip(patches_data,
+                            labels), key=lambda patch: measure_fn(patch))))
 
     assert len(
-        sorted_patches) == number_of_patches, _logger.error("Loss of data when sorting patches data")
-    assert patches_data.shape == sorted_patches.shape, _logger.error(
-        "Orignal tensor and sorted tensor have different shapes")
+        sorted_patches) == number_of_patches, \
+        _logger.error("Loss of data when sorting patches data")
+    assert patches_data.shape == sorted_patches.shape, \
+        _logger.error("Original tensor and sorted tensor have different shapes")
 
-    _logger.info("Successfully sorte patches")
+    _logger.info("Successfully sorted patches")
 
-    return tf.convert_to_tensor(sorted_patches, dtype=tf.float32)
+    sorted_labels = tf.convert_to_tensor(sorted_labels, dtype=tf.int8)
+
+    return tf.convert_to_tensor(sorted_patches, dtype=tf.float32), sorted_labels
 
 
 def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI, ordering=Ordering.Ascending):
