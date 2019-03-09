@@ -233,7 +233,7 @@ tf.app.flags.DEFINE_boolean(
 #####################
 
 tf.app.flags.DEFINE_string(
-    'measure', 'mi',
+    'measure', '',
     'When restoring a checkpoint would ignore missing variables.')
 
 tf.app.flags.DEFINE_string(
@@ -248,7 +248,7 @@ tf.app.flags.DEFINE_integer('ordering', 0, 'Patch ordering, 0=asc, 1=dec')
 # Curriculum Learning FLAGS
 #################################
 
-tf.app.flags.DEFINE_boolean('curriculum', True, 'Train using curriculum')
+tf.app.flags.DEFINE_boolean('curriculum', False, 'Train using curriculum')
 
 
 FLAGS = tf.app.flags.FLAGS
