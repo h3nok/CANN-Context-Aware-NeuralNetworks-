@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="Curriculum learning">
-      <change beforePath="$PROJECT_DIR$/.idea/Trainer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Trainer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/Deepdream/deepdream.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/Deepdream/deepdream_hires.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/curriculum_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/curriculum_learning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/eval_image_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/eval_image_classifier.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,7 +12,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/research/curriculum_learning.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="493">
@@ -25,6 +20,15 @@
               <folding>
                 <element signature="e#0#70#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/research/eval_image_classifier.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="825">
+              <caret line="190" selection-start-line="190" selection-end-line="190" />
             </state>
           </provider>
         </entry>
@@ -74,14 +78,15 @@
         <option value="$PROJECT_DIR$/phd_research/cc/fmpor.py" />
         <option value="$PROJECT_DIR$/phd_research/cc/reconstructor.py" />
         <option value="$PROJECT_DIR$/research/curriculum_learning.py" />
+        <option value="$PROJECT_DIR$/research/eval_image_classifier.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-2189" />
-    <option name="y" value="-20" />
-    <option name="width" value="1918" />
-    <option name="height" value="1078" />
+    <option name="x" value="86" />
+    <option name="y" value="-24" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -273,9 +278,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14498934" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12153518" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" weight="0.32995737" />
@@ -292,7 +296,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Terminal" order="3" weight="0.38859275" />
+      <window_info active="true" anchor="right" id="Terminal" order="3" visible="true" weight="0.38859275" />
       <window_info anchor="right" id="Run" order="4" weight="0.4120469" />
     </layout>
   </component>
@@ -500,6 +504,13 @@
           <folding>
             <element signature="e#0#70#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/eval_image_classifier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="190" selection-start-line="190" selection-end-line="190" />
         </state>
       </provider>
     </entry>

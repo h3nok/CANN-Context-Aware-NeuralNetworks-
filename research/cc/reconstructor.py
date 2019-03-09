@@ -20,7 +20,8 @@ def _determine_measure_type(measure):
     assert isinstance(measure, Measure), "{} not found.".format(measure.value)
     if measure in [Measure.JE, Measure.MI, Measure.CE, Measure.L1, Measure.L2,
                    Measure.MAX_NORM, Measure.KL, Measure.SSIM, Measure.PSNR,
-                   Measure.MI_NORMALIZED, Measure.LI, Measure.IV]:
+                   Measure.MI_NORMALIZED, Measure.LI, Measure.IV, Measure.CROSS_ENTROPY,
+                   Measure.CROSS_ENTROPY_PMF]:
 
         return MeasureType.Dist
     else:
