@@ -149,12 +149,14 @@ def sort_by_content_measure(patches_data, measure_fn, labels, curriculum=False):
 
     sorted_patches = None
     sorted_labels = None
+
     if not curriculum:
         sorted_patches = np.array(
             sorted(patches_data, key=lambda patch: measure_fn(patch)))
     else:
-        sorted_patches, sorted_labels = np.array(zip(*sorted(zip(patches_data,
-                            labels), key=lambda patch: measure_fn(patch))))
+        patches_data = zip(patches_data, labels)
+        sorted_patches, sorted_labels = np.array(zip(*sorted(patches_data,
+                                                             key=lambda patch: measure_fn(patches_data[patch]))))
 
     assert len(
         sorted_patches) == number_of_patches, \
@@ -162,7 +164,7 @@ def sort_by_content_measure(patches_data, measure_fn, labels, curriculum=False):
     assert patches_data.shape == sorted_patches.shape, \
         _logger.error("Original tensor and sorted tensor have different shapes")
 
-    _logger.info("Successfully sorted patches")
+    _logger.info("Successfully sorted patches using content measure ")
 
     sorted_labels = tf.convert_to_tensor(sorted_labels, dtype=tf.int8)
     sorted_patches = tf.convert_to_tensor(sorted_patches, dtype=tf.float32)

@@ -15,8 +15,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/research/curriculum_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+            <state relative-caret-position="493">
+              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
               <folding>
                 <element signature="e#0#70#0" expanded="true" />
               </folding>
@@ -39,8 +39,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/research/cc/reconstructor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="172" lean-forward="true" selection-start-line="172" selection-end-line="172" />
+            <state relative-caret-position="561">
+              <caret line="155" column="125" lean-forward="true" selection-start-line="155" selection-start-column="125" selection-end-line="155" selection-end-column="125" />
             </state>
           </provider>
         </entry>
@@ -337,7 +337,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" id="Terminal" order="3" visible="true" weight="0.38859275" />
+      <window_info active="true" anchor="right" id="Terminal" order="3" visible="true" weight="0.282516" />
       <window_info anchor="right" id="Run" order="4" weight="0.4120469" />
     </layout>
   </component>
@@ -439,8 +439,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/research/curriculum_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+        <state relative-caret-position="493">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
           <folding>
             <element signature="e#0#70#0" expanded="true" />
           </folding>
@@ -449,8 +449,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/research/cc/reconstructor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="172" lean-forward="true" selection-start-line="172" selection-end-line="172" />
+        <state relative-caret-position="561">
+          <caret line="155" column="125" lean-forward="true" selection-start-line="155" selection-start-column="125" selection-end-line="155" selection-end-column="125" />
         </state>
       </provider>
     </entry>
