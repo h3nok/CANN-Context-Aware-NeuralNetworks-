@@ -1,9 +1,7 @@
-from cc.patch_proposals import generate_patches_v2, p_por
-from cc.reconstructor import reconstruct_from_patches
+from cc.patch_proposals import p_por
 from cc.map_measure import Measure
 from cc.map_measure import Ordering
 import tensorflow as tf
-import numpy as np
 
 MEASURE_MAP = {
     'mi': Measure.MI,
@@ -16,18 +14,18 @@ MEASURE_MAP = {
     'mn': Measure.MAX_NORM,
     'psnr': Measure.PSNR,
     'ssim': Measure.SSIM,
-    'min':Measure.MI_NORMALIZED,
-    'ei':Measure.EI,
-    'li':Measure.LI,
+    'min': Measure.MI_NORMALIZED,
+    'ei': Measure.EI,
+    'li': Measure.LI,
     're': Measure.RE,
-    'mui':Measure.MULTI_I,
-    'bi':Measure.BI,
-    'coi':Measure.COI,
-    'cross_entropy':Measure.CROSS_ENTROPY,
+    'mui': Measure.MULTI_I,
+    'bi': Measure.BI,
+    'coi': Measure.COI,
+    'cross_entropy': Measure.CROSS_ENTROPY,
     'cep': Measure.CROSS_ENTROPY_PMF,
-    'eli':Measure.ELI,
-    'ii':Measure.II,
-    'iv':Measure.IV
+    'eli': Measure.ELI,
+    'ii': Measure.II,
+    'iv': Measure.IV
 }
 
 ORDERING_MAP = {

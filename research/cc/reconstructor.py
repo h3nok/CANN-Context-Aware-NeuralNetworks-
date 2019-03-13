@@ -3,12 +3,14 @@ import tensorflow as tf
 import numpy as np
 
 try:
-    from cc.map_measure import (Measure, MeasureType, Ordering, map_measure_fn,
+    from cc.map_measure import (Measure, MeasureType,
+                                Ordering, map_measure_fn,
                                 MEASURE_MAP)
     from cc.cc_utils import ConfigureLogger
-except (ImportError) as error:
+except ImportError as error:
     print(error)
-    from map_measure import (Measure, MeasureType, Ordering, map_measure_fn,
+    from map_measure import (Measure, MeasureType,
+                             Ordering, map_measure_fn,
                              MEASURE_MAP)
     from cc_utils import ConfigureLogger
 
