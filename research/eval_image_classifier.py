@@ -38,12 +38,12 @@ tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
 tf.app.flags.DEFINE_string(
-    'checkpoint_path', 'D:\\viNet\RnD\\results\summaries\\Inception_2018_08_08_10_1631',
+    'checkpoint_path', '/home/deeplearning/train_log/curriculum/inception_v2/cifar10/ce/10000/model.ckpt-10000',
     'The directory where the model was written to or an absolute path to a '
     'checkpoint file.')
 
 tf.app.flags.DEFINE_string(
-    'eval_dir', 'D:\\viNet\RnD\\results\\eval_' + datetime.datetime.now().strftime("%Y_%m_%d_%H_%M%S"),
+    'eval_dir', '/home/deeplearning/eval/eval_' + datetime.datetime.now().strftime("%Y_%m_%d_%H_%M%S"),
     'Directory where the results are saved to.')
 
 tf.app.flags.DEFINE_integer(
@@ -57,7 +57,7 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'validation', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', 'D:\\viNet\RnD\data\stage\\tfrecord\e3_augmented\\train',
+    'dataset_dir', '/home/deeplearning/data/cifar10-val',
     "The directory where the dataset files are stored.")
 
 tf.app.flags.DEFINE_integer(
@@ -157,7 +157,7 @@ def main(_):
         # Define the metrics:
         names_to_values, names_to_updates = slim.metrics.aggregate_metric_map({
             'Accuracy': slim.metrics.streaming_accuracy(predictions, labels),
-            'Recall_5': slim.metrics.streaming_recall_at_k(logits, labels, 3),
+            #'Recall_5': slim.metrics.streaming_sparse_recall_at_k(logits, labels, 3),
             "mse": slim.metrics.streaming_mean_squared_error(predictions, labels)
         })
 
