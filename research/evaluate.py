@@ -18,6 +18,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import os
 import math
 import tensorflow as tf
 import datetime
@@ -92,7 +93,7 @@ def main(_):
             'You must supply the dataset directory with --dataset_dir')
 
     if FLAGS.eval_dir:
-        FLAGS.eval_dir = os.path.join(FLAGS.eval_dir, FLAGS.metric, FLAGS.iter)
+        FLAGS.eval_dir = os.path.join(FLAGS.eval_dir, FLAGS.metric, str(FLAGS.iter))
 
     tf.logging.set_verbosity(tf.logging.INFO)
     with tf.Graph().as_default():
