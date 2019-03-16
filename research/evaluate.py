@@ -41,9 +41,11 @@ tf.app.flags.DEFINE_string(
     'checkpoint_path', '/home/deeplearning/train_log/curriculum/inception_v2/cifar10/ce/10000/model.ckpt-10000',
     'The directory where the model was written to or an absolute path to a '
     'checkpoint file.')
+tf.app.flags.DEFINE_string('metric', 'ce', 'Metric used to generate the checkpoints')
+tf.app.flags.DEFINE_integer('iter', 10000, 'The number of training iterations used to generate the checkpoints')
 
 tf.app.flags.DEFINE_string(
-    'eval_dir', '/home/deeplearning/eval/eval_' + datetime.datetime.now().strftime("%Y_%m_%d_%H_%M%S"),
+    'eval_dir', '/home/deeplearning/eval'
     'Directory where the results are saved to.')
 
 tf.app.flags.DEFINE_integer(
@@ -88,6 +90,9 @@ def main(_):
     if not FLAGS.dataset_dir:
         raise ValueError(
             'You must supply the dataset directory with --dataset_dir')
+
+    if FLAGS.eval_dir:
+        FLAGS.eval_dir = os.path.join(FLAGS.eval_dir, FLAGS.metric, FLAGS.iter)
 
     tf.logging.set_verbosity(tf.logging.INFO)
     with tf.Graph().as_default():
