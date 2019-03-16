@@ -109,13 +109,13 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, curri
                 closest_distance_thus_far = distance
                 _swap(i+1, j)
                 if curriculum:
-                    _swap_labels(i+1,j)
+                    _swap_labels(i+1, j)
                 # reference_patch_data = patches_data[i]
             elif ordering == Ordering.Descending and distance > closest_distance_thus_far:
                 closest_distance_thus_far = distance
                 _swap(i+1, j)
                 if labels is not None:
-                    _swap_labels(i+1,j)
+                    _swap_labels(i+1, j)
 
     sorted_patches = tf.convert_to_tensor(patches_data, dtype=tf.float32)
     sorted_labels = None
@@ -128,7 +128,7 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, curri
     _logger.info(
         "Successfully sorted patches, closing session and exiting ...")
 
-    return sorted_patches, labels_data
+    return sorted_patches, sorted_labels
 
 
 def sort_by_content_measure(patches_data, measure_fn, labels, curriculum=False):

@@ -125,7 +125,7 @@ def main(_):
 
        
         #####################################
-        # Select the preprocessing function #
+        # Select the pre-processing function #
         #####################################
         preprocessing_name = FLAGS.preprocessing_name or FLAGS.model_name
         image_preprocessing_fn = preprocessing_factory.get_preprocessing(
