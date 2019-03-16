@@ -120,7 +120,7 @@ def sort_patches_or_images(patches_data, total_patches, measure, ordering, curri
     sorted_patches = tf.convert_to_tensor(patches_data, dtype=tf.float32)
     sorted_labels = None
     if curriculum:
-        sorted_labels = tf.convert_to_tensor(labels_data, tf.int8)
+        sorted_labels = tf.convert_to_tensor(labels_data, tf.uint8)
         assert sorted_labels.shape[0] == total_patches
 
     assert sorted_patches.shape[0] == total_patches, _logger.error("Sorted patches list contains more or less \
