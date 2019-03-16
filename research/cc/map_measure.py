@@ -65,7 +65,11 @@ MEASURE_MAP = {
     Measure.BI: mi.binding_information,
     Measure.ELI: mi.exogenous_local_information,
     Measure.IV: mi.information_variation,
-    Measure.CROSS_ENTROPY: entropy.cross_entropy}
+    Measure.CROSS_ENTROPY: entropy.cross_entropy,
+    Measure.CROSS_ENTROPY_PMF: entropy.cross_entropy_pmf,
+    Measure.II: mi.information_interaction,
+    Measure.COI: mi.co_information
+}
 
 
 def map_measure_fn(m, measure_type=MeasureType.Dist):
