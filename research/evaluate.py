@@ -26,6 +26,7 @@ from datasets import dataset_factory
 from nets import nets_factory
 from preprocessing import preprocessing_factory
 
+
 slim = tf.contrib.slim
 
 tf.app.flags.DEFINE_integer(
@@ -35,18 +36,20 @@ tf.app.flags.DEFINE_integer(
     'max_num_batches', None,
     'Max number of batches to evaluate by default use all.')
 
+tf.app.flags.DEFINE_string('training_mode', 'curriculum', "training strategies employed to grow network")
+
 tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
 tf.app.flags.DEFINE_string(
-    'checkpoint_path', '/home/deeplearning/train_log/curriculum/inception_v2/cifar10/ce/10000/model.ckpt-10000',
-    'The directory where the model was written to or an absolute path to a '
-    'checkpoint file.')
+    'checkpoint_path', '/home/deeplearning/train_log',
+    "The directory where the model was written to or an absolute path to a "
+    "checkpoint file.")
 tf.app.flags.DEFINE_string('metric', 'ce', 'Metric used to generate the checkpoints')
 tf.app.flags.DEFINE_integer('iter', 10000, 'The number of training iterations used to generate the checkpoints')
 
 tf.app.flags.DEFINE_string(
-    'eval_dir', '/home/deeplearning/eval'
+    'eval_dir', '/home/deeplearning/eval',
     'Directory where the results are saved to.')
 
 tf.app.flags.DEFINE_integer(
@@ -93,8 +96,11 @@ def main(_):
             'You must supply the dataset directory with --dataset_dir')
 
     if FLAGS.eval_dir:
-        FLAGS.eval_dir = os.path.join(FLAGS.eval_dir, FLAGS.metric, str(FLAGS.iter))
+        FLAGS.eval_dir = os.path.join(FLAGS.eval_dir, FLAGS.training_mode, FLAGS.metric, str(FLAGS.iter))
 
+    FLAGS.checkpoint_path = os.path.join(FLAGS.checkpoint_path, FLAGS.training_mode, FLAGS.model_name,
+                                         FLAGS.dataset_name, FLAGS.metric, str(FLAGS.iter),
+                                         "model.ckpt-" + str(FLAGS.iter))
     tf.logging.set_verbosity(tf.logging.INFO)
     with tf.Graph().as_default():
         tf_global_step = slim.get_or_create_global_step()

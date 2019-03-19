@@ -4,7 +4,7 @@ import tensorflow as tf
 import numpy as np
 
 
-def MaxNorm(patch_1, patch_2):
+def max_norm(patch_1, patch_2):
     assert isinstance(patch_1, np.ndarray), "Patch data must be a numpy array."
     assert isinstance(patch_2, np.ndarray), "Patch data must be a numpy array."
     assert patch_1.shape == patch_2.shape, "Patches must have similar tensor shapes of [p_w, p_h, c]"

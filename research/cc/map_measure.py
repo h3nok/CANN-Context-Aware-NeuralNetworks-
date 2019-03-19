@@ -54,7 +54,7 @@ MEASURE_MAP = {
     Measure.KL: entropy.kl_divergence,
     Measure.L1: l1_norm.L1Norm,
     Measure.L2: l2_norm.L2Norm,
-    Measure.MAX_NORM: max_norm.MaxNorm,
+    Measure.MAX_NORM: max_norm.max_norm,
     Measure.PSNR: psnr.PSNR,
     Measure.SSIM: ssim.SSIM,
     Measure.MI_NORMALIZED: mi.normalized_mutual_information,
