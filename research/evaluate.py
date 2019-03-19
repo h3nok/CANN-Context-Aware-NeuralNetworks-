@@ -46,7 +46,8 @@ tf.app.flags.DEFINE_string(
     "The directory where the model was written to or an absolute path to a "
     "checkpoint file.")
 tf.app.flags.DEFINE_string('metric', 'ce', 'Metric used to generate the checkpoints')
-tf.app.flags.DEFINE_integer('iter', 10000, 'The number of training iterations used to generate the checkpoints')
+tf.app.flags.DEFINE_integer('iter', 10000,
+                            'The number of training iterations used to generate the checkpoints')
 
 tf.app.flags.DEFINE_string(
     'eval_dir', '/home/deeplearning/eval',
@@ -168,9 +169,11 @@ def main(_):
 
         # Define the metrics:
         names_to_values, names_to_updates = slim.metrics.aggregate_metric_map({
-            'Accuracy': slim.metrics.streaming_accuracy(predictions, labels),
-            #'Recall_5': slim.metrics.streaming_sparse_recall_at_k(logits, labels, 3),
-            "mse": slim.metrics.streaming_mean_squared_error(predictions, labels)
+            'Accuracy': tf.metrics.accuracy(labels, predictions),
+            "mse": slim.metrics.streaming_mean_squared_error(predictions, labels),
+            "tp": tf.metrics.true_positives(labels, predictions),
+            "tn": tf.metrics.true_negatives(labels, predictions),
+            'conf': tf.metrics.auc(labels, predictions)
         })
 
         # Print the summaries to screen.

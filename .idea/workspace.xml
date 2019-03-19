@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="Curriculum learning">
-      <change beforePath="$PROJECT_DIR$/.idea/Trainer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Trainer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/cc/map_measure.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/cc/map_measure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/cc/measures/max_norm.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/cc/measures/max_norm.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/research/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/evaluate.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -66,8 +60,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/research/evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="110" column="45" selection-start-line="110" selection-start-column="45" selection-end-line="110" selection-end-column="45" />
+            <state relative-caret-position="397">
+              <caret line="174" column="10" lean-forward="true" selection-start-line="174" selection-start-column="10" selection-end-line="174" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -117,8 +111,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/research/eval.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="17">
+              <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -247,7 +241,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.eval_image_classifier (1)">
+  <component name="RunManager" selected="Python.evaluate">
     <configuration name="eval_image_classifier (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Trainer" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -290,7 +284,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="fm_por" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="evaluate" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Trainer" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -298,11 +292,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/phd_research/cc" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/research" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\phd\Trainer\phd_research\cc\fmpor.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/research/evaluate.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -355,11 +349,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.evaluate" />
         <item itemvalue="Python.eval_image_classifier (1)" />
         <item itemvalue="Python.eval_image_classifier" />
         <item itemvalue="Python.fmpor" />
         <item itemvalue="Python.reconstructor" />
-        <item itemvalue="Python.fm_por" />
       </list>
     </recent_temporary>
   </component>
@@ -400,8 +394,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11567164" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11567164" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" weight="0.32995737" />
@@ -418,8 +413,8 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Terminal" order="3" weight="0.3848614" />
-      <window_info anchor="right" id="Run" order="4" weight="0.43496802" />
+      <window_info active="true" anchor="right" id="Terminal" order="3" visible="true" weight="0.3848614" />
+      <window_info anchor="right" id="Run" order="4" weight="0.36140725" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15260416" />
@@ -571,15 +566,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/research/eval.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="17">
+          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/research/evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="110" column="45" selection-start-line="110" selection-start-column="45" selection-end-line="110" selection-end-column="45" />
+        <state relative-caret-position="397">
+          <caret line="174" column="10" lean-forward="true" selection-start-line="174" selection-start-column="10" selection-end-line="174" selection-end-column="10" />
         </state>
       </provider>
     </entry>
