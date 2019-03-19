@@ -169,11 +169,11 @@ def main(_):
 
         # Define the metrics:
         names_to_values, names_to_updates = slim.metrics.aggregate_metric_map({
-            'Accuracy': tf.metrics.accuracy(labels, predictions),
+            'Accuracy': slim.metrics.streaming_accuracy(predictions, labels),
             "mse": slim.metrics.streaming_mean_squared_error(predictions, labels),
-            "tp": tf.metrics.true_positives(labels, predictions),
-            "tn": tf.metrics.true_negatives(labels, predictions),
-            'conf': tf.metrics.auc(labels, predictions)
+            # "tp": slim.metrics.(predictions, predictions),
+            # "tn": tf.metrics.true_negatives(labels, predictions),
+            # 'conf': tf.metrics.auc(labels, predictions)
         })
 
         # Print the summaries to screen.
