@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="Curriculum learning">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/eval.sh" beforeDir="false" afterPath="$PROJECT_DIR$/research/eval.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/evaluate.py" afterDir="false" />
-    </list>
+    <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,8 +55,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/research/evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="173" column="57" selection-start-line="173" selection-start-column="57" selection-end-line="173" selection-end-column="57" />
+            <state relative-caret-position="844">
+              <caret line="97" selection-start-line="97" selection-end-line="97" />
             </state>
           </provider>
         </entry>
@@ -375,9 +371,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11567164" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11567164" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" weight="0.32995737" />
@@ -394,7 +389,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Terminal" order="3" visible="true" weight="0.40618336" />
+      <window_info active="true" anchor="right" id="Terminal" order="3" visible="true" weight="0.45895523" />
       <window_info anchor="right" id="Run" order="4" weight="0.36140725" />
     </layout>
     <layout-to-restore>
@@ -566,8 +561,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/research/evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="173" column="57" selection-start-line="173" selection-start-column="57" selection-end-line="173" selection-end-column="57" />
+        <state relative-caret-position="844">
+          <caret line="97" selection-start-line="97" selection-end-line="97" />
         </state>
       </provider>
     </entry>
