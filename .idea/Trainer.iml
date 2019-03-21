@@ -8,6 +8,9 @@
       <sourceFolder url="file://$MODULE_DIR$/phd_research/datasets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/phd_research/cc/samples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../research" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/research" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/research/cc" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.6 (venv)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -173,8 +173,8 @@ def sort_by_content_measure(patches_data, measure_fn, labels, curriculum=False):
 
     if curriculum:
         return sorted_patches, sorted_labels
-    else:
-        return sorted_patches
+
+    return sorted_patches
 
 
 def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI, ordering=Ordering.Ascending):
@@ -197,7 +197,7 @@ def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI, orde
     number_of_patches = patches.shape[0]
     _logger.info("Entering reconstruct_from_patches, number of patches: {}".format(
         number_of_patches))
-    patches,_ = sort_patches_or_images(
+    patches, _ = sort_patches_or_images(
         patches, number_of_patches, measure, ordering)
 
     _logger.info("Reconstructing sample ...")

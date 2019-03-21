@@ -21,7 +21,6 @@ from __future__ import print_function
 import os
 import math
 import tensorflow as tf
-import datetime
 from datasets import dataset_factory
 from nets import nets_factory
 from preprocessing import preprocessing_factory
@@ -87,6 +86,8 @@ tf.app.flags.DEFINE_float(
 
 tf.app.flags.DEFINE_integer(
     'eval_image_size', 224, 'Eval image size')
+
+tf.app.flags.Define_boolean("once", True, "Evaluation loop")
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -197,13 +198,22 @@ def main(_):
 
         tf.logging.info('Evaluating %s' % checkpoint_path)
 
-        slim.evaluation.evaluate_once(
-            master=FLAGS.master,
-            checkpoint_path=checkpoint_path,
-            logdir=FLAGS.eval_dir,
-            num_evals=num_batches,
-            eval_op=list(names_to_updates.values()),
-            variables_to_restore=variables_to_restore)
+        if FLAGS.once:
+            slim.evaluation.evaluate_once(
+                master=FLAGS.master,
+                checkpoint_path=checkpoint_path,
+                logdir=FLAGS.eval_dir,
+                num_evals=num_batches,
+                eval_op=list(names_to_updates.values()),
+                variables_to_restore=variables_to_restore)
+        else:
+            slim.evaluation.evaluation_loop(
+                master=FLAGS.master,
+                checkpoint_path=checkpoint_path,
+                logdir=FLAGS.eval_dir,
+                num_evals=num_batches,
+                eval_op=list(names_to_updates.values()),
+                variables_to_restore=variables_to_restore)
 
 
 if __name__ == '__main__':
