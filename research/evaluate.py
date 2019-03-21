@@ -98,10 +98,16 @@ def main(_):
             'You must supply the dataset directory with --dataset_dir')
 
     if FLAGS.eval_dir:
-        FLAGS.eval_dir = os.path.join(FLAGS.eval_dir, FLAGS.training_mode, FLAGS.metric, str(FLAGS.iter))
+        FLAGS.eval_dir = os.path.join(FLAGS.eval_dir,
+                                      FLAGS.training_mode,
+                                      FLAGS.metric,
+                                      str(FLAGS.iter))
 
-    FLAGS.checkpoint_path = os.path.join(FLAGS.checkpoint_path, FLAGS.training_mode, FLAGS.model_name,
-                                         FLAGS.dataset_name, FLAGS.metric, str(FLAGS.iter),
+    FLAGS.checkpoint_path = os.path.join(FLAGS.checkpoint_path, FLAGS.training_mode,
+                                         FLAGS.model_name,
+                                         FLAGS.dataset_name,
+                                         FLAGS.metric,
+                                         str(FLAGS.iter),
                                          "model.ckpt-" + str(FLAGS.iter))
     tf.logging.set_verbosity(tf.logging.INFO)
     with tf.Graph().as_default():
@@ -132,7 +138,7 @@ def main(_):
         [image, label] = provider.get(['image', 'label'])
         label -= FLAGS.labels_offset
 
-       
+
         #####################################
         # Select the pre-processing function #
         #####################################
