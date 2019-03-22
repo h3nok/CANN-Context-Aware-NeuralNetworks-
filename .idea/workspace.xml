@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="/">
-      <change afterPath="$PROJECT_DIR$/research/tfsummary.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/tfsummary.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/tfsummary.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,8 +72,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/research/tfsummary.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="516">
-              <caret line="67" column="26" selection-start-line="67" selection-start-column="26" selection-end-line="67" selection-end-column="26" />
+            <state relative-caret-position="445">
+              <caret line="52" column="20" lean-forward="true" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="20" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -386,6 +384,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="0" width="1920" height="1080" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12686567" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -434,9 +433,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Curriculum learning" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/binding_information.py" />
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/co_information.py" />
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/cross_entropy.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/ce.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/je.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/kl.py" />
@@ -594,10 +590,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/research/Total loss_Inception V2">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15915" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/Total loss_Inception V2.eps">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/Total loss_Inception V2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/research/tfsummary.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
-          <caret line="67" column="26" selection-start-line="67" selection-start-column="26" selection-end-line="67" selection-end-column="26" />
+        <state relative-caret-position="445">
+          <caret line="52" column="20" lean-forward="true" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="20" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
