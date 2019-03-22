@@ -371,7 +371,6 @@ def _get_init_fn():
     Returns:
       An init function run by the supervisor.
     """
-    #print("CHECKPOINT_PATH = " + FLAGS.checkpoint_path)
     if FLAGS.checkpoint_path is None:
         return None
 
