@@ -5,17 +5,36 @@ import matplotlib.pyplot as plt
 import os
 import numpy as np
 
+
 class InceptionV2Loss(Enum):
 	regularization = "regularization_loss_1"
 	total = "total_loss_1"
 	softmax = "losses/softmax_cross_entropy_loss/value"
 
 
+METRIC_FULL_NAME = {
+	'ce': "Conditional Entropy",
+	'mn': "Max Norm",
+	'ssim': "Structural Similarity Index",
+	'psnr': 'Peak-Signal-to-Noise-Ratio',
+	'min': 'Normalized Mutual Information',
+	'mi': 'Mutual Information',
+	'e': "Entropy",
+	'kl': "Kullback-Leibler Divergence",
+	'l2': 'L2-Norm',
+	'l1': 'L1-Norm',
+	'je': 'Joint Entropy',
+	'iv': 'Information Variation',
+	'baseline': 'Baseline (no-curriculum)',
+	'base': 'Baseline (no-curriculum)',
+	'cross_entropy': 'Cross Entropy',
+	'cep': 'Cross Entropy PMF'
+}
+
+
 class Summary(object):
 	event_file = ""
 	tags = []
-	reg_loss = []
-	softmax_loss = []
 
 	def __init__(self, event_file_path, training=True):
 		assert event_file_path is not None, "Must supply a valid events file\n"
@@ -35,6 +54,7 @@ class Summary(object):
 		total_loss = []
 		reg_loss = []
 		softmax_loss = []
+
 		for item in total_loss_summary:
 			wall_time.append(item[0])
 			steps.append(item[1])
@@ -49,7 +69,7 @@ class Summary(object):
 		return steps, total_loss, reg_loss, softmax_loss
 
 
-def plot_multiple(data, plot='Softmax loss', network='Inception V2'):
+def plot_multiple(data, plot='Softmax loss', network='Inception V2', outdir=".", format="png"):
 	for run in data:
 		plt.plot(run['Steps'], run[plot], marker='o',
 									label=run['Metric'], c=np.random.rand(3))
@@ -57,14 +77,15 @@ def plot_multiple(data, plot='Softmax loss', network='Inception V2'):
 	plt.xlabel("Training Steps")
 	plt.ylabel("Loss")
 	plt.title("{} {}".format(network, plot))
-	plt.legend(loc='upper right', frameon=True)
-	plt.savefig('{}_{}.svg'.format(plot,network), format='svg', dpi=1000)
+	plt.legend(loc='upper right', frameon=True, fontsize='small')
+	plt.savefig(os.path.join(outdir, '{}_{}.{}'.format(plot, network, format)), format=format, dpi=1000)
 	plt.show()
 	plt.close()
 
 
 if __name__ == '__main__':
-	summaries_dir = "E:\\Thesis\\CC_V2\\summaries"
+	summaries_dir = "E:\\Thesis\\CC_V2\\summaries\\curriculum"
+	output_dir = "E:\\Thesis\\CC_V2\\summaries\\plots"
 	iterations = 10000
 	training_data = []
 	data = {}
@@ -83,10 +104,12 @@ if __name__ == '__main__':
 		data = {
 			"Steps": steps,
 			"Total loss": loss,
-			"Metric": metric,
+			"Metric": METRIC_FULL_NAME[metric],
 			"Reg loss": reg_loss,
 			"Softmax loss": softmax_loss
 		}
 		training_data.append(data)
 
-	plot_multiple(training_data)
+	plot_multiple(training_data, outdir=output_dir)
+	plot_multiple(training_data, plot="Total loss", outdir=output_dir)
+	plot_multiple(training_data, plot="Reg loss", outdir=output_dir)

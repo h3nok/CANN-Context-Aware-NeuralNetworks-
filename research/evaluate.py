@@ -41,7 +41,8 @@ tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
 tf.app.flags.DEFINE_string(
-    'checkpoint_path', '/home/deeplearning/train_log',
+    # 'checkpoint_path', '/home/deeplearning/train_log',
+    'checkpoint_path', "E:\\Thesis\\CC_V2\\summaries",
     "The directory where the model was written to or an absolute path to a "
     "checkpoint file.")
 tf.app.flags.DEFINE_string('metric', 'ce', 'Metric used to generate the checkpoints')
@@ -49,7 +50,8 @@ tf.app.flags.DEFINE_integer('iter', 10000,
                             'The number of training iterations used to generate the checkpoints')
 
 tf.app.flags.DEFINE_string(
-    'eval_dir', '/home/deeplearning/eval',
+    'eval_dir', 'E:\\Datasets\\cifar\\cifar10\\eval_log',
+    # 'eval_dir', '/home/deeplearning/eval',
     'Directory where the results are saved to.')
 
 tf.app.flags.DEFINE_integer(
@@ -63,7 +65,8 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'validation', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', '/home/deeplearning/data/cifar10-val',
+    # 'dataset_dir', '/home/deeplearning/data/cifar10-val',
+    'dataset_dir', 'E:\\Datasets\\cifar\cifar10\\tfrecord\\test',
     "The directory where the dataset files are stored.")
 
 tf.app.flags.DEFINE_integer(
@@ -87,7 +90,7 @@ tf.app.flags.DEFINE_float(
 tf.app.flags.DEFINE_integer(
     'eval_image_size', 224, 'Eval image size')
 
-tf.app.flags.Define_boolean("once", True, "Evaluation loop")
+tf.app.flags.DEFINE_string("eval", "once", "Evaluation loop (once, loop)")
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -109,6 +112,9 @@ def main(_):
                                          FLAGS.metric,
                                          str(FLAGS.iter),
                                          "model.ckpt-" + str(FLAGS.iter))
+    if not os.path.exists(FLAGS.checkpoint_path):
+        os.makedirs(FLAGS.checkpoint_path)
+
     tf.logging.set_verbosity(tf.logging.INFO)
     with tf.Graph().as_default():
         tf_global_step = slim.get_or_create_global_step()
@@ -204,7 +210,7 @@ def main(_):
 
         tf.logging.info('Evaluating %s' % checkpoint_path)
 
-        if FLAGS.once:
+        if FLAGS.eval == 'once':
             slim.evaluation.evaluate_once(
                 master=FLAGS.master,
                 checkpoint_path=checkpoint_path,
