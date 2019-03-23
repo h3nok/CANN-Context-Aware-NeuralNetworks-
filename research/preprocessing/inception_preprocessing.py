@@ -285,7 +285,7 @@ def preprocess_image(image, height, width,
                      is_training=False,
                      bbox=None, fast_mode=True, add_image_summaries=True):
   """
-    Pre-process one image for training or evaluation.
+    Pre-process_loss one image for training or evaluation.
 
     Args:
       image: 3-D Tensor [height, width, channels] with the image. If dtype is

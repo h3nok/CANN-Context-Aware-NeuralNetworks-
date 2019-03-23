@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="/">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/Softmax loss_Inception V2.svg" beforeDir="false" afterPath="$PROJECT_DIR$/research/Softmax loss_Inception V2.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/evaluate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/nets/nets_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/nets/nets_factory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/datasets/convert_data_2_tfrecord.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/datasets/convert_data_2_tfrecord.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/deployment/model_deploy.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/deployment/model_deploy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/label_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/label_image.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/preprocessing/inception_preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/preprocessing/inception_preprocessing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/research/tfsummary.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/tfsummary.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/research/curriculum_learning.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="357">
-              <caret line="21" column="34" lean-forward="true" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+              <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
               <folding>
                 <element signature="e#0#70#0" expanded="true" />
               </folding>
@@ -55,10 +56,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/research/tfsummary.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
-              <caret line="102" column="57" lean-forward="true" selection-start-line="102" selection-start-column="57" selection-end-line="102" selection-end-column="57" />
+            <state relative-caret-position="695">
+              <caret line="186" column="56" lean-forward="true" selection-start-line="186" selection-start-column="56" selection-end-line="186" selection-end-column="56" />
               <folding>
-                <element signature="e#0#23#0" expanded="true" />
+                <element signature="e#0#21#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -68,7 +69,7 @@
         <entry file="file://$PROJECT_DIR$/research/evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="497">
-              <caret line="179" column="42" lean-forward="true" selection-start-line="179" selection-start-column="42" selection-end-line="179" selection-end-column="42" />
+              <caret line="179" column="42" selection-start-line="179" selection-start-column="42" selection-end-line="179" selection-end-column="42" />
               <folding>
                 <element signature="e#764#802#0" expanded="true" />
               </folding>
@@ -358,7 +359,7 @@
     <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12686567" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12153518" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" weight="0.32995737" />
@@ -367,7 +368,7 @@
       <window_info anchor="bottom" id="Python Console" order="2" weight="0.21199143" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.22606121" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.22591007" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
@@ -375,7 +376,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Terminal" order="3" weight="0.3736674" />
+      <window_info anchor="right" id="Terminal" order="3" weight="0.3544776" />
       <window_info active="true" anchor="right" id="Run" order="4" visible="true" weight="0.4035181" />
     </layout>
     <layout-to-restore>
@@ -405,17 +406,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Curriculum learning" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pycharm/_jb_pytest_runner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#15#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/mi.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/fmpor.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/entropy.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/map_measure.py" />
@@ -563,7 +553,7 @@
     <entry file="file://$PROJECT_DIR$/research/curriculum_learning.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
-          <caret line="21" column="34" lean-forward="true" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+          <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
           <folding>
             <element signature="e#0#70#0" expanded="true" />
           </folding>
@@ -593,19 +583,33 @@
     <entry file="file://$PROJECT_DIR$/research/evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="497">
-          <caret line="179" column="42" lean-forward="true" selection-start-line="179" selection-start-column="42" selection-end-line="179" selection-end-column="42" />
+          <caret line="179" column="42" selection-start-line="179" selection-start-column="42" selection-end-line="179" selection-end-column="42" />
           <folding>
             <element signature="e#764#802#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://C:/Anaconda3/envs/tensorflow/Lib/site-packages/seaborn/relational.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="1063" column="4" selection-start-line="1063" selection-start-column="4" selection-end-line="1063" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/inception_v2.tags">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="627">
+          <caret line="8142" column="25" selection-start-line="8141" selection-start-column="14" selection-end-line="8143" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/research/tfsummary.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="102" column="57" lean-forward="true" selection-start-line="102" selection-start-column="57" selection-end-line="102" selection-end-column="57" />
+        <state relative-caret-position="695">
+          <caret line="186" column="56" lean-forward="true" selection-start-line="186" selection-start-column="56" selection-end-line="186" selection-end-column="56" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>

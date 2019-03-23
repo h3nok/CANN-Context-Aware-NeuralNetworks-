@@ -1,15 +1,19 @@
-import tensorflow as tf
 from enum import Enum
 from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
 import matplotlib.pyplot as plt
 import os
 import numpy as np
-
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
 
 class InceptionV2Loss(Enum):
 	regularization = "regularization_loss_1"
 	total = "total_loss_1"
 	softmax = "losses/softmax_cross_entropy_loss/value"
+	mixed_4c_sparsity = 'sparsity/Mixed_4c'
+	mixed_3b_sparsity = 'sparsity/Mixed_3b'
+	mixed_5b_sparsity = 'sparsity/Mixed_5b'
 
 
 METRIC_FULL_NAME = {
@@ -32,18 +36,48 @@ METRIC_FULL_NAME = {
 }
 
 
-class Summary(object):
+class InceptionV2Summary(object):
 	event_file = ""
 	tags = []
 
-	def __init__(self, event_file_path, training=True):
+	def __init__(self, event_file_path):
 		assert event_file_path is not None, "Must supply a valid events file\n"
 		self.event_file = event_file_path
 
-	def process(self):
+	def process_sparsity(self):
 		event_acc = EventAccumulator(self.event_file)
 		event_acc.Reload()
 		self.tags = event_acc.Tags()
+		# import pprint
+		# pprint.pprint(event_acc.Tags())
+
+		mixed_4c_summary = event_acc.Scalars(InceptionV2Loss.mixed_4c_sparsity.value)
+		mixed_3b_summary = event_acc.Scalars(InceptionV2Loss.mixed_3b_sparsity.value)
+		mixed_5b_summary = event_acc.Scalars(InceptionV2Loss.mixed_5b_sparsity.value)
+
+		steps = []
+		mixed_4c = []
+		mixed_3b = []
+		mixed_5b = []
+		walltime = []
+
+		for item in mixed_4c_summary:
+			walltime.append(item[0])
+			steps.append(item[1])
+			mixed_4c.append(item[2])
+		for item in mixed_3b_summary:
+			mixed_3b.append(item[2])
+		for item in mixed_5b_summary:
+			mixed_5b.append(item[2])
+
+		return steps, mixed_4c, mixed_3b, mixed_5b, walltime
+
+	def process_loss(self):
+		event_acc = EventAccumulator(self.event_file)
+		event_acc.Reload()
+		self.tags = event_acc.Tags()
+		# import pprint
+		# pprint.pprint(event_acc.Tags())
 
 		total_loss_summary = event_acc.Scalars(InceptionV2Loss.total.value)
 		regularization_loss_summary = event_acc.Scalars(InceptionV2Loss.regularization.value)
@@ -69,7 +103,8 @@ class Summary(object):
 		return steps, total_loss, reg_loss, softmax_loss
 
 
-def plot_multiple(data, plot='Softmax loss', network='Inception V2', outdir=".", format="png"):
+def _plot_multiple(data, plot='Softmax loss', network='Inception V2', outdir=".", format="png"):
+
 	for run in data:
 		plt.plot(run['Steps'], run[plot], marker='o',
 									label=run['Metric'], c=np.random.rand(3))
@@ -77,16 +112,48 @@ def plot_multiple(data, plot='Softmax loss', network='Inception V2', outdir=".",
 	plt.xlabel("Training Steps")
 	plt.ylabel("Loss")
 	plt.title("{} {}".format(network, plot))
-	plt.legend(loc='upper right', frameon=True, fontsize='small')
+	plt.legend(loc='upper right', frameon=False, fontsize='small')
 	plt.savefig(os.path.join(outdir, '{}_{}.{}'.format(plot, network, format)), format=format, dpi=1000)
 	plt.show()
 	plt.close()
 
 
-if __name__ == '__main__':
-	summaries_dir = "E:\\Thesis\\CC_V2\\summaries\\curriculum"
-	output_dir = "E:\\Thesis\\CC_V2\\summaries\\plots"
-	iterations = 10000
+def _plot_sparsity(data, plot='Mixed 4c', output_dir='.', format='png'):
+	data = data[1]
+	fig = plt.figure()
+	ax = fig.gca(projection='3d')
+
+	# Cook the data
+	X = data['Sparsity steps']
+	Y = data[plot]
+	X, Y = np.meshgrid(X,Y)
+
+	R = np.sqrt(X**2 + Y**2)
+	Z = np.sin(R)
+
+	# plot surface
+	surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm, linewidth=0,
+				antialiased=False)
+	# customize z axis
+	ax.set_zlim(-1.01, 1.01)
+	ax.zaxis.set_major_locator(LinearLocator(10))
+	ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
+
+	# Add a color bar which maps values to colors.
+	fig.colorbar(surf, shrink=0.5, aspect=5)
+
+	plt.show()
+
+
+def plot_losses(data, output_dir):
+	_plot_multiple(data, outdir=output_dir)
+	_plot_multiple(data, plot="Total loss", outdir=output_dir)
+	_plot_multiple(data, plot="Reg loss", outdir=output_dir)
+
+
+def run(summaries_dir="E:\\Thesis\\CC_V2\\summaries\\curriculum", output_dir="E:\\Thesis\\CC_V2\\summaries\\plots",
+		iterations=10000):
+
 	training_data = []
 	data = {}
 	for measure in os.listdir(summaries_dir):
@@ -99,17 +166,26 @@ if __name__ == '__main__':
 				event_file = file
 		if not event_file: continue
 		log_file = os.path.join(event_file_dir, event_file)
-		s = Summary(log_file)
-		steps, loss, reg_loss, softmax_loss = s.process()
+		s = InceptionV2Summary(log_file)
+		steps, loss, reg_loss, softmax_loss = s.process_loss()
+		sparsity_steps, mixed_4c, mixed_3b, mixed_5b, walltime = s.process_sparsity()
 		data = {
 			"Steps": steps,
 			"Total loss": loss,
 			"Metric": METRIC_FULL_NAME[metric],
 			"Reg loss": reg_loss,
-			"Softmax loss": softmax_loss
+			"Softmax loss": softmax_loss,
+			'Sparsity steps': sparsity_steps,
+			'Mixed 4c': mixed_4c,
+			'Mixed 3b': mixed_3b,
+			'Mixed 5b': mixed_5b,
+			'Wall time': walltime
 		}
 		training_data.append(data)
 
-	plot_multiple(training_data, outdir=output_dir)
-	plot_multiple(training_data, plot="Total loss", outdir=output_dir)
-	plot_multiple(training_data, plot="Reg loss", outdir=output_dir)
+	# plot_losses(training_data, output_dir=output_dir)
+	_plot_sparsity(training_data, output_dir=output_dir)
+
+
+if __name__ == "__main__":
+	run()

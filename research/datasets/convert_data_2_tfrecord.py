@@ -174,7 +174,7 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tra
                                 image_data, b'jpg', height, width, class_id)
                             tfrecord_writer.write(example.SerializeToString())
                         except:
-                            print("Unable to process {} file".format(
+                            print("Unable to process_loss {} file".format(
                                 filenames[i]))
 
     sys.stdout.write('\n')

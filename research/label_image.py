@@ -68,7 +68,7 @@ image_string = tf.placeholder(tf.string)
 
 #image = tf.image.decode_image(image_string, channels=3)
 image = tf.image.decode_jpeg(image_string, channels=3, try_recover_truncated=True,
-                             acceptable_fraction=0.3)  # To process corrupted image files
+                             acceptable_fraction=0.3)  # To process_loss corrupted image files
 
 image_preprocessing_fn = preprocessing_factory.get_preprocessing(
     preprocessing_name, is_training=False)
@@ -125,7 +125,7 @@ for fl in fls:
         #np_image, network_input, probs = sess.run([image, processed_image, probabilities], feed_dict={image_string:x})
 
     except Exception as e:
-        tf.logging.warn('Cannot process image file %s' % fl)
+        tf.logging.warn('Cannot process_loss image file %s' % fl)
         tf.logging.error(e)
         continue
 
