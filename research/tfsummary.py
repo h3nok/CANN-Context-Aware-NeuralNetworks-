@@ -148,11 +148,11 @@ def _plot_sparsity(data, plot='Mixed 4c', output_dir='.', format='png'):
 def plot_losses(data, output_dir):
 	_plot_multiple(data, outdir=output_dir)
 	_plot_multiple(data, plot="Total loss", outdir=output_dir)
-	_plot_multiple(data, plot="Reg loss", outdir=output_dir)
+	_plot_multiple(data, plot="Regularization loss", outdir=output_dir)
 
 
 def run(summaries_dir="E:\\Thesis\\CC_V2\\summaries\\curriculum", output_dir="E:\\Thesis\\CC_V2\\summaries\\plots",
-		iterations=100000):
+		iterations=10000):
 
 	training_data = []
 	data = {}
@@ -174,7 +174,7 @@ def run(summaries_dir="E:\\Thesis\\CC_V2\\summaries\\curriculum", output_dir="E:
 			"Steps": steps,
 			"Total loss": loss,
 			"Metric": METRIC_FULL_NAME[metric],
-			"Reg loss": reg_loss,
+			"Regularization loss": reg_loss,
 			"Softmax loss": softmax_loss,
 			'Sparsity steps': sparsity_steps,
 			'Mixed 4c': mixed_4c,
