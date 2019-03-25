@@ -10,9 +10,9 @@ import tensorflow as tf
 def entropy(patch):
     # flatten the tensor into a sigle dimensinoal array
     patch_data = patch.flatten()
-    entropy = itt.entropy(patch_data)
+    e = itt.entropy(patch_data)
 
-    return round(float(entropy), 4)  # result x.xxxx
+    return round(float(e), 4)  # result x.xxxx
 
 
 def cross_entropy(patch_1, patch_2):
@@ -118,4 +118,3 @@ def kl_divergence(patch_1, patch_2):
     je = round(itt.divergence_kullbackleibler(patch_1, patch_2), 4)  # result x.xxxx
 
     return je
-

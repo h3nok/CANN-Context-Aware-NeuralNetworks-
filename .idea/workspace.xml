@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e22e7104-ff5d-4008-9db5-0cf145c3a73d" name="Default Changelist" comment="/">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/datasets/convert_data_2_tfrecord.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/datasets/convert_data_2_tfrecord.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/deployment/model_deploy.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/deployment/model_deploy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/label_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/label_image.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/research/preprocessing/inception_preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/preprocessing/inception_preprocessing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/research/cc/map_measure.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/cc/map_measure.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/research/tfsummary.py" beforeDir="false" afterPath="$PROJECT_DIR$/research/tfsummary.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,8 +40,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/research/cc/map_measure.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
+            <state relative-caret-position="443">
+              <caret line="60" column="43" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="43" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -53,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/research/tfsummary.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="695">
-              <caret line="186" column="56" lean-forward="true" selection-start-line="186" selection-start-column="56" selection-end-line="186" selection-end-column="56" />
+            <state relative-caret-position="321">
+              <caret line="165" column="40" lean-forward="true" selection-start-line="165" selection-start-column="40" selection-end-line="165" selection-end-column="40" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -73,6 +69,27 @@
               <folding>
                 <element signature="e#764#802#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/research/cc/measures/mi.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="468">
+              <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/research/cc/ITT/itt.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-899">
+              <caret line="1749" column="4" selection-start-line="1749" selection-start-column="4" selection-end-line="1749" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -129,7 +146,6 @@
         <option value="$PROJECT_DIR$/phd_research/cc/fmpor.py" />
         <option value="$PROJECT_DIR$/phd_research/cc/reconstructor.py" />
         <option value="$PROJECT_DIR$/research/curriculum_learning.py" />
-        <option value="$PROJECT_DIR$/research/cc/map_measure.py" />
         <option value="$PROJECT_DIR$/research/eval_image_classifier.py" />
         <option value="$PROJECT_DIR$/research/datasets/cifar10.py" />
         <option value="$PROJECT_DIR$/research/preprocessing/cc_preprocessing.py" />
@@ -146,6 +162,7 @@
         <option value="$PROJECT_DIR$/research/nets/nets_factory.py" />
         <option value="$PROJECT_DIR$/research/evaluate.py" />
         <option value="$PROJECT_DIR$/research/tfsummary.py" />
+        <option value="$PROJECT_DIR$/research/cc/map_measure.py" />
       </list>
     </option>
   </component>
@@ -181,6 +198,13 @@
               <item name="phd" type="462c0819:PsiDirectoryNode" />
               <item name="Trainer" type="462c0819:PsiDirectoryNode" />
               <item name="research" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Trainer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="phd" type="462c0819:PsiDirectoryNode" />
+              <item name="Trainer" type="462c0819:PsiDirectoryNode" />
+              <item name="research" type="462c0819:PsiDirectoryNode" />
+              <item name="cc" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -376,7 +400,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Terminal" order="3" weight="0.3544776" />
+      <window_info anchor="right" id="Terminal" order="3" weight="0.45469084" />
       <window_info active="true" anchor="right" id="Run" order="4" visible="true" weight="0.4035181" />
     </layout>
     <layout-to-restore>
@@ -406,7 +430,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Curriculum learning" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/phd_research/cc/fmpor.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/measures/entropy.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/map_measure.py" />
     <entry file="file://$PROJECT_DIR$/phd_research/cc/reconstructor.py" />
@@ -450,16 +473,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
           <caret line="612" selection-start-line="612" selection-end-line="612" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/research/cc/measures/mi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="137" column="25" selection-start-line="137" selection-start-column="25" selection-end-line="137" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -570,16 +583,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/research/cc/map_measure.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/research/evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="497">
@@ -606,11 +609,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/research/tfsummary.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="695">
-          <caret line="186" column="56" lean-forward="true" selection-start-line="186" selection-start-column="56" selection-end-line="186" selection-end-column="56" />
+        <state relative-caret-position="321">
+          <caret line="165" column="40" lean-forward="true" selection-start-line="165" selection-start-column="40" selection-end-line="165" selection-end-column="40" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/cc/map_measure.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="60" column="43" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/cc/measures/mi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/research/cc/ITT/itt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-899">
+          <caret line="1749" column="4" selection-start-line="1749" selection-start-column="4" selection-end-line="1749" selection-end-column="4" />
         </state>
       </provider>
     </entry>

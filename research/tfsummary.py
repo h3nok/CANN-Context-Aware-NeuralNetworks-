@@ -152,13 +152,14 @@ def plot_losses(data, output_dir):
 
 
 def run(summaries_dir="E:\\Thesis\\CC_V2\\summaries\\curriculum", output_dir="E:\\Thesis\\CC_V2\\summaries\\plots",
-		iterations=10000):
+		iterations=100000):
 
 	training_data = []
 	data = {}
 	for measure in os.listdir(summaries_dir):
 		metric = measure
 		event_file_dir = os.path.join(summaries_dir, metric, str(iterations))
+		if not os.path.exists(event_file_dir): continue
 		files = os.listdir(event_file_dir)
 		event_file = None
 		for file in files:
@@ -183,8 +184,8 @@ def run(summaries_dir="E:\\Thesis\\CC_V2\\summaries\\curriculum", output_dir="E:
 		}
 		training_data.append(data)
 
-	# plot_losses(training_data, output_dir=output_dir)
-	_plot_sparsity(training_data, output_dir=output_dir)
+	plot_losses(training_data, output_dir=output_dir)
+	# _plot_sparsity(training_data, output_dir=output_dir)
 
 
 if __name__ == "__main__":
