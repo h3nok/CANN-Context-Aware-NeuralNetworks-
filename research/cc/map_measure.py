@@ -26,7 +26,6 @@ class Measure(Enum):
     MI_NORMALIZED = ('min', "Normalized mutual information ")
     EI = ("ei", "Enigmatic information")
     LI = ("li", "Lautum information")
-    RE = ("re", "Residual entropy")
     MULTI_I = ("mui", "Multi-information")
     BI = ("bi", "Binding information")
     COI = ("coi", "Co-Information")

@@ -22,7 +22,7 @@ def cross_entropy(patch_1, patch_2):
     assert not np.array_equal(
         patch_1, patch_2), "Patches are binary equivalent, Distance = 0"
 
-    # flatten the tensor into a sigle dimensinoal array
+    # flatten the tensor
     patch_1 = patch_1.flatten()
     patch_2 = patch_2.flatten()
     ce = itt.entropy_cross(patch_1, patch_2)
@@ -51,7 +51,7 @@ def conditional_entropy(patch_1, patch_2):
     assert not np.array_equal(
         patch_1, patch_2), "Patches are binary equivalent, Distance = 0"
 
-    # flatten the tensor into a sigle dimensinoal array
+    # flatten the tensor
     patch_1 = patch_1.flatten()
     patch_2 = patch_2.flatten()
     ce = itt.entropy_conditional(patch_1, patch_2)
@@ -79,7 +79,7 @@ def joint_entropy_tf(patch_1, patch_2):
     patch_data = sess.run(
         tf.concat([patch_1,
                    patch_2], 0))
-    # flatten the tensor into a sigle dimensinoal array
+    # flatten the tensor
     patch_data = sess.run(tf.reshape(patch_data, [-1]))
 
     je = round(itt.entropy_joint(patch_data), 4)  # result x.xxxx
@@ -96,9 +96,7 @@ def joint_entropy(patch_1, patch_2):
         patch_1, patch_2), "Patches are binary equivalent, Distance = 0"
 
     # combine the two tensors into one
-    # and flatten the tensor into a sigle dimensinoal array
     patch_data = np.concatenate((patch_1, patch_2)).flatten()
-
     je = round(itt.entropy_joint(patch_data), 4)  # result x.xxxx
 
     return je
