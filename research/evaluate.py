@@ -41,8 +41,8 @@ tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
 tf.app.flags.DEFINE_string(
-    # 'checkpoint_path', '/home/deeplearning/train_log',
-    'checkpoint_path', "E:\\Thesis\\CC_V2\\summaries",
+    'checkpoint_path', '/home/deeplearning/train_log',
+    #'checkpoint_path', "E:\\Thesis\\CC_V2\\summaries",
     "The directory where the model was written to or an absolute path to a "
     "checkpoint file.")
 tf.app.flags.DEFINE_string('metric', 'ce', 'Metric used to generate the checkpoints')
@@ -50,8 +50,8 @@ tf.app.flags.DEFINE_integer('iter', 10000,
                             'The number of training iterations used to generate the checkpoints')
 
 tf.app.flags.DEFINE_string(
-    'eval_dir', 'E:\\Datasets\\cifar\\cifar10\\eval_log',
-    # 'eval_dir', '/home/deeplearning/eval',
+    #'eval_dir', 'E:\\Datasets\\cifar\\cifar10\\eval_log',
+    'eval_dir', '/home/deeplearning/eval',
     'Directory where the results are saved to.')
 
 tf.app.flags.DEFINE_integer(
@@ -65,8 +65,8 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'validation', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    # 'dataset_dir', '/home/deeplearning/data/cifar10-val',
-    'dataset_dir', 'E:\\Datasets\\cifar\cifar10\\tfrecord\\test',
+    'dataset_dir', '/home/deeplearning/data/cifar10-val',
+    #'dataset_dir', 'E:\\Datasets\\cifar\cifar10\\tfrecord\\test',
     "The directory where the dataset files are stored.")
 
 tf.app.flags.DEFINE_integer(
@@ -102,7 +102,7 @@ def main(_):
 
     if FLAGS.eval_dir:
         FLAGS.eval_dir = os.path.join(FLAGS.eval_dir,
-                                      FLAGS.training_mode,
+                                      FLAGS.training_mode, FLAGS.model_name,
                                       FLAGS.metric,
                                       str(FLAGS.iter))
 
