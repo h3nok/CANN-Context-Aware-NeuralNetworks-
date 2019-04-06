@@ -617,8 +617,7 @@ def main(_):
         # summaries.add(tf.summary.image('input',image,5))
 
         # Create gradient updates.
-        grad_updates = optimizer.apply_gradients(clones_gradients,
-                                                 global_step=global_step)
+        grad_updates = optimizer.apply_gradients(clones_gradients, global_step=global_step)
         update_ops.append(grad_updates)
 
         update_op = tf.group(*update_ops)
