@@ -234,10 +234,9 @@ def eval(checkpoint, output_dir):
         else:
             checkpoint_path = checkpoint
 
-        tf.logging.info('Evaluating %s' % checkpoint_path)
+        tf.logging.info('Evaluating %s, output: %s' % (checkpoint_path, eval_dir))
 
-        if FLAGS.eval == 'once':
-            slim.evaluation.evaluate_once(
+        slim.evaluation.evaluate_once(
                 master=FLAGS.master,
                 checkpoint_path=checkpoint_path,
                 logdir=eval_dir,
@@ -246,7 +245,6 @@ def eval(checkpoint, output_dir):
                 variables_to_restore=variables_to_restore)
 
 def main(_):
-    dir = "E:\\viNet_RnD\\Deployment\\E3\\inception_v2_2019_04_02_07_3822"
     ckpts = get_checkpoints()
     if len(ckpts) == 0:
         raise RuntimeError("No checkpoints found")
