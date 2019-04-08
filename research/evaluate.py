@@ -136,7 +136,7 @@ def eval(checkpoint, output_dir):
         eval_dir = os.path.join(FLAGS.eval_dir,
                                       FLAGS.training_mode, FLAGS.model_name,
                                       FLAGS.metric,
-                                      str(FLAGS.iter))
+                                      str(FLAGS.iter), checkpoint)
     else:
         raise RuntimeError("Unable to run evaluation. Summary dir not found")
 
@@ -244,7 +244,6 @@ def eval(checkpoint, output_dir):
                 num_evals=num_batches,
                 eval_op=list(names_to_updates.values()),
                 variables_to_restore=variables_to_restore)
-    eval_dir = None
 
 def main(_):
     dir = "E:\\viNet_RnD\\Deployment\\E3\\inception_v2_2019_04_02_07_3822"
