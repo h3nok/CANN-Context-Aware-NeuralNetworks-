@@ -126,13 +126,14 @@ def get_checkpoints():
     return chkpts
 
 
-def eval(checkpoint):
+def eval(checkpoint, output_dir):
     if not FLAGS.dataset_dir:
         raise ValueError(
             'You must supply the dataset directory with --dataset_dir')
 
+    eval_dir = None
     if FLAGS.eval_dir:
-        FLAGS.eval_dir = os.path.join(FLAGS.eval_dir,
+        eval_dir = os.path.join(FLAGS.eval_dir,
                                       FLAGS.training_mode, FLAGS.model_name,
                                       FLAGS.metric,
                                       str(FLAGS.iter))
@@ -239,19 +240,11 @@ def eval(checkpoint):
             slim.evaluation.evaluate_once(
                 master=FLAGS.master,
                 checkpoint_path=checkpoint_path,
-                logdir=FLAGS.eval_dir,
+                logdir=eval_dir,
                 num_evals=num_batches,
                 eval_op=list(names_to_updates.values()),
                 variables_to_restore=variables_to_restore)
-        else:
-            slim.evaluation.evaluation_loop(
-                master=FLAGS.master,
-                checkpoint_path=checkpoint_path,
-                logdir=FLAGS.eval_dir,
-                num_evals=num_batches,
-                eval_op=list(names_to_updates.values()),
-                variables_to_restore=variables_to_restore)
-
+    eval_dir = None
 
 def main(_):
     dir = "E:\\viNet_RnD\\Deployment\\E3\\inception_v2_2019_04_02_07_3822"
