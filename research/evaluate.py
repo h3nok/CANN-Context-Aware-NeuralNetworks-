@@ -107,7 +107,8 @@ def get_checkpoints():
                                          FLAGS.dataset_name,
                                          FLAGS.metric,
                                          str(FLAGS.iter))
-
+    if not os.path.exists(dir):
+        raise RuntimeError("Check point direction \'{}\' not found".format(dir))
     files = glob.glob(dir+"/*")
     regex = "\w+.\w+-\d+"
     # files = os.listdir(dir)
