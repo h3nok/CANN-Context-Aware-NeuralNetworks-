@@ -235,7 +235,8 @@ def eval(checkpoint, output_dir):
             checkpoint_path = checkpoint
 
         tf.logging.info('Evaluating %s' % checkpoint_path)
-
+        print (eval_dir)
+        sdfds
         if FLAGS.eval == 'once':
             slim.evaluation.evaluate_once(
                 master=FLAGS.master,
