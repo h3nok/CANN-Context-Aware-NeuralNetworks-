@@ -25,6 +25,7 @@ import math
 import tensorflow as tf
 from datasets import dataset_factory
 from nets import nets_factory
+from pprint import pprint
 from preprocessing import preprocessing_factory
 
 _CKPT_PATTER = "model.ckpt-"
@@ -110,6 +111,10 @@ def get_checkpoints():
     if not os.path.exists(dir):
         raise RuntimeError("Check point direction \'{}\' not found".format(dir))
     files = glob.glob(dir+"/*")
+
+    print("Processing {} files from {}".format(len(files), dir))
+    pprint(dir)
+
     regex = "\w+.\w+-\d+"
     # files = os.listdir(dir)
     chkpts = set()
@@ -133,12 +138,6 @@ def eval(checkpoint):
                                       str(FLAGS.iter))
     else:
         raise RuntimeError("Unable to run evaluation. Summary dir not found")
-    # FLAGS.checkpoint_path = os.path.join(FLAGS.checkpoint_path, FLAGS.training_mode,
-    #                                      FLAGS.model_name,
-    #                                      FLAGS.dataset_name,
-    #                                      FLAGS.metric,
-    #                                      str(FLAGS.iter),
-    #                                      _CKPT_PATTER + str(FLAGS.iter))
 
     tf.logging.set_verbosity(tf.logging.INFO)
 
