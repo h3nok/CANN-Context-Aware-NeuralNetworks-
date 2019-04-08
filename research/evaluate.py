@@ -19,12 +19,15 @@ from __future__ import division
 from __future__ import print_function
 
 import os
+import re
+import glob
 import math
 import tensorflow as tf
 from datasets import dataset_factory
 from nets import nets_factory
 from preprocessing import preprocessing_factory
 
+_CKPT_PATTER = "model.ckpt-"
 
 slim = tf.contrib.slim
 
@@ -95,7 +98,29 @@ tf.app.flags.DEFINE_string("eval", "once", "Evaluation loop (once, loop)")
 FLAGS = tf.app.flags.FLAGS
 
 
-def main(_):
+def get_checkpoints():
+    if not os.path.exists(FLAGS.checkpoint_path):
+        raise RuntimeError("Checkpoint path not found\n")
+
+    dir =  os.path.join(FLAGS.checkpoint_path, FLAGS.training_mode,
+                                         FLAGS.model_name,
+                                         FLAGS.dataset_name,
+                                         FLAGS.metric,
+                                         str(FLAGS.iter))
+
+    files = glob.glob(dir+"/*")
+    regex = "\w+.\w+-\d+"
+    # files = os.listdir(dir)
+    chkpts = set()
+    for file in files:
+        if _CKPT_PATTER in file:
+            model_ckpt = re.search(regex, file)
+            chkpts.add(os.path.join(dir,model_ckpt.group(0)))
+
+    return chkpts
+
+
+def eval(checkpoint):
     if not FLAGS.dataset_dir:
         raise ValueError(
             'You must supply the dataset directory with --dataset_dir')
@@ -105,17 +130,17 @@ def main(_):
                                       FLAGS.training_mode, FLAGS.model_name,
                                       FLAGS.metric,
                                       str(FLAGS.iter))
-
-    FLAGS.checkpoint_path = os.path.join(FLAGS.checkpoint_path, FLAGS.training_mode,
-                                         FLAGS.model_name,
-                                         FLAGS.dataset_name,
-                                         FLAGS.metric,
-                                         str(FLAGS.iter),
-                                         "model.ckpt-" + str(FLAGS.iter))
-    if not os.path.exists(FLAGS.checkpoint_path):
-        os.makedirs(FLAGS.checkpoint_path)
+    else:
+        raise RuntimeError("Unable to run evaluation. Summary dir not found")
+    # FLAGS.checkpoint_path = os.path.join(FLAGS.checkpoint_path, FLAGS.training_mode,
+    #                                      FLAGS.model_name,
+    #                                      FLAGS.dataset_name,
+    #                                      FLAGS.metric,
+    #                                      str(FLAGS.iter),
+    #                                      _CKPT_PATTER + str(FLAGS.iter))
 
     tf.logging.set_verbosity(tf.logging.INFO)
+
     with tf.Graph().as_default():
         tf_global_step = slim.get_or_create_global_step()
 
@@ -204,9 +229,9 @@ def main(_):
                 dataset.num_samples / float(FLAGS.batch_size))
 
         if tf.gfile.IsDirectory(FLAGS.checkpoint_path):
-            checkpoint_path = tf.train.latest_checkpoint(FLAGS.checkpoint_path)
+            checkpoint_path = tf.train.latest_checkpoint(checkpoint)
         else:
-            checkpoint_path = FLAGS.checkpoint_path
+            checkpoint_path = checkpoint
 
         tf.logging.info('Evaluating %s' % checkpoint_path)
 
@@ -226,6 +251,13 @@ def main(_):
                 num_evals=num_batches,
                 eval_op=list(names_to_updates.values()),
                 variables_to_restore=variables_to_restore)
+
+
+def main(_):
+    dir = "E:\\viNet_RnD\\Deployment\\E3\\inception_v2_2019_04_02_07_3822"
+    ckpts = get_checkpoints()
+    for ckpt in ckpts:
+        eval(checkpoint=ckpt)
 
 
 if __name__ == '__main__':
