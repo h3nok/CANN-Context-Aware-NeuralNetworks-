@@ -1,14 +1,18 @@
 #!/bin/sh
 
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric iv --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric ssim --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric psnr --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric kl --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric mi --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric ce --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric je --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric cross_entropy --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric l1 --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric l2 --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric min --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
-python3 evaluate.py --model_name inception_v1 --dataset_name cifar100 --metric min --iter 100000  --dataset_dir '/home/deeplearning/data/cifar100-val'
+MODEL=inception_v1
+DATASET_NAME=cifar100
+ITER=10000
+DATASET='/home/deeplearning/data/cifar100-val'
+
+
+declare -a metrics=('iv', 'mi','min','l1',
+                    'l2','psnr','ssim',
+                    'cross_entropy', 'kl',
+                    'je','ce','baseline')
+
+for i in "${metrics[@]}"
+do
+#    python3 evaluate.py --model_name $MODEL --dataset_name $DATASET_NAME --metric $i --iter $ITER --dataset_dir $DATASET
+    echo $i
+done
