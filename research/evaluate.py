@@ -22,6 +22,7 @@ import os
 import re
 import glob
 import math
+import ntpath
 import tensorflow as tf
 from datasets import dataset_factory
 from nets import nets_factory
@@ -116,7 +117,6 @@ def get_checkpoints():
     pprint(dir)
 
     regex = "\w+.\w+-\d+"
-    # files = os.listdir(dir)
     chkpts = set()
     for file in files:
         if _CKPT_PATTER in file:
@@ -130,14 +130,11 @@ def eval(checkpoint, output_dir):
     if not FLAGS.dataset_dir:
         raise ValueError(
             'You must supply the dataset directory with --dataset_dir')
-
-    eval_dir = None
-    if FLAGS.eval_dir:
-        eval_dir = os.path.join(FLAGS.eval_dir,
+    output_dir = os.path.join(FLAGS.eval_dir,
                                       FLAGS.training_mode, FLAGS.model_name,
                                       FLAGS.metric,
-                                      str(FLAGS.iter), checkpoint)
-    else:
+                                      str(FLAGS.iter), ntpath.basename(checkpoint))
+    if output_dir is None:
         raise RuntimeError("Unable to run evaluation. Summary dir not found")
 
     tf.logging.set_verbosity(tf.logging.INFO)
@@ -210,9 +207,6 @@ def eval(checkpoint, output_dir):
         names_to_values, names_to_updates = slim.metrics.aggregate_metric_map({
             'Accuracy': slim.metrics.streaming_accuracy(predictions, labels),
             "mse": slim.metrics.streaming_mean_squared_error(predictions, labels),
-            # "tp": slim.metrics.(predictions, predictions),
-            # "tn": tf.metrics.true_negatives(labels, predictions),
-            # 'conf': tf.metrics.auc(labels, predictions)
         })
 
         # Print the summaries to screen.
@@ -234,15 +228,17 @@ def eval(checkpoint, output_dir):
         else:
             checkpoint_path = checkpoint
 
-        tf.logging.info('Evaluating %s, output: %s' % (checkpoint_path, eval_dir))
+        tf.logging.info('Evaluating %s, output: %s' % (checkpoint_path, output_dir))
 
         slim.evaluation.evaluate_once(
                 master=FLAGS.master,
                 checkpoint_path=checkpoint_path,
-                logdir=eval_dir,
+                logdir=output_dir,
                 num_evals=num_batches,
                 eval_op=list(names_to_updates.values()),
                 variables_to_restore=variables_to_restore)
+
+    output_dir = None 
 
 def main(_):
     ckpts = get_checkpoints()
@@ -252,7 +248,7 @@ def main(_):
         if ckpt is None:
             tf.logging.info("Skipping checkpoint ...")
             continue
-        eval(checkpoint=ckpt)
+        eval(checkpoint=ckpt, output_dir=None)
 
 
 if __name__ == '__main__':
