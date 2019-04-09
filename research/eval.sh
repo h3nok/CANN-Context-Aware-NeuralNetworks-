@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MODEL=inception_v1
-DATASET_NAME=cifar10
+MODEL=
+DATASET_NAME=
 ITER=10000
 DATASET="/home/deeplearning/data/cifar10-val"
 

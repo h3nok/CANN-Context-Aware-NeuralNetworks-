@@ -30,9 +30,9 @@ slim = tf.contrib.slim
 
 _FILE_PATTERN = 'cifar100_%s_*.tfrecord'
 
-SPLITS_TO_SIZES = {'train': 50000, 'validation': 10000}
+SPLITS_TO_SIZES = {'train': 50000, 'test': 10000}
 
-_NUM_CLASSES = 97
+_NUM_CLASSES = 100
 
 _ITEMS_TO_DESCRIPTIONS = {
     'image': 'A [32 x 32 x 3] color image.',
