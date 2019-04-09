@@ -110,7 +110,7 @@ def get_checkpoints():
                                          FLAGS.metric,
                                          str(FLAGS.iter))
     if not os.path.exists(dir):
-        raise RuntimeError("Check point direction \'{}\' not found".format(dir))
+        raise RuntimeError("Check point directory\'%s\' not found" %dir)
     files = glob.glob(dir+"/*")
 
     print("Processing {} files from {}".format(len(files), dir))
