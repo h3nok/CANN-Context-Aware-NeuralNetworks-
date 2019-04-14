@@ -6,13 +6,13 @@ try:
     from cc.map_measure import (Measure, MeasureType,
                                 Ordering, map_measure_fn,
                                 MEASURE_MAP)
-    from cc.cc_utils import ConfigureLogger
+    from cc.utils import ConfigureLogger
 except ImportError as error:
     print(error)
     from map_measure import (Measure, MeasureType,
                              Ordering, map_measure_fn,
                              MEASURE_MAP)
-    from cc_utils import ConfigureLogger
+    from utils import ConfigureLogger
 
 _logger = ConfigureLogger(__file__, '.')
 
@@ -40,7 +40,7 @@ def _print(patches):
               (key, value))
 
 
-def sort_patches_or_images(patches_data, total_patches, measure, ordering, curriculum=False, labels=None):
+def order_samples_or_patches(patches_data, total_patches, measure, ordering, curriculum=False, labels=None):
     """[summary]
 
     Arguments:
@@ -197,7 +197,7 @@ def reconstruct_from_patches(patches, image_h, image_w, measure=Measure.MI, orde
     number_of_patches = patches.shape[0]
     _logger.info("Entering reconstruct_from_patches, number of patches: {}".format(
         number_of_patches))
-    patches, _ = sort_patches_or_images(
+    patches, _ = order_samples_or_patches(
         patches, number_of_patches, measure, ordering)
 
     _logger.info("Reconstructing sample ...")

@@ -514,7 +514,7 @@ def main(_):
             if FLAGS.curriculum:
                 if FLAGS.measure is None:
                     raise RuntimeError("Must supply measure for curriculum learning")
-                curriculum = curriculum_learning.Curriculum(images, labels, FLAGS.batch_size)
+                curriculum = curriculum_learning.SyllabusFactory(images, labels, FLAGS.batch_size)
                 images, labels = curriculum.propose_syllabus(FLAGS.measure, FLAGS.ordering)
             # curriculum learning
             labels = slim.one_hot_encoding(

@@ -11,29 +11,30 @@ from itertools import product
 import gc
 
 
+def plot_image_patches(x, ksize_rows=299, ksize_cols=299):
+    nr = x.shape[1]
+    nc = x.shape[2]
+    # figsize: width and height in inches. can be changed to make
+    # +output figure fit well.
+    #fig = plt.figure(figsize=(nr, nc))
+    fig = plt.figure()
+    gs = gridspec.GridSpec(nr, nc)
+    gs.update(wspace=0.01, hspace=0.01)
+
+    for i in range(nr):
+        for j in range(nc):
+            ax = plt.subplot(gs[i*nc+j])
+            plt.axis('off')
+            ax.set_xticklabels([])
+            ax.set_yticklabels([])
+            ax.set_aspect('auto')
+            plt.imshow(x[0, i, j, ].reshape(ksize_rows, ksize_cols, 3))
+    return fig
+
+
 class ImagePatches(object):
     def __init__(self):
         self._size = tf.placeholder(dtype=tf.int)
-
-    def plot_image_patches(self, x, ksize_rows=299, ksize_cols=299):
-        nr = x.shape[1]
-        nc = x.shape[2]
-        # figsize: width and height in inches. can be changed to make
-        # +output figure fit well.
-        #fig = plt.figure(figsize=(nr, nc))
-        fig = plt.figure()
-        gs = gridspec.GridSpec(nr, nc)
-        gs.update(wspace=0.01, hspace=0.01)
-
-        for i in range(nr):
-            for j in range(nc):
-                ax = plt.subplot(gs[i*nc+j])
-                plt.axis('off')
-                ax.set_xticklabels([])
-                ax.set_yticklabels([])
-                ax.set_aspect('auto')
-                plt.imshow(x[0, i, j, ].reshape(ksize_rows, ksize_cols, 3))
-        return fig
 
 
 def patchify(patches: np.ndarray, patch_size, step: int = 1):
@@ -50,7 +51,6 @@ def unpatchify(patches: np.ndarray, imsize):
 
     n_h, n_w, _, p_h, p_w, _ = patches.shape
 
-    # Calculat the overlap size in each axis
     o_w = (n_w * p_w - i_w) / (n_w - 1)
     o_h = (n_h * p_h - i_h) / (n_h - 1)
 

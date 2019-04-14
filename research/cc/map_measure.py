@@ -3,10 +3,10 @@ from enum import Enum
 
 try:
 	from cc.measures import l1_norm, l2_norm,max_norm, mi, ssim, psnr, entropy
-	from cc.cc_utils import ConfigureLogger
+	from cc.utils import ConfigureLogger
 except (Exception, ImportError) as error:
     from measures import l1_norm, l2_norm, max_norm, mi,ssim, psnr, entropy
-    from cc_utils import ConfigureLogger
+    from utils import ConfigureLogger
 
 _logger = ConfigureLogger(__file__, '.')
 

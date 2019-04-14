@@ -2,10 +2,10 @@ import tensorflow as tf
 import numpy as np
 from patch_proposals import generate_patches_v2, p_por
 from map_measure import Measure, MeasureType, Ordering
-from reconstructor import reconstruct_from_patches
+from curriculum_factory import reconstruct_from_patches
 from PIL import Image
 import matplotlib.pyplot as plt
-from cc_utils import ImageHelper as IMPLOT
+from utils import ImageHelper as IMPLOT
 tf_func = tf.py_func
 tf_contrib = tf.contrib
 

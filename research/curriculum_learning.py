@@ -1,5 +1,5 @@
-from cc.map_measure import Measure, MeasureType, Ordering, MEASURE_MAP
-from cc.reconstructor import sort_patches_or_images
+from cc.map_measure import Measure, Ordering
+from cc.curriculum_factory import order_samples_or_patches
 from preprocessing.cc_preprocessing import decode_measure
 import tensorflow as tf
 import logger
@@ -7,7 +7,7 @@ import logger
 _logger = logger.Configure(__file__, 'cc.log')
 
 
-class Curriculum(object):
+class SyllabusFactory(object):
     def __init__(self, training_batch, labels, batch_size):
         assert labels is not None, "Must supply labels tensor with matching dimensions"
         _logger.debug("Constructing training curriculum")
@@ -22,8 +22,8 @@ class Curriculum(object):
         measure, ordering = decode_measure(measure, ordering)
         assert isinstance(measure, Measure)
         assert isinstance(ordering, Ordering)
-        syllabus, labels = sort_patches_or_images(
+        input_path, labels = order_samples_or_patches(
             self.batch, self.batch_size, measure, ordering, curriculum=True, labels=self.labels)
 
-        return syllabus, labels
+        return input_path, labels
 

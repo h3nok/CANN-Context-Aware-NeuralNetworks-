@@ -6,15 +6,15 @@ import numpy as np
 import tensorflow as tf
 
 try:
-    from cc.cc_utils import ImageHelper as IMPLOT, ConfigureLogger
+    from cc.utils import ImageHelper as IMPLOT, ConfigureLogger
     from cc.map_measure import Measure
-    from cc.reconstructor import reconstruct_from_patches
+    from cc.curriculum_factory import reconstruct_from_patches
     from cc.timer import endlog, log
 except (Exception, ImportError) as error:
     print(error)
-    from cc_utils import ImageHelper as IMPLOT, ConfigureLogger
+    from utils import ImageHelper as IMPLOT, ConfigureLogger
     from map_measure import Measure
-    from reconstructor import reconstruct_from_patches
+    from curriculum_factory import reconstruct_from_patches
     from timer import endlog, log
 
 _logger = ConfigureLogger(__file__, '.')

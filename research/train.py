@@ -438,14 +438,14 @@ def main(_):
     if FLAGS.measure is None or FLAGS.preprocessing_name is None and FLAGS.curriculum is False:
         FLAGS.measure = 'baseline'
 
-    if FLAGS.curriculum:
-        FLAGS.train_dir = os.path.join(FLAGS.train_dir, 'curriculum', FLAGS.model_name, FLAGS.dataset_name,
+    #if FLAGS.curriculum:
+    FLAGS.train_dir = os.path.join(FLAGS.train_dir, 'curriculum', FLAGS.model_name, FLAGS.dataset_name,
                                    FLAGS.measure,
                                    str(FLAGS.max_number_of_steps))
-    else:
-        FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name, FLAGS.dataset_name,
-                                   FLAGS.measure,
-                                   str(FLAGS.max_number_of_steps))
+    #else:
+    #    FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name, FLAGS.dataset_name,
+    #                               FLAGS.measure,
+    #                               str(FLAGS.max_number_of_steps))
 
     _write_config()
 
@@ -514,7 +514,7 @@ def main(_):
             if FLAGS.curriculum:
                 if FLAGS.measure is None:
                     raise RuntimeError("Must supply measure for curriculum learning")
-                curriculum = curriculum_learning.Curriculum(images, labels, FLAGS.batch_size)
+                curriculum = curriculum_learning.SyllabusFactory(images, labels, FLAGS.batch_size)
                 images, labels = curriculum.propose_syllabus(FLAGS.measure, FLAGS.ordering)
             # curriculum learning
             labels = slim.one_hot_encoding(
