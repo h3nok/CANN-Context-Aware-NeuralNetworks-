@@ -1,8 +1,8 @@
 #!/bin/sh
 
-MODEL=inception_v1
+MODEL=vgg_a
 DATASET_NAME=cifar100
-DATASET="/home/deeplearning/data/cifar/cifar100"
+DATASET="/home/deeplearning/data/cifar100"
 CURRICULUM=True
 STEPS=100000
 
@@ -12,7 +12,7 @@ declare -a metrics=("iv" "mi" "min"
                      "kl" "je" "ce")
 
 run baseline 
-python3 train.py --curriculum False --model_name $MODEL --max_number_of_steps $STEPS --dataset_dir $DATASET --dataset_name $DATASET_NAME
+python3 train.py --curriculum False --measure baseline --model_name $MODEL --max_number_of_steps $STEPS --dataset_dir $DATASET --dataset_name $DATASET_NAME
 
 #curriculum leanring 
 for i in "${metrics[@]}"
