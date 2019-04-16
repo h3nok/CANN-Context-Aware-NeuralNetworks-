@@ -25,15 +25,15 @@ from __future__ import print_function
 import os
 import tensorflow as tf
 
-import dataset_utils
+from datasets import dataset_utils
 
 slim = tf.contrib.slim
 
 _FILE_PATTERN = 'flowers_%s_*.tfrecord'
 
-SPLITS_TO_SIZES = {'train': 53226, 'validation': 20000, 'test':1000}
+SPLITS_TO_SIZES = {'train': 3320, 'validation': 350}
 
-_NUM_CLASSES = 2
+_NUM_CLASSES = 5
 
 _ITEMS_TO_DESCRIPTIONS = {
     'image': 'A color image of varying size.',

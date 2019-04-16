@@ -22,7 +22,7 @@ from datasets import cifar10
 from datasets import caltech101
 from datasets import caltech256
 from datasets import cifar100
-from datasets import cats_vs_dogs
+from datasets import imagenet
 # from datasets import flowers
 
 datasets_map = {
