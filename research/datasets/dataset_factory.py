@@ -31,7 +31,8 @@ datasets_map = {
       'cifar10':cifar10,
       'caltech101':caltech101,
       'caltech256':caltech256,
-      'cifar100':cifar100
+      'cifar100':cifar100,
+      'imagenet':imagenet
 }
 
 
