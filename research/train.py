@@ -44,10 +44,6 @@ tf.app.flags.DEFINE_string(
     'train_dir', '/home/deeplearning/train_log',
     'Directory where checkpoints and event logs are written to.')
 
-tf.app.flags.DEFINE_string(
-    'customer', 'cifar10',
-    'Name of the customer or site ')
-
 tf.app.flags.DEFINE_integer('num_clones', 1,
                             'Number of model clones to deploy.')
 
@@ -179,13 +175,13 @@ tf.app.flags.DEFINE_float(
 #######################
 
 tf.app.flags.DEFINE_string(
-    'dataset_name', 'cifar10', 'The name of the dataset to load.')
+    'dataset_name', 'imagenet', 'The name of the dataset to load.')
 
 tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', "/home/deeplearning/data/cifar10",
+    'dataset_dir', "/home/deeplearning/data/imagenet/train",
     'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
@@ -203,7 +199,7 @@ tf.app.flags.DEFINE_integer(
     'train_image_size', None, 'Train image size')
 
 tf.app.flags.DEFINE_integer('max_number_of_steps',
-                            10000, 'The maximum number of training steps.')
+                            500000, 'The maximum number of training steps.')
 
 #####################
 # Fine-Tuning Flags #
@@ -614,7 +610,6 @@ def main(_):
 
         # Add total_loss to summary.
         summaries.add(tf.summary.scalar('total_loss', total_loss))
-        # summaries.add(tf.summary.image('input',image,5))
 
         # Create gradient updates.
         grad_updates = optimizer.apply_gradients(clones_gradients, global_step=global_step)
