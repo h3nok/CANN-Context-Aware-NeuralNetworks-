@@ -23,21 +23,22 @@ from datasets import caltech101
 from datasets import caltech256
 from datasets import cifar100
 from datasets import imagenet
-# from datasets import flowers
+from datasets import flowers
 
 datasets_map = {
-      # 'cats_vs_dogs':cats_vs_dogs,
-      # 'flowers':flowers,
-      'cifar10':cifar10,
-      'caltech101':caltech101,
-      'caltech256':caltech256,
-      'cifar100':cifar100,
-      'imagenet':imagenet
+    # 'cats_vs_dogs':cats_vs_dogs,
+    # 'flowers':flowers,
+    'cifar10': cifar10,
+    'caltech101': caltech101,
+    'caltech256': caltech256,
+    'cifar100': cifar100,
+    'imagenet': imagenet,
+    'flowers': flowers
 }
 
 
 def get_dataset(name, split_name, dataset_dir, file_pattern=None, reader=None):
-  """Given a dataset name and a split_name returns a Dataset.
+    """Given a dataset name and a split_name returns a Dataset.
 
   Args:
     name: String, the name of the dataset.
@@ -51,13 +52,13 @@ def get_dataset(name, split_name, dataset_dir, file_pattern=None, reader=None):
     A `Dataset` class.
 
   Raises:
-    ValueError: If the dataset `name` is unknown.
+    ValueError: If the dataset `name` is unknown.clear
   """
-  if name not in datasets_map:
-    raise ValueError('Name of dataset unknown %s' % name)
- 
-  return datasets_map[name].get_split(
-      split_name,
-      dataset_dir,
-      file_pattern,
-      reader)
+    if name not in datasets_map:
+        raise ValueError('Name of dataset unknown %s' % name)
+
+    return datasets_map[name].get_split(
+        split_name,
+        dataset_dir,
+        file_pattern,
+        reader)
