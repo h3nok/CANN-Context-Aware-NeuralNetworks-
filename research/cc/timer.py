@@ -18,7 +18,7 @@ def log(s, elapsed=None):
     if elapsed:
         print("Elapsed time:", elapsed)
     print(line)
-    print
+    print()
 
 
 def endlog(start):
