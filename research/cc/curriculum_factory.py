@@ -1,4 +1,3 @@
-
 import tensorflow as tf
 import numpy as np
 
@@ -14,11 +13,10 @@ except ImportError as error:
                              MEASURE_MAP)
     from utils import ConfigureLogger
 
-_logger = ConfigureLogger(__file__, '.')
+_logger = ConfigureLogger(__name__, '.')
 
 
 def _determine_measure_type(measure):
-    print(type(measure))
     assert isinstance(measure, Measure), "{} not found.".format(measure.value)
     if measure in [Measure.JE, Measure.MI, Measure.CE, Measure.L1, Measure.L2,
                    Measure.MAX_NORM, Measure.KL, Measure.SSIM, Measure.PSNR,
@@ -81,10 +79,10 @@ def order_samples_or_patches(patches_data, total_patches, measure, ordering, cur
 
     def _compare_numpy(reference_patch, patch):
         patches_to_compare = (reference_patch, patch)
-        distance = measure_fn(patches_to_compare)
-        return distance
+        dist = measure_fn(patches_to_compare)
+        return dist
 
-    def _swap(i, j):
+    def _swap_patches(i, j):
         # print("Swapping %d with %d" % (i, j))
         patches_data[[i, j]] = patches_data[[j, i]]
 
@@ -92,14 +90,14 @@ def order_samples_or_patches(patches_data, total_patches, measure, ordering, cur
         labels_data[[i, j]] = labels_data[[j, i]]
 
     for i in range(0, total_patches):
-            # TODO- make configurable
+        # TODO- make configurable
         closest_distance_thus_far = 100
         reference_patch_data = patches_data[i]  # set reference patch
         # sorted_patches.append(reference_patch_data)
 
         # compare the rest to reference patch
-        for j in range(i+1, total_patches):
-                # print ("Comparing %d and %d" %(i,j))
+        for j in range(i + 1, total_patches):
+            # print ("Comparing %d and %d" %(i,j))
             distance = _compare_numpy(
                 reference_patch_data, patches_data[j])
             if j == 1:
@@ -107,15 +105,15 @@ def order_samples_or_patches(patches_data, total_patches, measure, ordering, cur
                 continue
             if ordering == Ordering.Ascending and distance < closest_distance_thus_far:
                 closest_distance_thus_far = distance
-                _swap(i+1, j)
+                _swap_patches(i + 1, j)
                 if curriculum:
-                    _swap_labels(i+1, j)
+                    _swap_labels(i + 1, j)
                 # reference_patch_data = patches_data[i]
             elif ordering == Ordering.Descending and distance > closest_distance_thus_far:
                 closest_distance_thus_far = distance
-                _swap(i+1, j)
+                _swap_patches(i + 1, j)
                 if labels is not None:
-                    _swap_labels(i+1, j)
+                    _swap_labels(i + 1, j)
 
     sorted_patches = tf.convert_to_tensor(patches_data, dtype=tf.float32)
     sorted_labels = None
