@@ -34,19 +34,15 @@ from syllabus_factory.map_measure import Measure
 
 slim = tf.contrib.slim
 
-HERACLES_DATA_DIR = '/home/deeplearning/data'
+DATA_DIR = 'E:\\Thesis\\data\\'
 
 
 tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
 
 tf.app.flags.DEFINE_string(
-    'train_dir', '/home/deeplearning/train_log',
+    'train_dir', 'E:\\Thesis\\logs',
     'Directory where checkpoints and event logs are written to.')
-
-tf.app.flags.DEFINE_string(
-    'customer', 'cifar10',
-    'Name of the customer or site ')
 
 tf.app.flags.DEFINE_integer('num_clones', 1,
                             'Number of model clones to deploy.')
@@ -185,7 +181,7 @@ tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', "/home/deeplearning/data/cifar10",
+    'dataset_dir', DATA_DIR + "cifar10\\train",
     'The directory where the dataset files are stored.')
 
 tf.app.flags.DEFINE_integer(
@@ -203,7 +199,7 @@ tf.app.flags.DEFINE_integer(
     'train_image_size', None, 'Train image size')
 
 tf.app.flags.DEFINE_integer('max_number_of_steps',
-                            10000, 'The maximum number of training steps.')
+                            500000, 'The maximum number of training steps.')
 
 #####################
 # Fine-Tuning Flags #
@@ -438,14 +434,14 @@ def main(_):
     if FLAGS.measure is None or FLAGS.preprocessing_name is None and FLAGS.curriculum is False:
         FLAGS.measure = 'baseline'
 
-    if FLAGS.curriculum:
-        FLAGS.train_dir = os.path.join(FLAGS.train_dir, 'curriculum', FLAGS.model_name, FLAGS.dataset_name,
+    #if FLAGS.curriculum:
+    FLAGS.train_dir = os.path.join(FLAGS.train_dir, 'curriculum', FLAGS.model_name, FLAGS.dataset_name,
                                    FLAGS.measure,
                                    str(FLAGS.max_number_of_steps))
-    else:
-        FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name, FLAGS.dataset_name,
-                                   FLAGS.measure,
-                                   str(FLAGS.max_number_of_steps))
+    #else:
+    #    FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name, FLAGS.dataset_name,
+    #                               FLAGS.measure,
+    #                               str(FLAGS.max_number_of_steps))
 
     _write_config()
 
@@ -614,7 +610,6 @@ def main(_):
 
         # Add total_loss to summary.
         summaries.add(tf.summary.scalar('total_loss', total_loss))
-        # summaries.add(tf.summary.image('input',image,5))
 
         # Create gradient updates.
         grad_updates = optimizer.apply_gradients(clones_gradients, global_step=global_step)

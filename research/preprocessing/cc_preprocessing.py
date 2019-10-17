@@ -1,6 +1,6 @@
-from cc.patch_proposals import p_por
-from cc.map_measure import Measure
-from cc.map_measure import Ordering
+from syllabus_factory.patch_proposals import p_por
+from syllabus_factory.map_measure import Measure
+from syllabus_factory.map_measure import Ordering
 import tensorflow as tf
 
 MEASURE_MAP = {

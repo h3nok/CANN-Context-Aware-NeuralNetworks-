@@ -1,12 +1,12 @@
-from cc.map_measure import Measure, Ordering
-from cc.curriculum_factory import order_samples_or_patches
+from syllabus_factory.map_measure import Measure, Ordering
+from syllabus_factory.curriculum_factory import order_samples_or_patches
 from preprocessing.cc_preprocessing import decode_measure
 import tensorflow as tf
 import logger
 import statistics
 from enum import Enum
 
-_logger = logger.Configure(__file__, 'cc.log')
+_logger = logger.Configure(__file__, 'syllabus_factory.log')
 
 
 class FitnessSignal(Enum):

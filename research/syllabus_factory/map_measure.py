@@ -2,8 +2,8 @@ import functools
 from enum import Enum
 
 try:
-	from cc.measures import l1_norm, l2_norm,max_norm, mi, ssim, psnr, entropy
-	from cc.utils import ConfigureLogger
+	from syllabus_factory.measures import l1_norm, l2_norm,max_norm, mi, ssim, psnr, entropy
+	from syllabus_factory.utils import ConfigureLogger
 except (Exception, ImportError) as error:
     from measures import l1_norm, l2_norm, max_norm, mi,ssim, psnr, entropy
     from utils import ConfigureLogger

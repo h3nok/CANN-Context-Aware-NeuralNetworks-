@@ -25,12 +25,12 @@ import tensorflow as tf
 from PIL import Image
 
 import curriculum_learning
-from cc import *
+from syllabus_factory import *
 from datasets import dataset_factory
 from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
-from cc.map_measure import Measure
+from syllabus_factory.map_measure import Measure
 
 slim = tf.contrib.slim
 

@@ -47,7 +47,7 @@ class ImageHelper(object):
 def ConfigureLogger(module, logfile_dir='.', console=True):
     logger = logging.getLogger(module)
     logger.setLevel(logging.DEBUG)
-    fh = logging.FileHandler(os.path.join(logfile_dir, 'cc.log'))
+    fh = logging.FileHandler(os.path.join(logfile_dir, 'syllabus_factory.log'))
     fh.setLevel(logging.DEBUG)
 
     # create console hadler

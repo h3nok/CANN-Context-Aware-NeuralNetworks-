@@ -243,10 +243,10 @@ def run(dataset_dir, output_dir, dataset_name, set_type='validation', tracks=Fal
 
 
 if __name__ == '__main__':
-    DATASET_DIR = "E:\\Datasets\\caltech\\caltech256\\original"
-    OUTPUT_DIR = 'E:\\Datasets\\caltech\\caltech256'
-    NAME = "caltech256"
-    TYPE = 'validation'
-    PREFIX = "caltech101"
+    DATASET_DIR = "E:\\Thesis\\data\\cifar10\\train"
+    OUTPUT_DIR = 'E:\\Thesis\\data'
+    NAME = "cifar10"
+    TYPE = 'train'
+    PREFIX = "cifar10"
     run(DATASET_DIR, OUTPUT_DIR, NAME, TYPE, False,
         subsample=False, normalize=False, prefix=PREFIX, ppor='')

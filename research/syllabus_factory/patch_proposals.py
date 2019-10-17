@@ -6,10 +6,10 @@ import numpy as np
 import tensorflow as tf
 
 try:
-    from cc.utils import ImageHelper as IMPLOT, ConfigureLogger
-    from cc.map_measure import Measure
-    from cc.curriculum_factory import reconstruct_from_patches
-    from cc.timer import endlog, log
+    from syllabus_factory.utils import ImageHelper as IMPLOT, ConfigureLogger
+    from syllabus_factory.map_measure import Measure
+    from syllabus_factory.curriculum_factory import reconstruct_from_patches
+    from syllabus_factory.timer import endlog, log
 except (Exception, ImportError) as error:
     print(error)
     from utils import ImageHelper as IMPLOT, ConfigureLogger
@@ -148,7 +148,7 @@ def p_por(image, height, width, measure, ordering, patch_h, patch_w):
 
 
 def test():
-    image_file = 'cc/samples/husky.jpg'
+    image_file = 'syllabus_factory/samples/husky.jpg'
     patch_width = 56
     patch_height = 56
     input_size = (224, 224)

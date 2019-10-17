@@ -3,10 +3,10 @@ import tensorflow as tf
 import numpy as np
 
 try:
-    from cc.map_measure import (Measure, MeasureType,
-                                Ordering, map_measure_fn,
-                                MEASURE_MAP)
-    from cc.utils import ConfigureLogger
+    from syllabus_factory.map_measure import (Measure, MeasureType,
+                                              Ordering, map_measure_fn,
+                                              MEASURE_MAP)
+    from syllabus_factory.utils import ConfigureLogger
 except ImportError as error:
     print(error)
     from map_measure import (Measure, MeasureType,

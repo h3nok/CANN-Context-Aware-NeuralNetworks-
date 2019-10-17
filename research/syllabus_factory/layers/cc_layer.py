@@ -1,6 +1,6 @@
 import tensorflow as tf
-from cc.measures.distance import *
-from cc.measures.standalone import *
+from syllabus_factory.measures.distance import *
+from syllabus_factory.measures.standalone import *
 
 TFKLayer = tf.keras.layers.Layer
 
