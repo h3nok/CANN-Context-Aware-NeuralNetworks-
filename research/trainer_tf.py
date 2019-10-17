@@ -401,16 +401,3 @@ class Trainer(object):
 
     def run(self):
         return self.train()
-
-
-def run_trainer():
-    # The config object should be created separately so that adjustments can be made before
-    # giving it to the trainer
-    config = Config(None)
-    config.load_config_from_xml('C:\\viNet_RnD\\configs\\E3.xml')
-    trainer = Trainer(config)
-    trainer.train()
-
-
-if __name__ == '__main__':
-    run_trainer()
