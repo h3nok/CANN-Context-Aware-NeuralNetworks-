@@ -10,7 +10,7 @@ from contextlib2 import contextmanager
 _base = declarative_base()
 
 
-class Hyperparameters(_base):
+class TrainingFlags(_base):
     # Training hyperparameters model default inception_v2
     __tablename__ = 'training_params'
     __table_args__ = {"schema": "train_config"}
@@ -75,7 +75,7 @@ class Hyperparameters(_base):
         # dict to Hyperparams object
         assert config, "Must supply config"
         assert isinstance(config, dict), "Supplied config is not a dict instance\n"
-        obj = Hyperparameters()
+        obj = TrainingFlags()
         for key, value in config.items():
             setattr(obj, key, value)
 
