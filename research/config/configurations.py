@@ -82,3 +82,9 @@ class TrainingFlags(_base):
         return obj
 
 
+class TrainConfig:
+    pass
+
+
+class EvalConfig:
+    pass
