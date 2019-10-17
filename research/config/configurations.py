@@ -81,3 +81,4 @@ class TrainingFlags(_base):
 
         return obj
 
+
