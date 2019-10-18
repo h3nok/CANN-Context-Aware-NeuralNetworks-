@@ -64,7 +64,7 @@ def run():
         output = fm_por('fm_por_1', image.eval(), input_size[0], patch_width)
         output = sess.run(output)
         plotter = IMPLOT()
-        plotter.show_images([image.eval(), output], 2, ['input', 'output'])
+        show_images([image.eval(), output], 2, ['input', 'output'])
         plt.show()
 
 

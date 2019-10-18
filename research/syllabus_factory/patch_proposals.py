@@ -194,7 +194,7 @@ def test():
                   "L2", "MAX", "JE", "Entropy",
                   "SSIM", "PSNR"]
         plotter = IMPLOT()
-        fig = plotter.show_images(reconstructed_samples, 2, titles=titles)
+        fig = show_images(reconstructed_samples, 2, titles=titles)
         plt.show()
 
 
