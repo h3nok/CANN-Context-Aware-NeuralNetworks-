@@ -2,6 +2,7 @@ from sqlalchemy import Column, String, Integer, Float, Boolean, text
 from sqlalchemy import inspect
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
+import yaml
 
 _base = declarative_base()
 
@@ -11,7 +12,7 @@ class TrainingFlags(_base):
     __tablename__ = 'training_params'
     __table_args__ = {"schema": "train_config"}
 
-    id = Column(UUID(as_uuid=True), default=text("uuid_generate_v1()"), primary_key=True)
+    id = Column(UUID(as_uuid=False), default=text("uuid_generate_v1()"), primary_key=True)
     name = Column(String, primary_key=True, nullable=False)
     dataset_name = Column(String, default='cifar10')
     customer = Column(String, default="cifar")
@@ -77,10 +78,14 @@ class TrainingFlags(_base):
 
         return obj
 
+    def dump(self, filename):
+        try:
+            with open(filename, 'w+') as outfile:
+                yaml.dump(self.to_dict(), outfile, default_flow_style=False)
+                outfile.close()
+        except BaseException as e:
+            print(e.args)
 
-class TrainConfig:
-    pass
 
-
-class EvalConfig:
+class EvalFlags:
     pass

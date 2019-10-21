@@ -5,4 +5,5 @@ log/
 *.npy
 *.idea
 *.log
+*.pyc
 venv/

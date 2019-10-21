@@ -220,7 +220,7 @@ tf.app.flags.DEFINE_boolean(
 
 
 #####################
-# Controlling Convolution CC V2 FLAGS #
+# Patch ordering and reconstruction
 #####################
 
 tf.app.flags.DEFINE_string(

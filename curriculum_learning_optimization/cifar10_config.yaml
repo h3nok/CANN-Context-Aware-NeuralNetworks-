@@ -7,7 +7,7 @@ checkpoint_exclude_scopes: null
 checkpoint_path: null
 clone_on_cpu: false
 customer: E3
-dataset_dir: E:\Thesis\data\cifar10\train
+dataset_dir: /home/henok/dataset/cifar10
 dataset_name: cifar10
 dataset_split_name: train
 end_learning_rate: 0.0001
