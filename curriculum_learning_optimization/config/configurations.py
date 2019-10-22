@@ -63,6 +63,11 @@ class TrainingFlags(_base):
     trainable_scopes = Column(String, default=None)
     dataset_split_name = Column(String, default=None)
     dataset_dir = Column(String, default=None)
+    measure = Column(String, default=None)
+    ordering = Column(Integer, default=0)
+    patch_size = Column(Integer, default=8)
+    curriculum = Column(Boolean, default=False)
+    master = Column(String, default=None)
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

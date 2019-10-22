@@ -31,6 +31,7 @@ from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
 from configurations import TrainingFlags
+import curriculum_learning
 
 _logger = logger.Configure(__name__, __name__, console=True)
 
@@ -171,7 +172,7 @@ class Trainer(object):
                           for scope in self.config.checkpoint_exclude_scopes.split(',')]
 
         variables_to_restore = []
-        for var in self.slim.get_model_variables():
+        for var in self.self.slim.get_model_variables():
             excluded = False
             for exclusion in exclusions:
                 if var.op.name.startswith(exclusion):
@@ -210,12 +211,24 @@ class Trainer(object):
         return variables_to_train
 
     def train(self):
-        if not self.config.train_dir:
+        if not self.config.dataset_dir:
             raise ValueError(
                 'You must supply the dataset directory with --dataset_dir')
 
         tf.logging.set_verbosity(tf.logging.INFO)
+        if self.config.measure is None or self.config.preprocessing_name is None and self.config.curriculum is False:
+            self.config.measure = 'baseline'
+
+        # if self.config.curriculum:
+        self.config.train_dir = os.path.join(self.config.train_dir, 'curriculum', self.config.model_name,
+                                             self.config.dataset_name,
+                                             self.config.measure,
+                                             str(self.config.max_number_of_steps))
+        # else: self.config.train_dir = os.path.join(self.config.train_dir, self.config.model_name,
+        # self.config.dataset_name, self.config.measure, str(self.config.max_number_of_steps))
+
         self._write_out_config()
+
         with tf.Graph().as_default():
             #######################
             # Config model_deploy #
@@ -267,17 +280,27 @@ class Trainer(object):
                 label -= self.config.labels_offset
 
                 train_image_size = self.config.train_image_size or network_fn.default_image_size
-
                 image = image_preprocessing_fn(
-                    image, train_image_size, train_image_size)
+                    image, train_image_size, train_image_size, self.config.measure,
+                    self.config.ordering, self.config.patch_size)
 
                 images, labels = tf.train.batch(
                     [image, label],
                     batch_size=self.config.batch_size,
                     num_threads=self.config.num_preprocessing_threads,
                     capacity=5 * self.config.batch_size)
+
+                # curriculum learning based on image content
+                curriculum = None
+                if self.config.curriculum:
+                    if self.config.measure is None:
+                        raise RuntimeError("Must supply measure for curriculum learning")
+                    curriculum = curriculum_learning.SyllabusFactory(images, labels, self.config.batch_size)
+                    images, labels = curriculum.propose_syllabus(self.config.measure, self.config.ordering)
+                # curriculum learning
                 labels = self.slim.one_hot_encoding(
                     labels, dataset.num_classes - self.config.labels_offset)
+
                 batch_queue = self.slim.prefetch_queue.prefetch_queue(
                     [images, labels], capacity=2 * deploy_config.num_clones)
 
@@ -329,7 +352,7 @@ class Trainer(object):
                 summaries.add(tf.summary.histogram(variable.op.name, variable))
 
             #################################
-            # configure the moving averages #
+            # Configure the moving averages #
             #################################
             if self.config.moving_average_decay:
                 moving_average_variables = self.slim.get_model_variables()
@@ -339,7 +362,7 @@ class Trainer(object):
                 moving_average_variables, variable_averages = None, None
 
             #########################################
-            # configure the optimization procedure. #
+            # Configure the optimization procedure. #
             #########################################
             with tf.device(deploy_config.optimizer_device()):
                 learning_rate = self._configure_learning_rate(
@@ -374,8 +397,7 @@ class Trainer(object):
             summaries.add(tf.summary.scalar('total_loss', total_loss))
 
             # Create gradient updates.
-            grad_updates = optimizer.apply_gradients(clones_gradients,
-                                                     global_step=global_step)
+            grad_updates = optimizer.apply_gradients(clones_gradients, global_step=global_step)
             update_ops.append(grad_updates)
 
             update_op = tf.group(*update_ops)
@@ -389,14 +411,14 @@ class Trainer(object):
 
             # Merge all summaries together.
             summary_op = tf.summary.merge(list(summaries), name='summary_op')
-
+            session_config = tf.ConfigProto(allow_soft_placement=False)
             ##########################
             # Kicks off the training. #
             ###########################
             self.slim.learning.train(
                 train_tensor,
                 logdir=self.config.train_dir,
-                master=self.config.tf_master,
+                master=self.config.master,
                 is_chief=(self.config.task == 0),
                 init_fn=self._get_init_fn(),
                 summary_op=summary_op,
@@ -404,7 +426,8 @@ class Trainer(object):
                 log_every_n_steps=self.config.log_every_n_steps,
                 save_summaries_secs=self.config.save_summaries_secs,
                 save_interval_secs=self.config.save_interval_secs,
-                sync_optimizer=optimizer if self.config.sync_replicas else None)
+                sync_optimizer=optimizer if self.config.sync_replicas else None,
+                session_config=session_config)
 
     def run(self):
         return self.train()
