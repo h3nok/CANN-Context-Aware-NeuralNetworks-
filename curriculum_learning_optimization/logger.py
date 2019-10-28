@@ -1,26 +1,29 @@
 import logging
 import os
-LOG_DIR = "."
+LOG_DIR = "/home/henok/research/training_log"
 
 
-def Configure(module, filename, console=True):
+def configure(module, filename, console=True):
     logger = logging.getLogger(module)
     logger.setLevel(logging.DEBUG)
+    if not os.path.exists(LOG_DIR):
+        os.makedirs(LOG_DIR)
     fh = logging.FileHandler(os.path.join(LOG_DIR, filename))
     fh.setLevel(logging.DEBUG)
 
-    # create console hadler
+    # create console handler
     ch = None
     if console:
         ch = logging.StreamHandler()
         ch.setLevel(logging.DEBUG)
 
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     fh.setFormatter(formatter)
-    ch.setFormatter(formatter)
+    if console:
+        ch.setFormatter(formatter)
     # add the handlers to the logger
     logger.addHandler(fh)
-    logger.addHandler(ch)
+    if console:
+        logger.addHandler(ch)
 
     return logger

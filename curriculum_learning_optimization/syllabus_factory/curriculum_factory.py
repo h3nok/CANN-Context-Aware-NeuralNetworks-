@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+import tqdm
 
 try:
     from syllabus_factory.map_measure import (Measure, MeasureType,
@@ -89,7 +90,8 @@ def order_samples_or_patches(patches_data, total_patches, measure, ordering, cur
     def _swap_labels(i, j):
         labels_data[[i, j]] = labels_data[[j, i]]
 
-    for i in range(0, total_patches):
+    for i in tqdm.tqdm(range(0, total_patches)):
+        _logger.info("Sorting batch of samples, # of samples: {}".format(total_patches))
         # TODO- make configurable
         closest_distance_thus_far = 100
         reference_patch_data = patches_data[i]  # set reference patch

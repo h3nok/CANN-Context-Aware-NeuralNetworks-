@@ -15,8 +15,8 @@ class TrainingFlags(_base):
     id = Column(UUID(as_uuid=False), default=text("uuid_generate_v1()"), primary_key=True)
     name = Column(String, primary_key=True, nullable=False)
     dataset_name = Column(String, default='cifar10')
-    customer = Column(String, default="cifar")
-    train_dir = Column(String, default=None)
+    purpose = Column(String, default="cifar")
+    training_log_dir = Column(String, default=None)
     optimizer = Column(String, default='sgd')
     batch_size = Column(Integer, default=8)
     train_image_size = Column(Integer, default=224)
@@ -68,6 +68,8 @@ class TrainingFlags(_base):
     patch_size = Column(Integer, default=8)
     curriculum = Column(Boolean, default=False)
     master = Column(String, default=None)
+    backup_measure = Column(String, default=None)
+    measure_list = Column(String, default=None)
 
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
@@ -75,7 +77,7 @@ class TrainingFlags(_base):
     @staticmethod
     def serialize(config):
         # dict to Hyperparams object
-        assert config, "Must supply config"
+        assert config, "Supplied config is None"
         assert isinstance(config, dict), "Supplied config is not a dict instance\n"
         obj = TrainingFlags()
         for key, value in config.items():
@@ -93,4 +95,9 @@ class TrainingFlags(_base):
 
 
 class EvalFlags:
+    __tablename__ = 'eval_config'
+
+    model = Column(String, default=None)
+    checkpoint_path = Column(String, default=None)
+
     pass

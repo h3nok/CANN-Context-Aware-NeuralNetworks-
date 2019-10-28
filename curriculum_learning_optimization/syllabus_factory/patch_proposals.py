@@ -4,7 +4,7 @@ from time import clock
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-from logger import Configure
+from logger import configure
 
 try:
     from syllabus_factory.utils import ImageHelper as IMPLOT, ConfigureLogger
@@ -18,7 +18,7 @@ except (Exception, ImportError) as error:
     from timer import endlog, log
 
 
-_logger = Configure(__file__, __name__, console=True)
+_logger = configure(__file__, __name__, console=True)
 
 
 def _patchify_tf(image_data, ksize_rows, ksize_cols, strides_rows, strides_cols,

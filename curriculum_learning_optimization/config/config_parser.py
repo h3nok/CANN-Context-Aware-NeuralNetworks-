@@ -14,8 +14,8 @@ class Config:
     type = None
     config_dict = dict()
 
-    def __init__(self, file, type : ConfigType):
-        assert os.path.exists(file), "Supplied file doesn't exist!"
+    def __init__(self, file, type: ConfigType):
+        assert os.path.exists(file), "Supplied file doesn't exist, file path: {}".format(file)
 
         self.config_file = file
         self.type = type
@@ -32,6 +32,10 @@ class Config:
     @property
     def get(self):
         return self.config_dict
+
+    @property
+    def file(self):
+        return self.config_file
 
     def pprint(self):
         for key, value in self.config_dict.items():

@@ -49,7 +49,7 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_string(
     'checkpoint_path', '/home/deeplearning/train_log',
-    #'checkpoint_path', "E:\\Thesis\\CC_V2\\summaries",
+    # 'checkpoint_path', "E:\\Thesis\\CC_V2\\summaries",
     "The directory where the model was written to or an absolute path to a "
     "checkpoint file.")
 tf.app.flags.DEFINE_string('metric', 'ce', 'Metric used to generate the checkpoints')
@@ -57,7 +57,7 @@ tf.app.flags.DEFINE_integer('iter', 10000,
                             'The number of training iterations used to generate the checkpoints')
 
 tf.app.flags.DEFINE_string(
-    #'eval_dir', 'E:\\Datasets\\cifar\\cifar10\\eval_log',
+    # 'eval_dir', 'E:\\Datasets\\cifar\\cifar10\\eval_log',
     'eval_dir', '/home/deeplearning/eval',
     'Directory where the results are saved to.')
 
@@ -73,7 +73,7 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_string(
     'dataset_dir', '/home/deeplearning/data/cifar10-val',
-    #'dataset_dir', 'E:\\Datasets\\cifar\cifar10\\tfrecord\\test',
+    # 'dataset_dir', 'E:\\Datasets\\cifar\cifar10\\tfrecord\\test',
     "The directory where the dataset files are stored.")
 
 tf.app.flags.DEFINE_integer(
@@ -87,7 +87,7 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_string(
     'preprocessing_name', None, 'The name of the preprocessing to use. If left '
-    'as `None`, then the model_name flag is used.')
+                                'as `None`, then the model_name flag is used.')
 
 tf.app.flags.DEFINE_float(
     'moving_average_decay', None,
@@ -106,14 +106,14 @@ def get_checkpoints():
     if not os.path.exists(FLAGS.checkpoint_path):
         raise RuntimeError("Checkpoint path not found\n")
 
-    dir =  os.path.join(FLAGS.checkpoint_path, FLAGS.training_mode,
-                                         FLAGS.model_name,
-                                         FLAGS.dataset_name,
-                                         FLAGS.metric,
-                                         str(FLAGS.iter))
+    dir = os.path.join(FLAGS.checkpoint_path, FLAGS.training_mode,
+                       FLAGS.model_name,
+                       FLAGS.dataset_name,
+                       FLAGS.metric,
+                       str(FLAGS.iter))
     if not os.path.exists(dir):
-        raise RuntimeError("Check point directory\'%s\' not found" %dir)
-    files = glob.glob(dir+"/*")
+        raise RuntimeError("Check point directory\'%s\' not found" % dir)
+    files = glob.glob(dir + "/*")
 
     print("Processing {} files from {}".format(len(files), dir))
     pprint(dir)
@@ -123,7 +123,7 @@ def get_checkpoints():
     for file in files:
         if _CKPT_PATTER in file:
             model_ckpt = re.search(regex, file)
-            chkpts.add(os.path.join(dir,model_ckpt.group(0)))
+            chkpts.add(os.path.join(dir, model_ckpt.group(0)))
 
     return chkpts
 
@@ -133,9 +133,9 @@ def eval(checkpoint, output_dir):
         raise ValueError(
             'You must supply the dataset directory with --dataset_dir')
     output_dir = os.path.join(FLAGS.eval_dir,
-                                      FLAGS.training_mode, FLAGS.model_name,
-                                      FLAGS.metric,
-                                      str(FLAGS.iter), ntpath.basename(checkpoint))
+                              FLAGS.training_mode, FLAGS.model_name,
+                              FLAGS.metric,
+                              str(FLAGS.iter), ntpath.basename(checkpoint))
     if output_dir is None:
         raise RuntimeError("Unable to run evaluation. Summary dir not found")
 
@@ -168,7 +168,6 @@ def eval(checkpoint, output_dir):
             common_queue_min=FLAGS.batch_size)
         [image, label] = provider.get(['image', 'label'])
         label -= FLAGS.labels_offset
-
 
         #####################################
         # Select the pre-processing function #
@@ -233,14 +232,15 @@ def eval(checkpoint, output_dir):
         tf.logging.info('Evaluating %s, output: %s' % (checkpoint_path, output_dir))
 
         slim.evaluation.evaluate_once(
-                master=FLAGS.master,
-                checkpoint_path=checkpoint_path,
-                logdir=output_dir,
-                num_evals=num_batches,
-                eval_op=list(names_to_updates.values()),
-                variables_to_restore=variables_to_restore)
+            master=FLAGS.master,
+            checkpoint_path=checkpoint_path,
+            logdir=output_dir,
+            num_evals=num_batches,
+            eval_op=list(names_to_updates.values()),
+            variables_to_restore=variables_to_restore)
 
-    output_dir = None 
+    output_dir = None
+
 
 def main(_):
     ckpts = get_checkpoints()

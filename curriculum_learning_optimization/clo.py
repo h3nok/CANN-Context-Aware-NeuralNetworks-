@@ -1,6 +1,5 @@
 import statistics
 from enum import Enum
-
 import tensorflow as tf
 
 import logger
@@ -8,7 +7,7 @@ from preprocessing.cc_preprocessing import decode_measure
 from syllabus_factory.curriculum_factory import order_samples_or_patches
 from syllabus_factory.map_measure import Measure, Ordering
 
-_logger = logger.Configure(__file__, 'syllabus_factory.log')
+_logger = logger.configure(__file__, 'syllabus_factory.log')
 
 
 class FitnessSignal(Enum):
@@ -28,6 +27,7 @@ class SyllabusFactory(object):
     def __init__(self, training_batch, labels, batch_size, backup_metrics=None):
         assert labels is not None, "Must supply labels tensor with matching dimensions"
         _logger.debug("Constructing training curriculum")
+        tf.logging.debug("Constructing training curriculum")
         self.batch = training_batch
         self.measure_type = None
         self.batch_size = batch_size
@@ -44,6 +44,7 @@ class SyllabusFactory(object):
 
     def propose_syllabus(self, measure, ordering):
         _logger.debug("Proposing syllabus using content measure: {} and ordering: {}".format(measure, ordering))
+        tf.logging.debug("Proposing syllabus using content measure: {} and ordering: {}".format(measure, ordering))
         assert tf.contrib.framework.is_tensor(self.batch)
         self.ordering = ordering
         measure, ordering = decode_measure(measure, ordering)
@@ -57,10 +58,12 @@ class SyllabusFactory(object):
 
     def evaluate_syllabus(self, losses, pi, baseline_threshold):
         _logger.debug("Evaluating syllabus, pi={}, beta={}...".format(pi, baseline_threshold))
+        tf.logging.debug("Evaluating syllabus, pi={}, beta={}...".format(pi, baseline_threshold))
         assert isinstance(losses, list), "Must supply a list of losses\n"
 
         if len(losses) != pi:
             _logger.warn("Evaluating syllabus using number of losses less than pi")
+            tf.logging.warn("Evaluating syllabus using number of losses less than pi")
 
         syllabus_loss = statistics.mean(losses)
 

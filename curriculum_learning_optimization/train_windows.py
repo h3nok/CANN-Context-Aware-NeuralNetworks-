@@ -21,7 +21,7 @@ import os
 
 import tensorflow as tf
 
-import curriculum_learning
+import curriculum_learning_optimization
 from datasets import dataset_factory
 from deployment import model_deploy
 from nets import nets_factory
@@ -505,7 +505,7 @@ def main(_):
             if FLAGS.curriculum:
                 if FLAGS.measure is None:
                     raise RuntimeError("Must supply measure for curriculum learning")
-                curriculum = curriculum_learning.SyllabusFactory(images, labels, FLAGS.batch_size)
+                curriculum = curriculum_learning_optimization.SyllabusFactory(images, labels, FLAGS.batch_size)
                 images, labels = curriculum.propose_syllabus(FLAGS.measure, FLAGS.ordering)
             # curriculum learning
             labels = slim.one_hot_encoding(
@@ -625,7 +625,7 @@ def main(_):
         ##########################
         # Kicks off the training. #
         ###########################
-        slim.learning.train(
+        slim.learning._train_slim(
             train_tensor,
             logdir=FLAGS.train_dir,
             master=FLAGS.master,
