@@ -24,6 +24,7 @@ class SyllabusFactory(object):
     ordering = None
     measure = None
 
+    @tf.function
     def __init__(self, training_batch, labels, batch_size, backup_metrics=None):
         assert labels is not None, "Must supply labels tensor with matching dimensions"
         _logger.debug("Constructing training curriculum")
@@ -42,6 +43,7 @@ class SyllabusFactory(object):
         self.measure = self.backup_metrics[0]
         self.backup_metrics.remove(self.backup_metrics[0])
 
+    @tf.function
     def propose_syllabus(self, measure, ordering):
         _logger.debug("Proposing syllabus using content measure: {} and ordering: {}".format(measure, ordering))
         tf.logging.debug("Proposing syllabus using content measure: {} and ordering: {}".format(measure, ordering))
@@ -56,6 +58,7 @@ class SyllabusFactory(object):
 
         return input_path, labels
 
+    @tf.function
     def evaluate_syllabus(self, losses, pi, baseline_threshold):
         _logger.debug("Evaluating syllabus, pi={}, beta={}...".format(pi, baseline_threshold))
         tf.logging.debug("Evaluating syllabus, pi={}, beta={}...".format(pi, baseline_threshold))

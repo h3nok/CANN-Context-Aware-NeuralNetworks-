@@ -28,9 +28,12 @@ sess = tf.Session(config=config)
 # sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 
 # ================ DATASET INFORMATION ======================
-dataset_dir = '/home/henok/dataset/cifar10'
+# dataset_dir = '/home/henok/dataset/cifar10'
+#
+# log_dir = '/home/henok/research/logs'
 
-log_dir = '/home/henok/research/logs'
+dataset_dir = r'E:\Thesis\data\cifar10\train'
+log_dir = r'E:\Thesis\logs'
 
 checkpoint_file = None
 image_size = 299
@@ -235,15 +238,18 @@ def run():
         # training step function that runs both the train_op, metrics_op and updates the global_step concurrently.
         def train_step(sess, train_op, global_step):
             '''
-            Simply runs a session for the three arguments provided and gives a logging on the time elapsed for each global step
+                Simply runs a session for the three arguments provided and gives a logging on the time elapsed for each
+                global step
             '''
+
             # Check the time for each sess run
             start_time = time.time()
             total_loss, global_step_count, _ = sess.run([train_op, global_step, metrics_op])
             time_elapsed = time.time() - start_time
 
             # Run the logging to print some results
-            logging.info('global step %s: loss: %.4f (%.2f sec/step)', global_step_count, total_loss, time_elapsed)
+            logging.info('TRAIN STEP :: global step %s: loss: %.4f (%.2f sec/step)', global_step_count, total_loss,
+                         time_elapsed)
 
             return total_loss, global_step_count
 
@@ -259,7 +265,7 @@ def run():
 
         # Run the managed session
         with sv.managed_session() as sess:
-            for step in tqdm(range(num_steps_per_epoch * num_epochs)):
+            for step in range(num_steps_per_epoch * num_epochs):
                 # At the start of every epoch, show the vital information:
                 if step % num_batches_per_epoch == 0:
                     logging.info('Epoch %s/%s', step / num_batches_per_epoch + 1, num_epochs)
@@ -272,7 +278,7 @@ def run():
                         [logits, probabilities, predictions, labels])
                     print('logits: \n', logits_value)
                     print('Probabilities: \n', probabilities_value)
-                    print('predictions: \n', predictions_value)
+                    print('Predictions: \n', predictions_value)
                     print('Labels:\n:', labels_value)
 
                 # Log the summaries every 10 step.

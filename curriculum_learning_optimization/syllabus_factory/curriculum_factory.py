@@ -39,6 +39,7 @@ def _print(patches):
               (key, value))
 
 
+@tf.function
 def order_samples_or_patches(patches_data, total_patches, measure, ordering, curriculum=False, labels=None):
     """[summary]
 
