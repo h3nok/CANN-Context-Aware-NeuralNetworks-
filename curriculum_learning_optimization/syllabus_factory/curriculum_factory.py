@@ -39,8 +39,13 @@ def _print(patches):
               (key, value))
 
 
+def _tensor_to_nparray(data=tf.placeholder('float', None)):
+    return data
+
+
 @tf.function
-def order_samples_or_patches(patches_data, total_patches, measure, ordering, curriculum=False, labels=None):
+def order_samples_or_patches(patches_data, total_patches=None, measure=None,
+                             ordering=None, curriculum=False, labels=None):
     """[summary]
 
     Arguments:
@@ -57,15 +62,19 @@ def order_samples_or_patches(patches_data, total_patches, measure, ordering, cur
     measure_type = _determine_measure_type(measure)
 
     measure_fn = map_measure_fn(measure, measure_type)
-
+    print(type(patches_data))
     sess = tf.Session()
     tf.train.start_queue_runners(sess=sess, coord=coord)
     patches_data = sess.run(patches_data)
+    print(type(patches_data))
     labels_data = None
     if curriculum:
         if labels is not None:
             labels_data = sess.run(labels)
     sess.close()
+    patches_data = patches_data.numpy()
+    if curriculum:
+        labels_data = labels.numpy()
 
     if measure_type == MeasureType.STA:
         _logger.info(

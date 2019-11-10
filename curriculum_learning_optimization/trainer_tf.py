@@ -54,8 +54,8 @@ class Trainer(object):
         self._config = config
         self._slim = tf.contrib.slim
 
-        assert self._config.measure is None or self._config.measure_list is None, "Must supply either a measure or a " \
-                                                                                  "list of measures "
+        assert self._config.measure is None or self._config.measure_list is None, \
+            "Must supply either a measure or a list of measures "
         if self._config.measure:
             self._measure = self._config.measure
         elif self._config.measure_list:
@@ -64,6 +64,14 @@ class Trainer(object):
 
             self._measure_list = self._config.measure_list.split(',')
             self._measure = self._measure_list[self._measure_index]
+
+    @tf.function
+    def _propose_syllabus(self, graph, images, labels):
+        assert graph
+        sf = SyllabusFactory(graph, images, labels, self._config.batch_size)
+        images, labels = sf.propose_syllabus(self._measure, self._config.ordering)
+
+        return images, labels
 
     def _write_config(self):
         """
@@ -252,8 +260,8 @@ class Trainer(object):
                                            str(self._config.max_number_of_steps))
 
         self._write_config()
-
-        with tf.Graph().as_default():
+        my_g = tf.Graph()
+        with my_g.as_default():
             #######################
             # Config model_deploy #
             #######################
@@ -328,8 +336,9 @@ class Trainer(object):
                         self._measure_index += 1
                         self._measure = self._measure_list[self._measure_index]
                         tf.logging.info("Updated syllabus, ranking measure: {}".format(self._measure))
-                    sf = SyllabusFactory(images, labels, self._config.batch_size)
-                    images, labels = sf.propose_syllabus(self._measure, self._config.ordering)
+                    # sf = SyllabusFactory(images, labels, self._config.batch_size)
+
+                    images, labels = self._propose_syllabus(my_g, images, labels)
                     syllabus_proposed = True
 
                 # syllabus learning
@@ -352,8 +361,8 @@ class Trainer(object):
                         self._measure_index += 1
                         self._measure = self._measure_list[self._measure_index]
                         tf.logging.info("Updated syllabus, ranking measure: {}".format(self._measure))
-                    sf = SyllabusFactory(images, labels, self._config.batch_size)
-                    images_curriculum, labels_curriculum = sf.propose_syllabus(self._measure, self._config.ordering)
+                    # sf = SyllabusFactory(images, labels, self._config.batch_size)
+                    images_curriculum, labels_curriculum = self._propose_syllabus(images, labels)
                     logits, end_points = network_fn(images_curriculum)
                 else:
                     logits, end_points = network_fn(images)

@@ -2,11 +2,12 @@ import functools
 from enum import Enum
 
 try:
-	from syllabus_factory.measures import l1_norm, l2_norm,max_norm, mi, ssim, psnr, entropy
-	from syllabus_factory.utils import ConfigureLogger
+    from syllabus_factory.measures import l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
+    from syllabus_factory.utils import ConfigureLogger
 except (Exception, ImportError) as error:
-    from measures import l1_norm, l2_norm, max_norm, mi,ssim, psnr, entropy
+    from measures import l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
     from utils import ConfigureLogger
+import tensorflow as tf
 
 _logger = ConfigureLogger(__file__, '.')
 
@@ -72,6 +73,7 @@ MEASURE_MAP = {
 }
 
 
+# @tf.function
 def map_measure_fn(m, measure_type=MeasureType.Dist):
     """[summary]
 
@@ -112,7 +114,6 @@ def map_measure_fn(m, measure_type=MeasureType.Dist):
 def get_measure_fn_test(patches):
     m_func = map_measure_fn(Measure.JE, MeasureType.Dist)
     return m_func(patches)
-
 
 # if __name__ == '__main__':
 #     patches = {}
