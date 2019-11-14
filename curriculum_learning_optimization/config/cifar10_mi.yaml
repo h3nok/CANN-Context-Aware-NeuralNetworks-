@@ -2,7 +2,7 @@ adadelta_rho: 0.95
 adagrad_initial_accumulator_value: 0.1
 adam_beta1: 0.9
 adam_beta2: 0.999
-backup_measure: null
+backup_measure: iv
 batch_size: 8
 checkpoint_exclude_scopes: null
 checkpoint_path: null
@@ -29,8 +29,8 @@ learning_rate_decay_type: exponential
 log_every_n_steps: 10
 master: null
 max_number_of_steps: 100000
-measure: null
-measure_list: kl,mi,iv,ssim,psnr,l1,l2,cross_entropy
+measure: mi
+measure_list: null
 model_name: inception_v1
 momentum: 0.9
 moving_average_decay: null

@@ -152,6 +152,7 @@ class SyllabusFactory(tf.Module):
             measure {Measure} -- ranking measure to use for sorting (default: {Measure.JE})
             ordering {Ordering} -- sort order (default: {Ordering.Ascending})
         """
+        assert measure
         coord = tf.train.Coordinator()
         # TODO - parallel implementation
         _logger.info("Entering Generate syllabus ... ")
@@ -192,7 +193,7 @@ class SyllabusFactory(tf.Module):
             labels_data[[i, j]] = labels_data[[j, i]]
 
         for i in tqdm(range(0, self.batch_size)):
-            _logger.info("Sorting batch , # of samples: {}".format(self.batch_size))
+            _logger.info("Sorting batch , measure: {}, # of samples: {}".format(measure.value, self.batch_size))
             # TODO- make configurable
             closest_distance_thus_far = 100
             reference_patch_data = self.batch[i]  # set reference patch

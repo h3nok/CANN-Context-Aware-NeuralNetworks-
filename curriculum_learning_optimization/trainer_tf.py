@@ -245,7 +245,10 @@ class Trainer(object):
                                            self._measure,
                                            str(self._config.max_number_of_steps))
         else:
-            measure_list = self._config.measure_list.replace(",", "_")
+            if self._config.measure_list:
+                measure_list = self._config.measure_list.replace(",", "_")
+            else:
+                measure_list = self._config.measure
             self._train_dir = os.path.join(self._config.training_log_dir,
                                            self._config.dataset_name,
                                            self._config.model_name,
@@ -253,7 +256,6 @@ class Trainer(object):
                                            str(self._config.max_number_of_steps))
 
         self._write_config()
-        # my_g = tf.Graph()
 
         with tf.Graph().as_default() as training_graph:
             #######################
@@ -359,6 +361,7 @@ class Trainer(object):
                         tf.logging.info("Updated syllabus, ranking measure: {}".format(self._measure))
                     # sf = SyllabusFactory(images, labels, self._config.batch_size)
                     images_curriculum, labels_curriculum = _propose_syllabus(training_graph, images, labels)
+                    print(images_curriculum.shape)
                     logits, end_points = network_fn(images_curriculum)
                 else:
                     logits, end_points = network_fn(images)
