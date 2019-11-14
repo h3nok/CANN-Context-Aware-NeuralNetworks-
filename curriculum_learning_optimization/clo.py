@@ -140,7 +140,7 @@ class SyllabusFactory(tf.Module):
         else:
             self.fitness_signal = FitnessSignal.Continue
 
-    # @tf.function
+    @tf.function
     def generate_syllabus(self, measure=None, ordering=None, curriculum=True):
         """[summary]
 

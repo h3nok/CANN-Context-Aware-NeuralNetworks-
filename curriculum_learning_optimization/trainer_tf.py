@@ -336,13 +336,8 @@ class Trainer(object):
                         self._measure_index += 1
                         self._measure = self._measure_list[self._measure_index]
                         tf.logging.info("Updated syllabus, ranking measure: {}".format(self._measure))
-                    # sf = SyllabusFactory(images, labels, self._config.batch_size)
-                    shape = images.get_shape()
-
                     images, labels = _propose_syllabus(training_graph, images, labels)
                     syllabus_proposed = True
-
-                # syllabus learning
 
                 labels = self._slim.one_hot_encoding(
                     labels, dataset.num_classes - self._config.labels_offset)
@@ -355,7 +350,7 @@ class Trainer(object):
             ####################
             def clone_fn(batch_queue):
                 """Allows data parallelism by creating multiple clones of network_fn."""
-                images, labels = batch_queue.dequeue()
+                images, labels = batch_queue.dequeue_many(self._config.batch_size)
 
                 if self._config.curriculum:
                     if self._config.measure_list:

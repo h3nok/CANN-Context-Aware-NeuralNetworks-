@@ -14,6 +14,7 @@ from inception_resnet_v2 import inception_resnet_v2, inception_resnet_v2_arg_sco
 from tqdm import tqdm
 import os
 import time
+from clo import SyllabusFactory
 
 slim = tf.contrib.slim
 
@@ -22,6 +23,7 @@ config = tf.ConfigProto()
 config.gpu_options.per_process_gpu_memory_fraction = 0.7  # maximun alloc gpu50% of MEM
 config.gpu_options.allow_growth = True  # allocate dynamically
 sess = tf.Session(config=config)
+curriculum = True
 
 # gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.7)
 
@@ -196,6 +198,16 @@ def run():
         # First create the dataset and load one batch
         dataset = get_split('train', dataset_dir, file_pattern=file_pattern)
         images, labels = load_batch(dataset, batch_size=batch_size)
+
+        def _propose_syllabus(local_graph, images, labels):
+            assert local_graph
+            sf = SyllabusFactory(local_graph, images, labels, batch_size)
+            images, labels = sf.propose_syllabus('mi', 0)
+
+            return images, labels
+
+        if curriculum:
+            images, labels = _propose_syllabus(graph, images, labels)
 
         # Know the number steps to take before decaying the learning rate and batches per epoch
         num_batches_per_epoch = int(dataset.num_samples / batch_size)
