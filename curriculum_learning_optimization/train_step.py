@@ -33,7 +33,7 @@ sess = tf.Session(config=config)
 # log_dir = '/home/henok/research/logs'
 
 dataset_dir = r'E:\Thesis\data\cifar10\train'
-log_dir = r'E:\Thesis\logs'
+log_dir = r'E:\Thesis\logs\train_step'
 
 checkpoint_file = None
 image_size = 299
@@ -128,8 +128,16 @@ def get_split(split_name, dataset_dir, file_pattern=file_pattern,
 
 
 def load_batch(dataset, batch_size, height=image_size, width=image_size, is_training=True):
-    '''
-    Loads a batch for training.
+    """
+    :param dataset:
+    :param batch_size:
+    :param height:
+    :param width:
+    :param is_training:
+
+    :return:
+
+        Loads a batch for training.
     INPUTS:
     - dataset(Dataset): a Dataset class object that is created from the get_split function
     - batch_size(int): determines how big of a batch to train
@@ -139,8 +147,10 @@ def load_batch(dataset, batch_size, height=image_size, width=image_size, is_trai
     OUTPUTS:
     - images(Tensor): a Tensor of the shape (batch_size, height, width, channels) that contain one batch of images
     - labels(Tensor): the batch's labels with the shape (batch_size,) (requires one_hot_encoding).
-    '''
+    """
+
     # First create the data_provider object
+    logging.info("Fetching a batch, size: {}".format(batch_size))
     data_provider = slim.dataset_data_provider.DatasetDataProvider(
         dataset,
         common_queue_capacity=24 + 3 * batch_size,
@@ -160,8 +170,9 @@ def load_batch(dataset, batch_size, height=image_size, width=image_size, is_trai
     raw_image = tf.image.resize_nearest_neighbor(raw_image, [height, width])
     raw_image = tf.squeeze(raw_image)
 
-    # Batch up the image by enqueing the tensors internally in a FIFO queue and dequeueing many elements with
-    # tf.train.batch.
+    # Batch up the image by enqueing the tensors internally in a FIFO queue and dequeueing many
+    # elements with tf.train.batch.
+
     raw_images, labels = tf.train.batch(
         [raw_image, label],
         batch_size=batch_size,
@@ -193,7 +204,8 @@ def run():
 
         # Create the model inference
         with slim.arg_scope(inception_resnet_v2_arg_scope()):
-            logits, end_points = inception_resnet_v2(images, num_classes=dataset.num_classes, is_training=True)
+            logits, end_points = inception_resnet_v2(images, num_classes=dataset.num_classes,
+                                                     is_training=True)
 
         # Define the scopes that you want to exclude for restoration
         exclude = ['InceptionResnetV2/Logits', 'InceptionResnetV2/AuxLogits']
@@ -237,11 +249,16 @@ def run():
 
         # training step function that runs both the train_op, metrics_op and updates the global_step concurrently.
         def train_step(sess, train_op, global_step):
-            '''
-                Simply runs a session for the three arguments provided and gives a logging on the time elapsed for each
-                global step
-            '''
+            """
+            :param sess:
+            :param train_op:
+            :param global_step:
+            :return:
 
+            Simply runs a session for the three arguments provided and gives a logging on the time elapsed for each
+            global step
+
+            """
             # Check the time for each sess run
             start_time = time.time()
             total_loss, global_step_count, _ = sess.run([train_op, global_step, metrics_op])

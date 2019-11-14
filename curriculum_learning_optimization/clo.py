@@ -84,14 +84,11 @@ class SyllabusFactory(tf.Module):
     measure = None
     graph = None
 
-    def __init__(self, graph, training_batch, labels,
-                 batch_size, backup_metrics=None):
+    def __init__(self, graph, training_batch, labels, batch_size, backup_metrics=None):
         super().__init__()
         assert labels is not None, "Must supply labels tensor with matching dimensions"
         _logger.debug("Constructing training curriculum")
         tf.logging.debug("Constructing training curriculum")
-
-
         self.batch = training_batch
         self.measure_type = None
         self.batch_size = batch_size
@@ -119,7 +116,7 @@ class SyllabusFactory(tf.Module):
         measure, ordering = decode_measure(measure, ordering)
         assert isinstance(measure, Measure)
         assert isinstance(ordering, Ordering)
-        input_path, labels = self.order_samples_or_patches(measure, ordering, curriculum=True)
+        input_path, labels = self.generate_syllabus(measure, ordering, curriculum=True)
 
         return input_path, labels
 
@@ -144,7 +141,7 @@ class SyllabusFactory(tf.Module):
             self.fitness_signal = FitnessSignal.Continue
 
     # @tf.function
-    def order_samples_or_patches(self, measure=None, ordering=None, curriculum=False):
+    def generate_syllabus(self, measure=None, ordering=None, curriculum=True):
         """[summary]
 
         Arguments:
@@ -157,25 +154,13 @@ class SyllabusFactory(tf.Module):
         """
         coord = tf.train.Coordinator()
         # TODO - parallel implementation
-        _logger.info("Entering _sort_patches ... ")
+        _logger.info("Entering Generate syllabus ... ")
         measure_type = _determine_measure_type(measure)
 
-        print(type(self.batch))
         measure_fn = map_measure_fn(measure, measure_type)
-        local_graph = tf.Graph()
-        # with local_graph.as_default():
         with tf.Session(graph=self.graph) as sess:
-            shape = self.batch.get_shape()
             tf.train.start_queue_runners(sess=sess, coord=coord)
-            batch_var = tf.Variable(tf.zeros(np.asarray([self.batch_size, int(shape[1]), int(shape[2]), int(shape[3])])),
-                                    dtype=tf.float32, validate_shape=False)
-
-            # tf.reshape(batch_var, np.asarray([self.batch_size, int(shape[1]), int(shape[2]), int(shape[3])]))
-            set_batch_var_ph = tf.placeholder(tf.float32)
-            set_var_op = batch_var.assign(self.batch)
-            # sess.run(self.batch)
-            # self.batch = sess.run(feed_dict={batch: self.batch})
-            self.batch = sess.run(self.batch_var)
+            self.batch = sess.run(self.batch)
             labels_data = None
             if curriculum:
                 if self.labels is not None:
@@ -199,41 +184,41 @@ class SyllabusFactory(tf.Module):
             dist = measure_fn(patches_to_compare)
             return dist
 
-        def _swap_patches(i, j):
+        def _swap(i, j):
             # print("Swapping %d with %d" % (i, j))
-            self[[i, j]] = self[[j, i]]
+            self.batch[[i, j]] = self.batch[[j, i]]
 
         def _swap_labels(i, j):
             labels_data[[i, j]] = labels_data[[j, i]]
 
         for i in tqdm(range(0, self.batch_size)):
-            _logger.info("Sorting batch of samples, # of samples: {}".format(self.batch_size))
+            _logger.info("Sorting batch , # of samples: {}".format(self.batch_size))
             # TODO- make configurable
             closest_distance_thus_far = 100
-            reference_patch_data = self[i]  # set reference patch
+            reference_patch_data = self.batch[i]  # set reference patch
             # sorted_patches.append(reference_patch_data)
 
             # compare the rest to reference patch
             for j in range(i + 1, self.batch_size):
                 # print ("Comparing %d and %d" %(i,j))
                 distance = _compare_numpy(
-                    reference_patch_data, self[j])
+                    reference_patch_data, self.batch[j])
                 if j == 1:
                     closest_distance_thus_far = distance
                     continue
                 if ordering == Ordering.Ascending and distance < closest_distance_thus_far:
                     closest_distance_thus_far = distance
-                    _swap_patches(i + 1, j)
+                    _swap(i + 1, j)
                     if curriculum:
                         _swap_labels(i + 1, j)
                     # reference_patch_data = patches_data[i]
                 elif ordering == Ordering.Descending and distance > closest_distance_thus_far:
                     closest_distance_thus_far = distance
-                    _swap_patches(i + 1, j)
+                    _swap(i + 1, j)
                     if self.labels is not None:
                         _swap_labels(i + 1, j)
 
-        sorted_patches = tf.convert_to_tensor(self, dtype=tf.float32)
+        sorted_patches = tf.convert_to_tensor(self.batch, dtype=tf.float32)
         sorted_labels = None
         if curriculum:
             sorted_labels = tf.convert_to_tensor(labels_data, tf.uint8)

@@ -33,6 +33,7 @@ from nets import nets_factory
 from preprocessing import preprocessing_factory
 from configurations import TrainingFlags
 from clo import SyllabusFactory
+import numpy as np
 
 _logger = logger.configure('tensorflow', __name__, console=False)
 
@@ -64,14 +65,6 @@ class Trainer(object):
 
             self._measure_list = self._config.measure_list.split(',')
             self._measure = self._measure_list[self._measure_index]
-
-    @tf.function
-    def _propose_syllabus(self, graph, images, labels):
-        assert graph
-        sf = SyllabusFactory(graph, images, labels, self._config.batch_size)
-        images, labels = sf.propose_syllabus(self._measure, self._config.ordering)
-
-        return images, labels
 
     def _write_config(self):
         """
@@ -260,8 +253,9 @@ class Trainer(object):
                                            str(self._config.max_number_of_steps))
 
         self._write_config()
-        my_g = tf.Graph()
-        with my_g.as_default():
+        # my_g = tf.Graph()
+
+        with tf.Graph().as_default() as training_graph:
             #######################
             # Config model_deploy #
             #######################
@@ -327,8 +321,14 @@ class Trainer(object):
                     allow_smaller_final_batch=True)
 
                 # images, labels = tf.data.Dataset.batch(self._config.batch_size)
-
                 # Setup syllabus learning optimization #
+
+                def _propose_syllabus(graph, images, labels):
+                    assert graph
+                    sf = SyllabusFactory(graph, images, labels, self._config.batch_size)
+                    images, labels = sf.propose_syllabus(self._measure, self._config.ordering)
+
+                    return images, labels
 
                 sf = None
                 if self._config.curriculum:
@@ -337,8 +337,9 @@ class Trainer(object):
                         self._measure = self._measure_list[self._measure_index]
                         tf.logging.info("Updated syllabus, ranking measure: {}".format(self._measure))
                     # sf = SyllabusFactory(images, labels, self._config.batch_size)
+                    shape = images.get_shape()
 
-                    images, labels = self._propose_syllabus(my_g, images, labels)
+                    images, labels = _propose_syllabus(training_graph, images, labels)
                     syllabus_proposed = True
 
                 # syllabus learning
@@ -362,7 +363,7 @@ class Trainer(object):
                         self._measure = self._measure_list[self._measure_index]
                         tf.logging.info("Updated syllabus, ranking measure: {}".format(self._measure))
                     # sf = SyllabusFactory(images, labels, self._config.batch_size)
-                    images_curriculum, labels_curriculum = self._propose_syllabus(images, labels)
+                    images_curriculum, labels_curriculum = _propose_syllabus(training_graph, images, labels)
                     logits, end_points = network_fn(images_curriculum)
                 else:
                     logits, end_points = network_fn(images)
