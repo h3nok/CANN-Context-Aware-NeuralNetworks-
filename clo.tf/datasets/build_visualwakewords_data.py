@@ -52,7 +52,7 @@ For classification models, you need the image/encoded and image/class/label.
 Please note that this tool creates sharded output files.
 
 Example usage:
-Add folder tensorflow/models/curriculum_learning_optimization/slim to your PYTHONPATH,
+Add folder tensorflow/models/clo.tf/slim to your PYTHONPATH,
 and from this folder, run the following commands:
 
     bash download_mscoco.sh path-to-mscoco-dataset

@@ -45,7 +45,7 @@
 # downloading the raw images.
 #
 # usage:
-#  cd curriculum_learning_optimization/slim
+#  cd clo.tf/slim
 #  bazel build :download_and_convert_imagenet
 #  ./bazel-bin/download_and_convert_imagenet.sh [data-dir]
 set -e

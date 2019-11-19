@@ -15,7 +15,7 @@
 """Provides data for the Cifar10 dataset.
 
 The dataset scripts used to create the dataset can be found at:
-tensorflow/models/curriculum_learning_optimization/slim/datasets/download_and_convert_cifar10.py
+tensorflow/models/clo.tf/slim/datasets/download_and_convert_cifar10.py
 """
 
 from __future__ import absolute_import
@@ -30,15 +30,15 @@ from datasets import dataset_utils
 
 slim = tf.contrib.slim
 
-_FILE_PATTERN = 'caltech_%s_*.tfrecord'
+_FILE_PATTERN = 'cifar100_%s_*.tfrecord'
 
 SPLITS_TO_SIZES = {'train': 50000, 'test': 10000}
 
-_NUM_CLASSES = 102
+_NUM_CLASSES = 100
 
 _ITEMS_TO_DESCRIPTIONS = {
     'image': 'A [32 x 32 x 3] color image.',
-    'label': 'A single integer between 0 and 101',
+    'label': 'A single integer between 0 and 94',
 }
 
 
