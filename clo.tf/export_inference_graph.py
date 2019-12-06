@@ -46,7 +46,7 @@ bazel-bin/tensorflow/examples/label_image/label_image \
 --input_layer=input \
 --output_layer=InceptionV3/Predictions/Reshape_1 \
 --graph=/tmp/frozen_inception_v3.pb \
---labels=/tmp/imagenet_slim_labels.txt \
+--names=/tmp/imagenet_slim_labels.txt \
 --input_mean=0 \
 --input_std=255
 
@@ -85,7 +85,7 @@ tf.app.flags.DEFINE_string('dataset_name', 'vinet',
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
-    'An offset for the labels in the dataset. This flag is primarily used to '
+    'An offset for the names in the dataset. This flag is primarily used to '
     'evaluate the VGG and ResNet architectures which do not use a background '
     'class for the ImageNet dataset.')
 

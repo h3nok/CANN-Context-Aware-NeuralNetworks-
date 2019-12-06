@@ -54,13 +54,13 @@ _ITEMS_TO_DESCRIPTIONS = {
     'label': 'The label id of the image, integer between 0 and 999',
     'label_text': 'The text of the label.',
     'object/bbox': 'A list of bounding boxes.',
-    'object/label': 'A list of labels, one per each object.',
+    'object/label': 'A list of names, one per each object.',
 }
 
 _NUM_CLASSES = 1001
 
 # If set to false, will not try to set label_to_names in dataset
-# by reading them from labels.txt or github.
+# by reading them from names.txt or github.
 LOAD_READABLE_NAMES = True
 
 
@@ -71,7 +71,7 @@ def create_readable_names_for_imagenet_labels():
       labels_to_names: dictionary where keys are integers from to 1000
       and values are human-readable names.
 
-  We retrieve a synset file, which contains a list of valid synset labels used
+  We retrieve a synset file, which contains a list of valid synset names used
   by ILSVRC competition. There is one synset one per line, eg.
           #   n01440764
           #   n01443537

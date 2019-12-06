@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Provides data for Visual WakeWords Dataset with images+labels.
+"""Provides data for Visual WakeWords Dataset with images+names.
 
 Visual WakeWords Dataset derives from the COCO dataset to design tiny models
 classifying two classes, such as person/not-person. The COCO annotations
@@ -47,13 +47,13 @@ _ITEMS_TO_DESCRIPTIONS = {
     'image': 'A color image of varying height and width.',
     'label': 'The label id of the image, an integer in {0, 1}',
     'object/bbox': 'A list of bounding boxes.',
-    'object/label': 'A list of labels, all objects belong to the same class.',
+    'object/label': 'A list of names, all objects belong to the same class.',
 }
 
 _NUM_CLASSES = 2
 
-# labels file
-LABELS_FILENAME = 'labels.txt'
+# names file
+LABELS_FILENAME = 'names.txt'
 
 
 def get_split(split_name, dataset_dir, file_pattern=None, reader=None):

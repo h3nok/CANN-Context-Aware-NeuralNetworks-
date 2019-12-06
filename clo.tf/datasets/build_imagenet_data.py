@@ -24,10 +24,10 @@ following directory structure.
 where 'n01440764' is the unique synset label associated with
 these images.
 
-The training data set consists of 1000 sub-directories (i.e. labels)
+The training data set consists of 1000 sub-directories (i.e. names)
 each containing 1200 JPEG images for a total of 1.2M JPEG images.
 
-The evaluation data set consists of 1000 sub-directories (i.e. labels)
+The evaluation data set consists of 1000 sub-directories (i.e. names)
 each containing 50 JPEG images for a total of 50K JPEG images.
 
 This TensorFlow script converts the training and evaluation data into
@@ -111,7 +111,7 @@ tf.app.flags.DEFINE_integer('validation_shards', 128,
 tf.app.flags.DEFINE_integer('num_threads', 8,
                             'Number of threads to preprocess the images.')
 
-# The labels file contains a list of valid labels are held in this file.
+# The names file contains a list of valid names are held in this file.
 # Assumes that the file contains entries as such:
 #   n01440764
 #   n01443537
@@ -462,7 +462,7 @@ def _process_image_files(name, filenames, synsets, labels, humans,
 
 
 def _find_image_files(data_dir, labels_file):
-    """Build a list of all images files and labels in the data set.
+    """Build a list of all images files and names in the data set.
 
   Args:
     data_dir: string, path to the root directory of images.
@@ -475,9 +475,9 @@ def _find_image_files(data_dir, labels_file):
 
       where 'n01440764' is the unique synset label associated with these images.
 
-    labels_file: string, path to the labels file.
+    labels_file: string, path to the names file.
 
-      The list of valid labels are held in this file. Assumes that the file
+      The list of valid names are held in this file. Assumes that the file
       contains entries as such:
         n01440764
         n01443537
@@ -487,15 +487,15 @@ def _find_image_files(data_dir, labels_file):
       ordering) starting with the integer 1 corresponding to the synset
       contained in the first line.
 
-      The reason we start the integer labels at 1 is to reserve label 0 as an
+      The reason we start the integer names at 1 is to reserve label 0 as an
       unused background class.
 
   Returns:
     filenames: list of strings; each string is a path to an image file.
     synsets: list of strings; each string is a unique WordNet ID.
-    labels: list of integer; each integer identifies the ground truth.
+    names: list of integer; each integer identifies the ground truth.
   """
-    print('Determining list of input files and labels from %s.' % data_dir)
+    print('Determining list of input files and names from %s.' % data_dir)
     challenge_synsets = [
         l.strip() for l in tf.gfile.GFile(labels_file, 'r').readlines()
     ]
@@ -507,7 +507,7 @@ def _find_image_files(data_dir, labels_file):
     # Leave label index 0 empty as a background class.
     label_index = 1
 
-    # Construct the list of JPEG files and labels.
+    # Construct the list of JPEG files and names.
     for synset in challenge_synsets:
         jpeg_file_path = '%s/%s/*.JPEG' % (data_dir, synset)
         matching_files = tf.gfile.Glob(jpeg_file_path)
@@ -532,17 +532,17 @@ def _find_image_files(data_dir, labels_file):
     synsets = [synsets[i] for i in shuffled_index]
     labels = [labels[i] for i in shuffled_index]
 
-    print('Found %d JPEG files across %d labels inside %s.' %
+    print('Found %d JPEG files across %d names inside %s.' %
           (len(filenames), len(challenge_synsets), data_dir))
     return filenames, synsets, labels
 
 
 def _find_human_readable_labels(synsets, synset_to_human):
-    """Build a list of human-readable labels.
+    """Build a list of human-readable names.
 
   Args:
     synsets: list of strings; each string is a unique WordNet ID.
-    synset_to_human: dict of synset to human labels, e.g.,
+    synset_to_human: dict of synset to human names, e.g.,
       'n02119022' --> 'red fox, Vulpes vulpes'
 
   Returns:
@@ -589,7 +589,7 @@ def _process_dataset(name, directory, num_shards, synset_to_human,
     name: string, unique identifier specifying the data set.
     directory: string, root path to the data set.
     num_shards: integer number of shards for this data set.
-    synset_to_human: dict of synset to human labels, e.g.,
+    synset_to_human: dict of synset to human names, e.g.,
       'n02119022' --> 'red fox, Vulpes vulpes'
     image_to_bboxes: dictionary mapping image file names to a list of
       bounding boxes. This list contains 0+ bounding boxes.
@@ -618,7 +618,7 @@ def _build_synset_lookup(imagenet_metadata_file):
       formatted as <synset>\t<human readable label>.
 
   Returns:
-    Dictionary of synset to human labels, such as:
+    Dictionary of synset to human names, such as:
       'n02119022' --> 'red fox, Vulpes vulpes'
   """
     lines = tf.gfile.GFile(imagenet_metadata_file, 'r').readlines()

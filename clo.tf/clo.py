@@ -86,7 +86,7 @@ class SyllabusFactory(tf.Module):
 
     def __init__(self, graph, training_batch, labels, batch_size, backup_metrics=None):
         super().__init__()
-        assert labels is not None, "Must supply labels tensor with matching dimensions"
+        assert labels is not None, "Must supply names tensor with matching dimensions"
         _logger.debug("Constructing training curriculum")
         tf.logging.debug("Constructing training curriculum")
         self.batch = training_batch

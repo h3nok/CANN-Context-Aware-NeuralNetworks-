@@ -185,7 +185,7 @@ tf.app.flags.DEFINE_string(
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
-    'An offset for the labels in the dataset. This flag is primarily used to '
+    'An offset for the names in the dataset. This flag is primarily used to '
     'evaluate the VGG and ResNet architectures which do not use a background '
     'class for the ImageNet dataset.')
 

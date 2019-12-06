@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-r"""Build Visual WakeWords Dataset with images and labels for person/not-person.
+r"""Build Visual WakeWords Dataset with images and names for person/not-person.
 
 This script generates the Visual WakeWords dataset annotations from
 the raw COCO dataset and converts them to TFRecord.
@@ -115,7 +115,7 @@ def main(unused_argv):
   visualwakewords_annotations_val = os.path.join(
       FLAGS.output_dir, 'instances_visualwakewords_val2014.json')
   visualwakewords_labels_filename = os.path.join(FLAGS.output_dir,
-                                                 'labels.txt')
+                                                 'names.txt')
   small_object_area_threshold = FLAGS.small_object_area_threshold
   foreground_class_of_interest = FLAGS.foreground_class_of_interest
   # Create the Visual WakeWords annotations from COCO annotations

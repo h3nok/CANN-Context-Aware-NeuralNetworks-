@@ -3,7 +3,7 @@ from dataset_utils import count_files
 #
 # dataset_dir = "E:\\Datasets\\cifar\\cifar10\\Archive\\cifar\\cifar\\test"
 # output_dir = os.path.join(dataset_dir,"grouped")
-# label_file = "E:\\Datasets\\cifar\\cifar10\\Archive\\cifar\\cifar\\labels.txt"
+# label_file = "E:\\Datasets\\cifar\\cifar10\\Archive\\cifar\\cifar\\names.txt"
 #
 # training_files = glob(dataset_dir+"\\*")
 #

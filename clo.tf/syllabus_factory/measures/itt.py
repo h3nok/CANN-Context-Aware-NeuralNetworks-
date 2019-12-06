@@ -27,7 +27,7 @@ random variables.
 
 For ease of reference, function names follow the following convention:
 
-Function names beginning with "entropy" : Entropy measures
+Function names beginning with "_entropy" : Entropy measures
 
 Function names beginning with "information" : Mutual information measures
 
@@ -45,7 +45,7 @@ Function                                           Generalises           Non-neg
 :meth:`divergence_kullbackleibler_pmf`                                   Yes            No       Yes
 :meth:`divergence_kullbackleibler_symmetrised`                           Yes            Yes      Yes
 :meth:`divergence_kullbackleibler_symmetrised_pmf`                       Yes            Yes      Yes
-:meth:`entropy`                                                          Yes
+:meth:`_entropy`                                                          Yes
 :meth:`entropy_conditional`                                              Yes            No       No
 :meth:`entropy_cross`                                                    Yes            No       No
 :meth:`entropy_cross_pmf`                                                Yes            No       No
@@ -74,12 +74,12 @@ International Workshop on Independent Component Analysis and Blind Signal \
 Separation. 2003.
 .. [CoTh06] Cover, T.M.; Thomas, J.A.: Elements of information theory \
 (2nd ed.). John Wiley & Sons, 2006.
-.. [Croo15] Crooks, G.E.: On measures of entropy and information. \
+.. [Croo15] Crooks, G.E.: On measures of _entropy and information. \
 http://threeplusone.com/info, retrieved 2017-03-16.
 .. [GaSa95] Gale, W.A.; Sampson, G.: Good‐Turing frequency estimation \
 without tears. In: Journal of Quantitative Linguistics, \
 Vol. 2, No. 3, 1995, P. 217-237.
-.. [Han78] Han, T.S.: Nonnegative entropy measures of multivariate symmetric \
+.. [Han78] Han, T.S.: Nonnegative _entropy measures of multivariate symmetric \
 correlations. In: Information and Control, Vol. 36, 1978, P. 133-156.
 .. [HaSt09] Hausser, J.; Strimmer, K.: Entropy inference and the James-Stein \
 estimator, with application to nonlinear gene association networks. \
@@ -89,7 +89,7 @@ interactions. arXiv preprint cs/0308002, 2003.
 .. [JaEC11] James, R.G.; Ellison, C.J.; Crutchfield, J.P.: Anatomy of a bit: \
 Information in a time series observation. In: Chaos: An Interdisciplinary \
 Journal of Nonlinear Science, Vol. 21, No. 3, 2011.
-.. [Lin91] Lin, J.: Divergence measures based on the Shannon entropy. \
+.. [Lin91] Lin, J.: Divergence measures based on the Shannon _entropy. \
 In: IEEE Transactions on Information theory, Vol. 37, No. 1, 1991, P. 145-151.
 .. [Meil03] Meilă, M.: Comparing clusterings by the variation of \
 information. In: Learning theory and kernel machines. \
@@ -101,7 +101,7 @@ transactions on information theory, Vol. 54, No. 3, 2008, P. 964-975.
 .. [StVe98] Studený, M.; Vejnarová, J.: The multiinformation function \
 as a tool for measuring stochastic dependence. In: Learning in graphical \
 models. Springer Netherlands, 1998, P. 261-297.
-.. [VeWe06] Verdú, S.; Weissman, T.: Erasure entropy. In: Proc. IEEE \
+.. [VeWe06] Verdú, S.; Weissman, T.: Erasure _entropy. In: Proc. IEEE \
 International Symposium on Information Theory, 2006, P. 98-102.
 .. [Wata60] Watanabe, S.: Information theoretical analysis of multivariate \
 correlation. In: IBM Journal of clo.tf and development, \
@@ -148,19 +148,19 @@ NONE_REPLACEMENT = -32768
 def entropy_residual(X, base=2, fill_value=-1, estimator='ML',
                      Alphabet_X=None, keep_dims=False):
     """
-    Returns the estimated residual entropy [JaEC11] (also known as erasure
-    entropy [VeWe06]) for an array X containing realisations of discrete random
+    Returns the estimated residual _entropy [JaEC11] (also known as erasure
+    _entropy [VeWe06]) for an array X containing realisations of discrete random
     variables.
 
     **Mathematical definition**:
 
     Given discrete random variables :math:`X_1, \ldots, X_n`, the residual
-    entropy :math:`R(X_1, \\ldots, X_n)` is defined as:
+    _entropy :math:`R(X_1, \\ldots, X_n)` is defined as:
 
     .. math::
         R(X_1, \\ldots, X_n) = H(X_1, \\ldots, X_n) - B(X_1, \\ldots, X_n)
 
-    where :math:`H(\\cdot, \\ldots, \\cdot)` denotes the joint entropy and
+    where :math:`H(\\cdot, \\ldots, \\cdot)` denotes the joint _entropy and
     where :math:`B(\\cdot, \\ldots, \\cdot)` denotes the binding information.
 
     **Estimation**:
@@ -170,7 +170,7 @@ def entropy_residual(X, base=2, fill_value=-1, estimator='ML',
 
         entropy_joint()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although residual
     information is a non-negative quantity, depending on the chosen estimator
@@ -183,7 +183,7 @@ def entropy_residual(X, base=2, fill_value=-1, estimator='ML',
         An array containing discrete random variable realisations. Successive
         realisations of a random variable are indexed by the last axis in the
         array; multiple random variables may be specified using preceding axes.
-        When X.ndim==1, returns a scalar and is equivalent to entropy(). When
+        When X.ndim==1, returns a scalar and is equivalent to _entropy(). When
         X.ndim>1, returns a scalar based on jointly considering all random
         variables indexed in the array. X may not contain (floating point) NaN
         values. Missing data may be specified using numpy masked arrays, as
@@ -296,7 +296,7 @@ def information_exogenous_local(X, base=2, fill_value=-1, estimator='ML',
 
         entropy_joint()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although exogenous
     local information is a non-negative quantity, depending on the chosen
@@ -420,7 +420,7 @@ def information_enigmatic(X, base=2, fill_value=-1, estimator='ML',
 
         entropy_joint()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although enigmatic
     information is a non-negative quantity, depending on the chosen estimator
@@ -533,10 +533,10 @@ def information_interaction(X, base=2, fill_value=-1, estimator='ML',
         \\mathrm{Int}(X_1, \\ldots, X_n) = - \\sum_{T \\subseteq
         \\{1,\\ldots, n\\}} (-1)^{n-|T|}  H(X_i : i \in T)
 
-    where :math:`H(X_i : i \in T)` denotes the joint entropy of the subset of
+    where :math:`H(X_i : i \in T)` denotes the joint _entropy of the subset of
     random variables specified by :math:`T`. Thus, interaction information is
     an alternating sum of joint entropies, with the sets of random variables
-    used to compute the joint entropy in each term selected from the power set
+    used to compute the joint _entropy in each term selected from the power set
     of available random variables.
 
     Note that interaction information is equal in magnitude to the
@@ -564,7 +564,7 @@ def information_interaction(X, base=2, fill_value=-1, estimator='ML',
         An array containing discrete random variable realisations. Successive
         realisations of a random variable are indexed by the last axis in the
         array; multiple random variables may be specified using preceding axes.
-        When X.ndim==1, returns a scalar and is equivalent to -1*entropy().
+        When X.ndim==1, returns a scalar and is equivalent to -1*_entropy().
         When X.ndim>1, returns a scalar based on jointly considering all random
         variables indexed in the array. X may not contain (floating point) NaN
         values. Missing data may be specified using numpy masked arrays, as
@@ -705,10 +705,10 @@ def information_co(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
         I(X_1, \\ldots, X_n) = - \\sum_{T \\subseteq \\{1,\\ldots, n\\}}
         (-1)^{|T|}  H(X_i : i \in T)
 
-    where :math:`H(X_i : i \in T)` denotes the joint entropy of the subset of
+    where :math:`H(X_i : i \in T)` denotes the joint _entropy of the subset of
     random variables specified by :math:`T`. Thus, co-information is an
     alternating sum of joint entropies, with the sets of random variables used
-    to compute the joint entropy in each term selected from the power set of
+    to compute the joint _entropy in each term selected from the power set of
     available random variables.
 
     Note that co-information is equal in magnitude to the interaction
@@ -736,7 +736,7 @@ def information_co(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
         An array containing discrete random variable realisations. Successive
         realisations of a random variable are indexed by the last axis in the
         array; multiple random variables may be specified using preceding axes.
-        When X.ndim==1, returns a scalar and is equivalent to entropy(). When
+        When X.ndim==1, returns a scalar and is equivalent to _entropy(). When
         X.ndim>1, returns a scalar based on jointly considering all random
         variables indexed in the array. X may not contain (floating point) NaN
         values. Missing data may be specified using numpy masked arrays, as
@@ -879,8 +879,8 @@ def information_binding(X, base=2, fill_value=-1, estimator='ML',
         B(X_1, \\ldots, X_n) = H(X_1, \\ldots, X_n) -
         \\sum_{i=1}^{n} H(X_i | X_1, \\ldots X_{i-1}, X_{i+1}, \\ldots, X_n)
 
-    where :math:`H(\\cdot)` denotes the entropy and where
-    :math:`H(\\cdot | \\cdot)` denotes the conditional entropy.
+    where :math:`H(\\cdot)` denotes the _entropy and where
+    :math:`H(\\cdot | \\cdot)` denotes the conditional _entropy.
 
     **Estimation**:
 
@@ -889,7 +889,7 @@ def information_binding(X, base=2, fill_value=-1, estimator='ML',
 
         entropy_joint()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although binding
     information is a non-negative quantity, depending on the chosen estimator
@@ -1048,8 +1048,8 @@ def information_multi(X, base=2, fill_value=-1, estimator='ML',
         T(X_1, \\ldots, X_n) = \\left( \\sum_{i=1}^{n} H(X_i) \\right) -
         H(X_1, \\ldots, X_n)
 
-    where :math:`H(\\cdot)` denotes the entropy and where
-    :math:`H(\\cdot, \\ldots, \\cdot)` denotes the joint entropy.
+    where :math:`H(\\cdot)` denotes the _entropy and where
+    :math:`H(\\cdot, \\ldots, \\cdot)` denotes the joint _entropy.
 
     **Estimation**:
 
@@ -1058,7 +1058,7 @@ def information_multi(X, base=2, fill_value=-1, estimator='ML',
 
         entropy_joint()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although
     multi-information is a non-negative quantity, depending on the chosen
@@ -1175,7 +1175,7 @@ def information_mutual_conditional(X, Y, Z, cartesian_product=False, base=2,
     .. math::
         I(X;Y|Z) = H(X|Z) - H(X|Y,Z)
 
-    where :math:`H(\\cdot|\\cdot)` denotes the conditional entropy.
+    where :math:`H(\\cdot|\\cdot)` denotes the conditional _entropy.
 
     **Estimation**:
 
@@ -1184,7 +1184,7 @@ def information_mutual_conditional(X, Y, Z, cartesian_product=False, base=2,
 
         entropy_joint()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although
     conditional mutual information is a non-negative quantity, depending on the
@@ -1781,7 +1781,7 @@ def information_mutual_normalised(X, Y=None, norm_factor='Y',
          \\end{eqnarray}
 
     where :math:`H(\\cdot)` and :math:`H(\\cdot,\\cdot)` respectively denote
-    the entropy and joint entropy.
+    the _entropy and joint _entropy.
 
     **Estimation**:
 
@@ -1790,7 +1790,7 @@ def information_mutual_normalised(X, Y=None, norm_factor='Y',
 
         entropy_joint()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although normalised
     mutual information is a non-negative quantity, depending on the chosen
@@ -2120,7 +2120,7 @@ def information_variation(X, Y=None, cartesian_product=False, base=2,
     .. math::
         VI(X;Y) = H(X|Y) + H(Y|X)
 
-    where :math:`H(\\cdot|\\cdot)` denotes the conditional entropy.
+    where :math:`H(\\cdot|\\cdot)` denotes the conditional _entropy.
 
     **Estimation**:
 
@@ -2129,7 +2129,7 @@ def information_variation(X, Y=None, cartesian_product=False, base=2,
 
         entropy_joint()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although variation
     of information is a non-negative quantity, depending on the chosen
@@ -2281,8 +2281,8 @@ def information_mutual(X, Y=None, cartesian_product=False, base=2,
     .. math::
         I(X;Y) = H(X) - H(X|Y)
 
-    where :math:`H(\\cdot)` denotes the entropy and where
-    :math:`H(\\cdot|\\cdot)` denotes the conditional entropy.
+    where :math:`H(\\cdot)` denotes the _entropy and where
+    :math:`H(\\cdot|\\cdot)` denotes the conditional _entropy.
 
     **Estimation**:
 
@@ -2291,7 +2291,7 @@ def information_mutual(X, Y=None, cartesian_product=False, base=2,
 
         entropy_joint()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although mutual
     information is a non-negative quantity, depending on the chosen estimator
@@ -2428,21 +2428,21 @@ def entropy_cross(X, Y=None, cartesian_product=False, base=2, fill_value=-1,
                   estimator='ML', Alphabet_X=None, Alphabet_Y=None,
                   keep_dims=False):
     """
-    Returns the cross entropy (see e.g. [Murp12]) between arrays X and Y, each
+    Returns the cross _entropy (see e.g. [Murp12]) between arrays X and Y, each
     containing discrete random variable realisations.
 
     **Mathematical definition**:
 
     Denoting with :math:`P_X(x)`, :math:`P_Y(x)` respectively the probability
     of observing an outcome :math:`x` with discrete random variables :math:`X`,
-    :math:`Y`, the cross entropy :math:`H^\\times(X,Y)` is defined as:
+    :math:`Y`, the cross _entropy :math:`H^\\times(X,Y)` is defined as:
 
     .. math::
         H^\\times(X,Y) = -\\sum_x {P_X(x) \\log {P_Y(x)}}.
 
     **Estimation**:
 
-    Cross entropy is estimated based on frequency tables. See below for a list
+    Cross _entropy is estimated based on frequency tables. See below for a list
     of available estimators.
 
     **Parameters**:
@@ -2719,7 +2719,7 @@ def divergence_kullbackleibler(X, Y=None, cartesian_product=False, base=2,
 
         entropy_cross()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although
     Kullback-Leibler divergence is a non-negative quantity, depending on the
@@ -3155,7 +3155,7 @@ def divergence_kullbackleibler_symmetrised(X, Y=None, cartesian_product=False,
 
         entropy_cross()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although
     symmetrised Kullback-Leibler divergence is a non-negative quantity,
@@ -3292,31 +3292,31 @@ def entropy_conditional(X, Y=None, cartesian_product=False, base=2,
                         fill_value=-1, estimator='ML', Alphabet_X=None,
                         Alphabet_Y=None, keep_dims=False):
     """
-    Returns the conditional entropy (see e.g. [CoTh06]) between arrays X and Y,
+    Returns the conditional _entropy (see e.g. [CoTh06]) between arrays X and Y,
     each containing discrete random variable realisations.
 
     **Mathematical definition**:
 
     Given discrete random variables :math:`X`, :math:`Y`, the conditional
-    entropy :math:`H(X|Y)` is defined as:
+    _entropy :math:`H(X|Y)` is defined as:
 
     .. math::
         H(X|Y) = H(X,Y) - H(Y)
 
-    where :math:`H(\\cdot,\\cdot)` denotes the joint entropy and where
-    :math:`H(\\cdot)` denotes the entropy.
+    where :math:`H(\\cdot,\\cdot)` denotes the joint _entropy and where
+    :math:`H(\\cdot)` denotes the _entropy.
 
     **Estimation**:
 
-    Conditional entropy is estimated based on frequency tables, using the
+    Conditional _entropy is estimated based on frequency tables, using the
     following functions:
 
         entropy_joint()
 
-        entropy()
+        _entropy()
 
     See below for a list of available estimators. Note that although
-    conditional entropy is a non-negative quantity, depending on the chosen
+    conditional _entropy is a non-negative quantity, depending on the chosen
     estimator the obtained estimate may be negative.
 
     **Parameters**:
@@ -3535,14 +3535,14 @@ def entropy_conditional(X, Y=None, cartesian_product=False, base=2,
 def entropy_joint(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
                   keep_dims=False):
     """
-    Returns the estimated joint entropy (see e.g. [CoTh06]) for an array X
+    Returns the estimated joint _entropy (see e.g. [CoTh06]) for an array X
     containing realisations of discrete random variables.
 
     **Mathematical definition**:
 
     Denoting with :math:`P(x_1, \\ldots, x_n)` the probability of jointly
     observing outcomes :math:`(x_1, \\ldots, x_n)` of :math:`n` discrete random
-    variables :math:`(X_1, \ldots, X_n)`, the joint entropy
+    variables :math:`(X_1, \ldots, X_n)`, the joint _entropy
     :math:`H(X_1, \\ldots, X_n)` is defined as:
 
     .. math::
@@ -3551,7 +3551,7 @@ def entropy_joint(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
 
     **Estimation**:
 
-    Joint entropy is estimated based on frequency tables. See below for a list
+    Joint _entropy is estimated based on frequency tables. See below for a list
     of available estimators.
 
     *Parameters**:
@@ -3561,7 +3561,7 @@ def entropy_joint(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
         An array containing discrete random variable realisations. Successive
         realisations of a random variable are indexed by the last axis in the
         array; multiple random variables may be specified using preceding axes.
-        When X.ndim==1, returns a scalar and is equivalent to entropy(). When
+        When X.ndim==1, returns a scalar and is equivalent to _entropy(). When
         X.ndim>1, returns a scalar based on jointly considering all random
         variables indexed in the array. X may not contain (floating point) NaN
         values. Missing data may be specified using numpy masked arrays, as
@@ -3718,13 +3718,13 @@ def entropy_joint(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
 def entropy(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
             keep_dims=False):
     """
-    Returns the estimated entropy (see e.g. [CoTh06]) for an array X containing
+    Returns the estimated _entropy (see e.g. [CoTh06]) for an array X containing
     realisations of a discrete random variable.
 
     **Mathematical definition**:
 
     Denoting with :math:`P(x)` the probability of observing outcome :math:`x`
-    of a discrete random variable :math:`X`, the entropy :math:`H(X)` is
+    of a discrete random variable :math:`X`, the _entropy :math:`H(X)` is
     defined as:
 
     .. math::
@@ -3860,7 +3860,7 @@ def entropy(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
 
     _verify_alphabet_sufficiently_large(X, Alphabet_X, fill_value)
 
-    # NB: This is not joint entropy. Elements in each row are sorted
+    # NB: This is not joint _entropy. Elements in each row are sorted
     # independently
     X = np.sort(X, axis=1)
 
@@ -3902,13 +3902,13 @@ def entropy(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
 
 def entropy_pmf(P, base=2, require_valid_pmf=True, keep_dims=False):
     """
-    Returns the entropy (see e.g. [CoTh06]) of an array P representing a
+    Returns the _entropy (see e.g. [CoTh06]) of an array P representing a
     discrete probability distribution.
 
     **Mathematical definition**:
 
     Denoting with :math:`P(x)` the probability mass associated with observing
-    an outcome :math:`x` under distribution :math:`P`, the entropy :math:`H(P)`
+    an outcome :math:`x` under distribution :math:`P`, the _entropy :math:`H(P)`
     is defined as:
 
     .. math::
@@ -3961,14 +3961,14 @@ def entropy_pmf(P, base=2, require_valid_pmf=True, keep_dims=False):
 def entropy_cross_pmf(P, Q=None, cartesian_product=False, base=2,
                       require_valid_pmf=True, keep_dims=False):
     """
-    Returns the cross entropy (see e.g. [Murp12]) between arrays P and Q, each
+    Returns the cross _entropy (see e.g. [Murp12]) between arrays P and Q, each
     representing a discrete probability distribution.
 
     **Mathematical definition**:
 
     Denoting with :math:`P(x)`, :math:`Q(x)` respectively the probability mass
     associated with observing an outcome :math:`x` under distributions
-    :math:`P`, :math:`Q`, the cross entropy :math:`H^\\times(P,Q)` is defined
+    :math:`P`, :math:`Q`, the cross _entropy :math:`H^\\times(P,Q)` is defined
     as:
 
     .. math::
@@ -4780,7 +4780,7 @@ def _vstack_pad(Arrays, fill_value):
 # TODO Avoid hack surrounding fill_type None and numpy arrays with Python 3. Remove support for fill_type None?
 # TODO Tests for keep_dims
 # TODO Should this really be NaN? Is it consistently NaN for all measures?
-# drv.entropy([-1,], estimator='PERKS', Alphabet_X = np.arange(100))
+# drv._entropy([-1,], estimator='PERKS', Alphabet_X = np.arange(100))
 
 # NB: The following tests should also determine what happens when data contain
 # None, but fill value is not None

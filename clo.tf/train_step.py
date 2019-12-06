@@ -148,7 +148,7 @@ def load_batch(dataset, batch_size, height=image_size, width=image_size, is_trai
     - is_training(bool): to determine whether to perform a training or evaluation preprocessing
     OUTPUTS:
     - images(Tensor): a Tensor of the shape (batch_size, height, width, channels) that contain one batch of images
-    - labels(Tensor): the batch's labels with the shape (batch_size,) (requires one_hot_encoding).
+    - names(Tensor): the batch's names with the shape (batch_size,) (requires one_hot_encoding).
     """
 
     # First create the data_provider object
@@ -223,7 +223,7 @@ def run():
         exclude = ['InceptionResnetV2/Logits', 'InceptionResnetV2/AuxLogits']
         variables_to_restore = slim.get_variables_to_restore(exclude=exclude)
 
-        # Perform one-hot-encoding of the labels (Try one-hot-encoding within the load_batch function!)
+        # Perform one-hot-encoding of the names (Try one-hot-encoding within the load_batch function!)
         one_hot_labels = slim.one_hot_encoding(labels, dataset.num_classes)
 
         # Performs the equivalent to tf.nn.sparse_softmax_cross_entropy_with_logits but enhanced with checks

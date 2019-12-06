@@ -234,7 +234,7 @@ def run(dataset_dir, output_dir, dataset_name, set_type='validation', tracks=Fal
                      normalize,
                      prefix)
 
-    # Finally, write the labels file:
+    # Finally, write the names file:
     labels_to_class_names = dict(zip(range(len(class_names)), class_names))
     dataset_utils.write_label_file(labels_to_class_names, output_dir)
 

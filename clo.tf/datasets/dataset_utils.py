@@ -25,7 +25,7 @@ from glob import glob
 import tensorflow as tf
 from six.moves import urllib
 
-LABELS_FILENAME = 'labels.txt'
+LABELS_FILENAME = 'names.txt'
 
 
 def int64_feature(values):
@@ -104,8 +104,8 @@ def write_label_file(labels_to_class_names, dataset_dir,
     """Writes a file with the list of class names.
 
     Args:
-      labels_to_class_names: A map of (integer) labels to class names.
-      dataset_dir: The directory in which the labels file should be written.
+      labels_to_class_names: A map of (integer) names to class names.
+      dataset_dir: The directory in which the names file should be written.
       filename: The filename where the class names are written.
     """
     labels_filename = os.path.join(dataset_dir, filename)
@@ -119,20 +119,20 @@ def has_labels(dataset_dir, filename=LABELS_FILENAME):
     """Specifies whether or not the dataset directory contains a label map file.
 
     Args:
-      dataset_dir: The directory in which the labels file is found.
+      dataset_dir: The directory in which the names file is found.
       filename: The filename where the class names are written.
 
     Returns:
-      `True` if the labels file exists and `False` otherwise.
+      `True` if the names file exists and `False` otherwise.
     """
     return tf.gfile.Exists(os.path.join(dataset_dir, filename))
 
 
 def read_label_file(dataset_dir, filename=LABELS_FILENAME):
-    """Reads the labels file and returns a mapping from ID to class name.
+    """Reads the names file and returns a mapping from ID to class name.
 
     Args:
-      dataset_dir: The directory in which the labels file is found.
+      dataset_dir: The directory in which the names file is found.
       filename: The filename where the class names are written.
 
     Returns:

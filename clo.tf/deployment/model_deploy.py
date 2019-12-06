@@ -38,8 +38,8 @@ Usage:
 
   # Define the inputs
   with tf.device(config.inputs_device()):
-    images, labels = LoadData(...)
-    inputs_queue = slim.data.prefetch_queue((images, labels))
+    images, names = LoadData(...)
+    inputs_queue = slim.data.prefetch_queue((images, names))
 
   # Define the optimizer.
   with tf.device(config.optimizer_device()):
@@ -47,9 +47,9 @@ Usage:
 
   # Define the model including the loss.
   def model_fn(inputs_queue):
-    images, labels = inputs_queue.dequeue()
+    images, names = inputs_queue.dequeue()
     predictions = CreateNetwork(images)
-    slim.losses.log_loss(predictions, labels)
+    slim.losses.log_loss(predictions, names)
 
   model_dp = model_deploy.deploy(config, model_fn, [inputs_queue],
                                  optimizer=optimizer)

@@ -103,7 +103,7 @@ def create_visual_wakeword_annotations(annotations_file,
           annotations_list, image, small_object_area_threshold,
           foreground_class_of_interest_id)
       annotations_index_filtered[image['id']].append(annotations_list_filtered)
-    # Output Visual WakeWords annotations and labels
+    # Output Visual WakeWords annotations and names
     labels_to_class_names = {0: 'background', 1: foreground_class_of_interest}
     with open(visualwakewords_labels_filename, 'w') as fp:
       for label in labels_to_class_names:

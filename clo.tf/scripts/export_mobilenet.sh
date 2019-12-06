@@ -125,7 +125,7 @@ bazel-bin/tensorflow/examples/label_image/label_image \
   --input_layer=input --output_layer=MobilenetV1/Predictions/Reshape_1 \
   --graph=${MODEL_FOLDER}/quantized_graph.pb --input_mean=-127 --input_std=127 \
   --image=tensorflow/examples/label_image/data/grace_hopper.jpg \
-  --input_width=${IMAGE_SIZE} --input_height=${IMAGE_SIZE} --labels=${MODEL_FOLDER}/labels.txt
+  --input_width=${IMAGE_SIZE} --input_height=${IMAGE_SIZE} --names=${MODEL_FOLDER}/names.txt
 
 echo "*******"
 echo "Saved graphs to ${MODEL_FOLDER}/frozen_graph.pb and ${MODEL_FOLDER}/quantized_graph.pb"

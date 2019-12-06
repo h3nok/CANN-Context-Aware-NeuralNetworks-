@@ -322,7 +322,7 @@ class Trainer(object):
                     capacity=5 * self._config.batch_size,
                     allow_smaller_final_batch=True)
 
-                # images, labels = tf.data.Dataset.batch(self._config.batch_size)
+                # images, names = tf.data.Dataset.batch(self._config.batch_size)
                 # Setup syllabus learning optimization #
 
                 def _propose_syllabus(graph, images, labels):
@@ -359,7 +359,7 @@ class Trainer(object):
                         self._measure_index += 1
                         self._measure = self._measure_list[self._measure_index]
                         tf.logging.info("Updated syllabus, ranking measure: {}".format(self._measure))
-                    # sf = SyllabusFactory(images, labels, self._config.batch_size)
+                    # sf = SyllabusFactory(images, names, self._config.batch_size)
                     images_curriculum, labels_curriculum = _propose_syllabus(training_graph, images, labels)
                     print(images_curriculum.shape)
                     logits, end_points = network_fn(images_curriculum)
