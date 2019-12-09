@@ -1,26 +1,23 @@
-from dataset import DataSet
-from trainingsetstat import TrainingSetStat
-import plots
-import numpy as np
+from cifar import Cifar
+from caltech import Caltech
+from imagenet import ImageNet
+from research_datasets import Custom_Color
 import matplotlib.pyplot as plt
-from research_datasets import ImageDatasets
+from map_measure import Measure
 
 if __name__ == '__main__':
-    ds = 'cifar10'
-    cifar10_ds = DataSet(name=ImageDatasets.caltech101.value)
-    total_samples = cifar10_ds.info.splits['test']
-    ts_stat = TrainingSetStat(cifar10_ds)
-    data = ts_stat.entropy('train')
-    entropies = np.array([x[1] for x in list(data.values())])
-    labels = np.array([x[0] for x in list(data.values())])
-
-    plots.hist(data=entropies,
-               title='Entropy distribution of {}'.format(ds.upper()),
-               x_label='Entropy')
-
-    plt.show()
-    plt.close()
-    plots.scatter(labels, entropies,
-                  title='Entropy Distribution of {} across Categories'.format(ds.upper()),
-                  x_label='Category', y_label='Entropy')
-    plt.show()
+    # ds = Cifar(metric=Measure.IQ)
+    c = [Custom_Color['gold'], Custom_Color['black']]
+    # ds.imq_train_test_scatter_plot(colors=c, dataset='cifar100')
+    # ds.imq_train_test_scatter_plot(colors=c, dataset='cifar10')
+    # ds.plot_cifar100_im_q_histograms(colors=c)
+    # ds.plot_cifar10_im_q_histograms(colors=c)
+    # ds = Cifar(metric=Measure.ENTROPY)
+    # ds.entropy_train_test_scatter_plot(colors=c, dataset='cifar10')
+    # ds.entropy_train_test_scatter_plot(colors=c, dataset='cifar100')
+    # ds.plot_cifar100_entropy_histograms(colors=c)
+    # ds.plot_cifar10_entropy_histograms(colors=c)
+    caltech = Caltech()
+    caltech.plot_caltech101_entropy_histograms(colors=c)
+    caltech.entropy_train_test_scatter_plot(colors=c)
+    # # plt.show()

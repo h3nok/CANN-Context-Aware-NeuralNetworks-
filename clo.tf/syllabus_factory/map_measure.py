@@ -1,12 +1,8 @@
 import functools
 from enum import Enum
 
-try:
-    from syllabus_factory.measures import l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
-    from syllabus_factory.utils import ConfigureLogger
-except (Exception, ImportError) as error:
-    from measures import l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
-    from utils import ConfigureLogger
+from measures import l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
+from utils import ConfigureLogger
 import tensorflow as tf
 
 _logger = ConfigureLogger(__file__, '.')
@@ -35,6 +31,7 @@ class Measure(Enum):
     ELI = ("eli", "Exogenous local information")
     II = ("ii", "Information interaction")
     IV = ("iv", "Information variation")
+    IQ = ('iq', "Image quality based on FFT spectrum analysis")
 
 
 class Ordering(Enum):

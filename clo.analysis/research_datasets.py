@@ -1,5 +1,14 @@
 from enum import Enum
 
+Custom_Color = {
+    'gold': '#cfb87c',
+    'black': '#000000',
+    'dark_gray': '#565A5C',
+    'light_gray': '#A2A4A3',
+    'blue': '#4b92db',
+    'white': 'white'
+}
+
 
 class ImageDatasets(Enum):
     abstract_reasoning = 'abstract_reasoning'
@@ -15,8 +24,8 @@ class ImageDatasets(Enum):
     cats_vs_dogs = 'cats_vs_dogs'
     celeb_a = 'celeb_a'
     celeb_a_hq = 'celeb_a_hq'
-    # cifar10
-    # cifar100
+    cifar10 = 'cifar10'
+    cifar100 = 'cifar100'
     # cifar10_1
     # cifar10_corrupted
     # citrus_leaves
@@ -41,9 +50,9 @@ class ImageDatasets(Enum):
     # horses_or_humans
     # i_naturalist2017
     # image_label_folder
-    # imagenet2012
+    imagenet2012 = 'imagenet2012'
     # imagenet2012_corrupted
-    # imagenet_resized
+    imagenet_resized = 'imagenet_resized'
     # kmnist
     # lfw
     # lost_and_found
