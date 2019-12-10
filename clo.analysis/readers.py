@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from plots import line_plot_df
-
+import os
 
 class Excel:
     _filepath = None
@@ -33,9 +33,11 @@ class CSV:
 
 
 if __name__ == '__main__':
+    savedir = r"E:\Thesis\OneDrive\Research\Publications\Deep Learning\2020\Dataset"
     excel = CSV(r"E:\Thesis\OneDrive\Research\Publications\Deep "
                 r"Learning\2020\Training and Generalization\MI_SSIM_Training.csv")
     excel.to_df()
     line_plot_df(excel.to_df(), x='Step', y=['SSIM', 'MI', 'Baseline'], xlabel='Step', ylabel='Loss',
-                 title='Training performance of MI and SSIM syllabus on CIFAR10 dataset')
+                 title='Training performance of MI and SSIM syllabus on CIFAR10 dataset',
+                 saveas=os.path.join(savedir, 'training_loss.png'))
     plt.show()

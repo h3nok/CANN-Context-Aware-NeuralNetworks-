@@ -4,7 +4,7 @@ import plots
 import numpy as np
 import matplotlib.pyplot as plt
 from research_datasets import ImageDatasets
-from map_measure import  Measure
+from map_measure import Measure
 
 
 class Cifar:

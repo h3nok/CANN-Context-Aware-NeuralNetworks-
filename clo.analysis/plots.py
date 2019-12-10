@@ -98,10 +98,12 @@ def multi_hist(data, title, x_label, y_label, labels, bins='auto', colors=None,
     plt.savefig(save_as, dpi=300)
 
 
-def line_plot_df(data, x, y, title=None, xlabel=None, ylabel=None):
+def line_plot_df(data, x, y, title=None, xlabel=None, ylabel=None, saveas='plot.png'):
     ax = data.plot.line(x, y, colors=[UCD_COLORS['black'],
                                       UCD_COLORS['dark_gray'],
                                       UCD_COLORS['gold']])
     ax.set_title(title)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
+
+    plt.savefig(saveas, dpi=300)
