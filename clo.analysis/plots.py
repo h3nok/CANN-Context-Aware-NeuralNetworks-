@@ -6,11 +6,16 @@ UCD_COLORS = {
     'gold': '#cfb87c',
     'black': '#000000',
     'dark_gray': '#565A5C',
+    'blue': '#4b92db',
     'light_gray': '#A2A4A3'
 }
 
 PLOTS_DIR = r'E:\Thesis\OneDrive\Research\Publications\Deep Learning\2020\Dataset'
 plt.style.use('seaborn-darkgrid')
+plt.rc('font', family='serif')
+plt.rc('xtick', labelsize='x-small')
+plt.rc('ytick', labelsize='x-small')
+# plt.style.use('dark_background')
 # plt.style.use('dark_background')
 
 
@@ -31,8 +36,8 @@ def hist(data, title=None, x_label=None, label=None, y_label=None, bins='auto', 
 
 def scatter(x, y, title=None, x_label=None, y_label=None, alpha=0.75, save_as='plot.png', c=None):
     save_as = os.path.join(PLOTS_DIR, save_as)
-    area = y**2
-    plt.scatter(x, y,  s=area, c=c)
+    area = y ** 2
+    plt.scatter(x, y, s=area, c=c)
     plt.tick_params(
         axis='x',  # changes apply to the x-axis
         which='both',  # both major and minor ticks are affected
@@ -77,14 +82,13 @@ def multi_hist(data, title, x_label, y_label, labels, bins='auto', colors=None,
     maxfreq = 0
     for i in range(len(data)):
         if colors is None:
-            n, _, _ = plt.hist(data[i], bins=bins, alpha=alpha, label=labels[i], rwidth=rwidth)
+            n, _, _ = plt.hist(data[i], bins=bins, alpha=alpha,
+                               label=labels[i], rwidth=rwidth)
         else:
             assert len(colors) == len(data)
-            n, _, _ = plt.hist(data[i], bins=bins, color=colors[i], alpha=alpha, label=labels[i],
+            n, _, _ = plt.hist(data[i], bins=bins, color=colors[i],
+                               alpha=alpha, label=labels[i],
                                rwidth=rwidth)
-        # maxfreq = max(max(n), maxfreq)
-    #
-    # plt.ylim(ymax=np.ceil(maxfreq / 10) * 10 if maxfreq % 10 else maxfreq + 10)
 
     plt.grid(axis='y', alpha=alpha)
     plt.xlabel(x_label)
@@ -93,3 +97,11 @@ def multi_hist(data, title, x_label, y_label, labels, bins='auto', colors=None,
     plt.legend(loc='upper left')
     plt.savefig(save_as, dpi=300)
 
+
+def line_plot_df(data, x, y, title=None, xlabel=None, ylabel=None):
+    ax = data.plot.line(x, y, colors=[UCD_COLORS['black'],
+                                      UCD_COLORS['dark_gray'],
+                                      UCD_COLORS['gold']])
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
