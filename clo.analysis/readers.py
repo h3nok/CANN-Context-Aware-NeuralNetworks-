@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from plots import line_plot_df
 import os
 
+
 class Excel:
     _filepath = None
     _df = None
@@ -24,7 +25,6 @@ class CSV:
 
     def to_df(self):
         self._df = pd.read_csv(self._filepath)
-        print(self._df.columns)
         return self._df
 
     @property
@@ -39,5 +39,11 @@ if __name__ == '__main__':
     excel.to_df()
     line_plot_df(excel.to_df(), x='Step', y=['SSIM', 'MI', 'Baseline'], xlabel='Step', ylabel='Loss',
                  title='Training performance of MI and SSIM syllabus on CIFAR10 dataset',
-                 saveas=os.path.join(savedir, 'training_loss.png'))
+                 saveas=os.path.join(savedir, 'training_loss_inception_smoothed.png'), smoothing='rolling')
+    line_plot_df(excel.to_df(), x='Step', y=['SSIM', 'MI', 'Baseline'], xlabel='Step', ylabel='Loss',
+                 title='Training performance of MI and SSIM syllabus on CIFAR10 dataset',
+                 saveas=os.path.join(savedir, 'training_loss_inception.png'), smoothing=None)
+    line_plot_df(excel.to_df(), x='Step', y=['SSIM', 'MI', 'Baseline'], xlabel='Step', ylabel='Loss',
+                 title='Training performance of MI and SSIM syllabus on CIFAR10 dataset',
+                 saveas=os.path.join(savedir, 'training_acc_inception.png'), smoothing='expanding')
     plt.show()

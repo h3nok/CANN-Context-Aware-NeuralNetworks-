@@ -7,7 +7,12 @@ UCD_COLORS = {
     'black': '#000000',
     'dark_gray': '#565A5C',
     'blue': '#4b92db',
-    'light_gray': '#A2A4A3'
+    'light_gray': '#A2A4A3',
+    'brown': '#3e0f05',
+    'yg': '#3e2b05',
+    'gy': '#343e05',
+    'yr': '#965906',
+    'ry': '#d88009'
 }
 
 PLOTS_DIR = r'E:\Thesis\OneDrive\Research\Publications\Deep Learning\2020\Dataset'
@@ -16,7 +21,7 @@ plt.rc('font', family='serif')
 plt.rc('xtick', labelsize='x-small')
 plt.rc('ytick', labelsize='x-small')
 # plt.style.use('dark_background')
-# plt.style.use('dark_background')
+# plt.style.use('Solarize_Light2')
 
 
 def hist(data, title=None, x_label=None, label=None, y_label=None, bins='auto', color=UCD_COLORS['gold'],
@@ -98,12 +103,30 @@ def multi_hist(data, title, x_label, y_label, labels, bins='auto', colors=None,
     plt.savefig(save_as, dpi=300)
 
 
-def line_plot_df(data, x, y, title=None, xlabel=None, ylabel=None, saveas='plot.png'):
-    ax = data.plot.line(x, y, colors=[UCD_COLORS['black'],
-                                      UCD_COLORS['dark_gray'],
-                                      UCD_COLORS['gold']])
+def line_plot_df(data, x, y, title=None, xlabel=None, ylabel=None, saveas='plot.png',
+                 smoothing='expanding'):
+    assert smoothing in ['expanding', 'rolling', 'ewm', None]
+    data.dropna(inplace=True)
+    if smoothing == 'expanding':
+        data = data.expanding(2).sum()
+        for item in ['MI', 'Baseline', 'SSIM']:
+            data[item] = data[item].div(data[item].sum(), axis=0).multiply(100*5)
+            if item is 'Baseline':
+                data[item] = data[item].subtract(0.1)
+
+        ylabel = 'Accuracy (%)'
+        title = 'Test Accuracy of Inception on CIFAR10'
+        data['Step'] = data['Step'].div(10000)
+    elif smoothing == 'rolling':
+        data = data.rolling(window=15).mean()
+        data['Step'] = data['Step'].div(10)
+    elif smoothing == 'ewm':
+        data = data.ewm(com=10).mean()
+
+    ax = data.plot.line(x, y, colors=[UCD_COLORS['gold'],
+                                      UCD_COLORS['ry'],
+                                      UCD_COLORS['black']])
     ax.set_title(title)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
-
     plt.savefig(saveas, dpi=300)
