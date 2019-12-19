@@ -4,16 +4,24 @@ from plots import line_plot_df
 import os
 
 
-class Excel:
-    _filepath = None
-    _df = None
+class ExcelImporter(object):
+    _file_path = None
+    _pd_dataframe = None
+    _head = None
+    columns = None
 
-    def __init__(self, file):
-        self._filepath = file
+    def __init__(self, file_path):
+        self._file_path = file_path
 
-    def to_df(self):
-        self._df = pd.read_excel(self._filepath, index_col=0)
-        print(self._df)
+    def import_pd(self):
+        self._pd_dataframe = pd.read_excel(self._file_path)
+        self._head = self._pd_dataframe.head()
+        self.columns = list(self._pd_dataframe.columns)
+        assert isinstance(self._pd_dataframe, pd.core.frame.DataFrame)
+
+    @property
+    def pd_dataframe(self):
+        return self._pd_dataframe
 
 
 class CSV:

@@ -20,6 +20,8 @@ plt.style.use('seaborn-darkgrid')
 plt.rc('font', family='serif')
 plt.rc('xtick', labelsize='x-small')
 plt.rc('ytick', labelsize='x-small')
+# plt.rcParams['font.family'] = "sans-serif"
+plt.rcParams['font.sans-serif'] = "Comic Sans MS"
 # plt.style.use('dark_background')
 # plt.style.use('Solarize_Light2')
 

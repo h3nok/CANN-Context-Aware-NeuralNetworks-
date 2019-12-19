@@ -1,5 +1,5 @@
 from dataset import Dataset
-from datasetstat import DatasetStat
+from datasetstat import DatasetStat, write_csv
 import plots
 import numpy as np
 import matplotlib.pyplot as plt
@@ -85,12 +85,12 @@ class Cifar:
         if dataset == ImageDatasets.cifar10.value:
             plots.multi_scatter([self._cifar10_labels_train, self._cifar10_labels_test],
                                 [self._cifar10_fft_iq_train, self._cifar10_fft_iq_test],
-                                title="Entropy distribution of {} across labels".format(ImageDatasets.cifar10.value),
+                                title="Image Quality distribution of {} across labels".format(ImageDatasets.cifar10.value),
                                 c=colors, labels=['train', 'test'], x_label="Classes", y_label='Image Quality',
                                 save_as=ImageDatasets.cifar10.value + '_imq_scatter.png', loc='upper right')
         elif dataset == ImageDatasets.cifar100.value:
             plots.multi_scatter([self._cifar100_labels_train, self._cifar100_labels_test],
                                 [self._cifar100_fft_iq_train, self._cifar100_fft_iq_test],
-                                title="Entropy distribution of {} across labels".format(ImageDatasets.cifar100.value),
+                                title="Image Quality distribution of {} across labels".format(ImageDatasets.cifar100.value),
                                 c=colors, labels=['train', 'test'], x_label='Classes', y_label='Image Quality',
                                 save_as=ImageDatasets.cifar100.value + '_imq_scatter.png', loc='upper right')

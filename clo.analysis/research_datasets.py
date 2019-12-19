@@ -4,9 +4,13 @@ Custom_Color = {
     'gold': '#cfb87c',
     'black': '#000000',
     'dark_gray': '#565A5C',
-    'light_gray': '#A2A4A3',
     'blue': '#4b92db',
-    'white': 'white'
+    'light_gray': '#A2A4A3',
+    'brown': '#3e0f05',
+    'yg': '#3e2b05',
+    'gy': '#343e05',
+    'yr': '#965906',
+    'ry': '#d88009'
 }
 
 

@@ -9,10 +9,12 @@ class Dataset:
     _metadata = None
     _train_total = None
     _test_total = None
+    _name = None
 
     def __init__(self, name=None, train=None, test=None, batch_size=None):
         assert name
         self._train = train
+        self._name = name
         self._test = test
         if not self._train or not self._test:
             if batch_size:
@@ -64,3 +66,8 @@ class Dataset:
     @property
     def total_test_samples(self):
         return self._test_total
+
+    @property
+    def name(self):
+        return self._name
+
