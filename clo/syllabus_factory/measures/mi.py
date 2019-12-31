@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 try:
-    from syllabus_factory.ITT import itt as itt
+    from ITT import itt as itt
 except(Exception, ImportError) as error:
     print (error)
     from ITT import itt as itt

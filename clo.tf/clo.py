@@ -4,8 +4,7 @@ import tensorflow as tf
 import numpy as np
 import logger
 from preprocessing.cc_preprocessing import decode_measure
-from syllabus_factory.curriculum_factory import order_samples_or_patches
-from syllabus_factory.map_measure import Measure, Ordering, MeasureType, map_measure_fn
+from clo.syllabus_factory import Measure, Ordering, MeasureType, map_measure_fn
 from tqdm import tqdm
 
 _logger = logger.configure(__file__, 'syllabus_factory.log')

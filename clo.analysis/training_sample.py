@@ -1,4 +1,4 @@
-from ITT import itt
+import itt
 import numpy as np
 import skimage
 from PIL import Image, ImageStat

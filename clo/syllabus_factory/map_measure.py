@@ -3,9 +3,8 @@ from enum import Enum
 
 from measures import l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
 from utils import ConfigureLogger
-import tensorflow as tf
 
-_logger = ConfigureLogger(__file__, '.')
+_logger = ConfigureLogger(__file__, '../../clo.tf')
 
 
 class Measure(Enum):

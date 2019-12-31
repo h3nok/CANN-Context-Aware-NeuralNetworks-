@@ -1,8 +1,8 @@
 import tensorflow as tf
 
-from syllabus_factory.map_measure import Measure
-from syllabus_factory.map_measure import Ordering
-from syllabus_factory.patch_proposals import p_por
+from clo.syllabus_factory import Measure
+from clo.syllabus_factory import Ordering
+from clo.syllabus_factory import p_por
 
 MEASURE_MAP = {
     'mi': Measure.MI,

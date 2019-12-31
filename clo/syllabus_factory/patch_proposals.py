@@ -7,10 +7,10 @@ import tensorflow as tf
 from logger import configure
 
 try:
-    from syllabus_factory.utils import ImageHelper as IMPLOT, ConfigureLogger
-    from syllabus_factory.map_measure import Measure
-    from syllabus_factory.curriculum_factory import reconstruct_from_patches
-    from syllabus_factory.timer import endlog, log
+    from clo.syllabus_factory import ImageHelper as IMPLOT, ConfigureLogger
+    from clo.syllabus_factory import Measure
+    from curriculum_factory import reconstruct_from_patches
+    from clo.syllabus_factory import endlog, log
 except (Exception, ImportError) as error:
     print(error)
     from map_measure import Measure
@@ -149,7 +149,7 @@ def p_por(image, height, width, measure, ordering, patch_h, patch_w):
 
 
 def test():
-    image_file = 'syllabus_factory/samples/husky.jpg'
+    image_file = 'samples/husky.jpg'
     patch_width = 56
     patch_height = 56
     input_size = (224, 224)

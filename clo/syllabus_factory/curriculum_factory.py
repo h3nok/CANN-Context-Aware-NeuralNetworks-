@@ -3,10 +3,10 @@ import tensorflow as tf
 import tqdm
 
 try:
-    from syllabus_factory.map_measure import (Measure, MeasureType,
-                                              Ordering, map_measure_fn,
-                                              MEASURE_MAP)
-    from syllabus_factory.utils import ConfigureLogger
+    from clo.syllabus_factory import (Measure, MeasureType,
+                                      Ordering, map_measure_fn,
+                                      MEASURE_MAP)
+    from clo.syllabus_factory import ConfigureLogger
 except ImportError as error:
     print(error)
     from map_measure import (Measure, MeasureType,
@@ -14,7 +14,7 @@ except ImportError as error:
                              MEASURE_MAP)
     from utils import ConfigureLogger
 
-_logger = ConfigureLogger(__name__, '.')
+_logger = ConfigureLogger(__name__, '../../clo.tf')
 
 
 def _determine_measure_type(measure):

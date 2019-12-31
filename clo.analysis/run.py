@@ -1,8 +1,6 @@
 from cifar import Cifar
-from caltech import Caltech
 from research_datasets import Custom_Color
 from map_measure import Measure
-import itertools
 
 if __name__ == '__main__':
     ds = Cifar(metric=Measure.ENTROPY)

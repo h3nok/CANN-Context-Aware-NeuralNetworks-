@@ -1,7 +1,6 @@
 from dataset import Dataset
-from datasetstat import DatasetStat, write_csv
+from datasetstat import DatasetStat
 import plots
-import numpy as np
 import matplotlib.pyplot as plt
 from research_datasets import ImageDatasets
 from map_measure import Measure

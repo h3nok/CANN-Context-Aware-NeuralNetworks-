@@ -52,7 +52,7 @@ def fm_por(name, input, input_size, patch_size, measure=Measure.MI, order=Orderi
 
 
 def run():
-    image_file = 'syllabus_factory/samples/husky.jpg'
+    image_file = 'samples/husky.jpg'
     patch_width = 56
     patch_height = 56
     input_size = (224, 224)

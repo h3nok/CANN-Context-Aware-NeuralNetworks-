@@ -35,13 +35,17 @@ def train_dataset(batch_size=32, num_epochs=1):
 
     def scale_fn(image, label):
         return (tf.image.convert_image_dtype(image, tf.float32) - 0.5) * 2.0, label
-
     dataset = tf.data.Dataset.from_tensor_slices((tf.expand_dims(input_x, -1),
                                                   tf.expand_dims(input_y, -1))).map(scale_fn)
     dataset = dataset.cache().repeat(num_epochs)
     dataset = dataset.shuffle(batch_size)
+    batch = dataset.batch(batch_size)
 
-    return dataset.batch(batch_size).prefetch(1)
+    #TODO - preprocess batch
+
+    tf.print("Fetching batch of size of ", batch_size)
+
+    return batch.prefetch(1)
 
 
 def train():
@@ -51,6 +55,7 @@ def train():
 
     # Input data
     dataset = train_dataset(num_epochs=10)
+
     # Training parameters
     loss = tf.losses.SparseCategoricalCrossentropy(from_logits=True)
     step = tf.Variable(1, name="global_step")
