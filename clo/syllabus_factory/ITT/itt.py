@@ -104,7 +104,7 @@ models. Springer Netherlands, 1998, P. 261-297.
 .. [VeWe06] Verdú, S.; Weissman, T.: Erasure _entropy. In: Proc. IEEE \
 International Symposium on Information Theory, 2006, P. 98-102.
 .. [Wata60] Watanabe, S.: Information theoretical analysis of multivariate \
-correlation. In: IBM Journal of clo.tf and development, \
+correlation. In: IBM Journal of clo.slim.tf and development, \
 Vol. 4, No. 1, 1960, P. 66-82.
 """
 from __future__ import division

@@ -14,7 +14,7 @@ except ImportError as error:
                              MEASURE_MAP)
     from utils import ConfigureLogger
 
-_logger = ConfigureLogger(__name__, '../../clo.tf')
+_logger = ConfigureLogger(__name__, '../../clo.slim.tf')
 
 
 def _determine_measure_type(measure):
