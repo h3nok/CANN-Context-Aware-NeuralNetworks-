@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.datasets import fashion_mnist
+from clo.training_sample import Sample, SampleAttribute
 
 
 def load_data():
@@ -29,15 +30,26 @@ def make_model(n_classes):
     ])
 
 
+def propose_syllabus(dataset):
+    sorted = []
+    for features, labels in dataset:
+        features_np = features.numpy()
+        labels_np = labels.numpy()
+        sample = Sample(features_np, labels)
+        entropy = sample.entropy
+
+
 def train_dataset(batch_size=32, num_epochs=1):
     (train_x, train_y), (test_x, test_y) = fashion_mnist.load_data()
     input_x, input_y = train_x, train_y
 
     def scale_fn(image, label):
-        return (tf.image.convert_image_dtype(image, tf.float32) - 0.5) * 2.0, label
+        return (tf.image.convert_image_dtype(image,
+                                             tf.float32) - 0.5) * 2.0, label
 
     dataset = tf.data.Dataset.from_tensor_slices((tf.expand_dims(input_x, -1),
                                                   tf.expand_dims(input_y, -1))).map(scale_fn)
+    propose_syllabus(dataset)
     dataset = dataset.cache().repeat(num_epochs)
     dataset = dataset.shuffle(batch_size)
     batch = dataset.batch(batch_size)

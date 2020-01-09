@@ -7,7 +7,7 @@ from preprocessing.cc_preprocessing import decode_measure
 from clo.syllabus_factory import Measure, Ordering, MeasureType, map_measure_fn
 from tqdm import tqdm
 
-_logger = logger.configure(__file__, 'syllabus_factory.log')
+# _logger = logger.configure(__file__, 'syllabus_factory.log')
 
 
 class FitnessSignal(Enum):

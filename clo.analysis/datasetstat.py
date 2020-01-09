@@ -1,4 +1,4 @@
-from training_sample import Sample
+from clo.training_sample import Sample
 import numpy as np
 import uuid
 import csv

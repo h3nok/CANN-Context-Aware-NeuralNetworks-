@@ -6,7 +6,7 @@ import scipy.fftpack as fp
 from map_measure import Measure, map_measure_fn
 import cv2
 import math
-
+import tensorflow as tf
 
 class FFT:
     _frame_data = None
@@ -55,7 +55,6 @@ class SampleAttribute:
 
     def __init__(self, sample: np.ndarray):
         self._sample = sample
-        self._pil_frame_data = Image.fromarray(sample)
 
     def entropy(self):
         return round(skimage.measure.shannon_entropy(self._sample), 4)
@@ -109,6 +108,7 @@ class SampleAttribute:
         return _fm
 
     def perceived_brightness(self):
+        self._pil_frame_data = Image.fromarray(self._sample)
         stat = ImageStat.Stat(self._pil_frame_data)
         r, g, b = stat.rms
         return round(math.sqrt(0.241 * (r ** 2) +
@@ -116,6 +116,7 @@ class SampleAttribute:
                                0.068 * (b ** 2)))
 
     def brightness(self, mode='mean'):
+        self._pil_frame_data = Image.fromarray(self._sample)
         stat = ImageStat.Stat(self._pil_frame_data.convert('L'))
         if mode == 'mean':
             return round(stat.mean[0])
@@ -123,6 +124,7 @@ class SampleAttribute:
             return round(stat.rms[0])
 
     def colors(self):
+        self._pil_frame_data = Image.fromarray(self._sample)
         return self._pil_frame_data.getcolors(255)
 
     def variance(self):
