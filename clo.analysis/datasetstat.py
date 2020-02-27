@@ -81,7 +81,7 @@ class DatasetStat:
         labels = np.array([x[1] for x in self._entropies[split]])
         ids = np.array([x[0] for x in self._entropies[split]])
 
-        write_csv([ids, labels, entropies], self._training_set.name + "_entropy.csv")
+        # write_csv([ids, labels, entropies], self._training_set.name + "_entropy.csv")
         return entropies, labels
 
     def quality_measure(self, split='train'):
@@ -93,7 +93,7 @@ class DatasetStat:
         labels = np.array([x[1] for x in self._fft_iqs[split]])
         ids = np.array([x[0] for x in self._fft_iqs[split]])
 
-        write_csv([ids, labels, entropies], save_as=self._training_set.name + "_image_quality.csv")
+        # write_csv([ids, labels, entropies], save_as=self._training_set.name + "_image_quality.csv")
 
         return entropies, labels
 

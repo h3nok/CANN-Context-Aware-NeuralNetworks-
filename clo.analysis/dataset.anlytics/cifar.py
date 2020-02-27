@@ -18,18 +18,20 @@ class Cifar:
         self._cifar10_stats = DatasetStat(self._cifar_10)
         self._cifar100_stats = DatasetStat(self._cifar_100)
 
-        if metric == Measure.ENTROPY:
-            self._cifar10_entropies_train, self._cifar10_labels_train = self._cifar10_stats.entropy('train')
-            self._cifar10_entropies_test, self._cifar10_labels_test = self._cifar10_stats.entropy('test')
-            self._cifar100_entropies_train, self._cifar100_labels_train = self._cifar100_stats.entropy('train')
-            self._cifar100_entropies_test, self._cifar100_labels_test = self._cifar100_stats.entropy('test')
-        elif metric == Measure.IQ:
-            self._cifar10_fft_iq_train, self._cifar10_labels_train = self._cifar10_stats.quality_measure('train')
-            self._cifar10_fft_iq_test, self._cifar10_labels_test = self._cifar10_stats.quality_measure('test')
-            self._cifar100_fft_iq_train, self._cifar100_labels_train = self._cifar100_stats.quality_measure('train')
-            self._cifar100_fft_iq_test, self._cifar100_labels_test = self._cifar100_stats.quality_measure('test')
+        self._cifar10_entropies_train, self._cifar10_labels_train = self._cifar10_stats.entropy('train')
+        print(len(self._cifar10_entropies_train))
+        print(len(self._cifar10_labels_train))
 
-        assert len(set(self._cifar100_labels_train)) == self._cifar_100.num_classes
+        self._cifar10_entropies_test, self._cifar10_labels_test = self._cifar10_stats.entropy('test')
+        self._cifar100_entropies_train, self._cifar100_labels_train = self._cifar100_stats.entropy('train')
+        self._cifar100_entropies_test, self._cifar100_labels_test = self._cifar100_stats.entropy('test')
+
+        # self._cifar10_fft_iq_train, self._cifar10_labels_train = self._cifar10_stats.quality_measure('train')
+        # self._cifar10_fft_iq_test, self._cifar10_labels_test = self._cifar10_stats.quality_measure('test')
+        # self._cifar100_fft_iq_train, self._cifar100_labels_train = self._cifar100_stats.quality_measure('train')
+        # self._cifar100_fft_iq_test, self._cifar100_labels_test = self._cifar100_stats.quality_measure('test')
+
+        # assert len(set(self._cifar100_labels_train)) == self._cifar_100.num_classes
 
     def plot_cifar10_entropy_histograms(self, colors=None):
         plt.close()
@@ -93,3 +95,12 @@ class Cifar:
                                 title="Image Quality distribution of {} across labels".format(ImageDatasets.cifar100.value),
                                 c=colors, labels=['train', 'test'], x_label='Classes', y_label='Image Quality',
                                 save_as=ImageDatasets.cifar100.value + '_imq_scatter.png', loc='upper right')
+
+    def to_tfrecord(self, dataset='cifar10'):
+        if dataset == 'cifar10':
+            self._cifar_10.ds2tfrecord('train', r'E:\Thesis\Datasets\cifar10\\' + 'cifar10_train.tfrecord')
+            self._cifar_10.ds2tfrecord('test', r'E:\Thesis\Datasets\cifar10\\' + 'cifar10_test.tfrecord')
+
+        elif dataset == 'cifar100':
+            self._cifar_100.ds2tfrecord('test', r'E:\Thesis\Datasets\cifar100\\' + 'cifar100_test.tfrecord')
+            self._cifar_100.ds2tfrecord('train', r'E:\Thesis\Datasets\cifar100\\' + 'cifar100_train.tfrecord')

@@ -6,7 +6,7 @@ import plots
 
 class ImageNet(Dataset):
     def __init__(self):
-        super().__init__()
+        super().__init__(name=ImageDatasets.imagenet2012.value)
         self._dataset = Dataset(name=ImageDatasets.imagenet2012.value)
         assert self._dataset
 

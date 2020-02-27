@@ -1,5 +1,7 @@
 import tensorflow_datasets as tfds
-import tensorflow as tf
+# import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 
 class Dataset:
@@ -21,7 +23,7 @@ class Dataset:
                 self._loader, self._metadata = tfds.load(name, with_info=True, batch_size=batch_size)
             else:
                 self._loader, self._metadata = tfds.load(name, with_info=True)
-            self._train, self._test = self._loader['train'], self._loader['test']
+            self._train, self._test = tfds.load(name, split='train'), tfds.load(name, split='test')
             self._train_total = self._metadata.splits['train']
             self._test_total = self._metadata.splits['test']
 
@@ -71,3 +73,28 @@ class Dataset:
     def name(self):
         return self._name
 
+    def ds2tfrecord(self, split, filepath):
+        ds = None
+        if split is 'train':
+            ds = self._train
+        elif split is 'test':
+            ds = self._test
+
+        with tf.io.TFRecordWriter(filepath) as writer:
+            feat_dict = tf.data.make_one_shot_iterator(ds).get_next()
+            serialized_dict = {name: tf.io.serialize_tensor(fea) for name, fea in feat_dict.items()}
+            with tf.Session() as sess:
+                try:
+                    while True:
+                        features = {}
+                        for name, serialized_tensor in serialized_dict.items():
+                            bytes_string = sess.run(serialized_tensor)
+                            bytes_list = tf.train.BytesList(value=[bytes_string])
+                            features[name] = tf.train.Feature(bytes_list=bytes_list)
+                        # Create a Features message using tf.train.Example.
+                        example_proto = tf.train.Example(features=tf.train.Features(feature=features))
+                        example_string = example_proto.SerializeToString()
+                        # Write to TFRecord
+                        writer.write(example_string)
+                except tf.errors.OutOfRangeError:
+                    pass

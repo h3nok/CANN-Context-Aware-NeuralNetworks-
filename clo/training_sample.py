@@ -8,6 +8,7 @@ import cv2
 import math
 import tensorflow as tf
 
+
 class FFT:
     _frame_data = None
     _freq_img = None

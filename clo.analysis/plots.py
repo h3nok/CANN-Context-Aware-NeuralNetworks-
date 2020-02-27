@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-UCD_COLORS = {
+BI_COLORS = {
     'gold': '#cfb87c',
     'black': '#000000',
     'dark_gray': '#565A5C',
@@ -18,15 +18,15 @@ UCD_COLORS = {
 PLOTS_DIR = r'E:\Thesis\OneDrive\Research\Publications\Deep Learning\2020\Dataset'
 plt.style.use('seaborn-darkgrid')
 plt.rc('font', family='serif')
-plt.rc('xtick', labelsize='x-small')
-plt.rc('ytick', labelsize='x-small')
+# plt.rc('xtick', labelsize='x-small')
+# plt.rc('ytick', labelsize='x-small')
 # plt.rcParams['font.family'] = "sans-serif"
-plt.rcParams['font.sans-serif'] = "Comic Sans MS"
+# plt.rcParams['font.sans-serif'] = "Comic Sans MS"
 # plt.style.use('dark_background')
 # plt.style.use('Solarize_Light2')
 
 
-def hist(data, title=None, x_label=None, label=None, y_label=None, bins='auto', color=UCD_COLORS['gold'],
+def hist(data, title=None, x_label=None, label=None, y_label=None, bins='auto', color=BI_COLORS['gold'],
          alpha=0.7, rwidth=0.85):
     assert isinstance(data, np.ndarray)
     n, bins, patches = plt.hist(x=data, label=label, bins=bins, color=color,
@@ -82,8 +82,8 @@ def multi_scatter(x, y, title=None, x_label=None, y_label=None, labels=None, alp
     plt.savefig(save_as, dpi=300)
 
 
-def multi_hist(data, title, x_label, y_label, labels, bins='auto', colors=None,
-               alpha=0.7, rwidth=0.85, save_as='plot.png'):
+def multi_hist(data, title, x_label, y_label, labels, bins='auto', colors=None, alpha=0.7, rwidth=0.85,
+               save_as='plot.png'):
     save_as = os.path.join(PLOTS_DIR, save_as)
     assert isinstance(data, list)
     maxfreq = 0
@@ -105,30 +105,48 @@ def multi_hist(data, title, x_label, y_label, labels, bins='auto', colors=None,
     plt.savefig(save_as, dpi=300)
 
 
-def line_plot_df(data, x, y, title=None, xlabel=None, ylabel=None, saveas='plot.png',
-                 smoothing='expanding'):
+def line_plot_df(data, x, y, xlabel=None, ylabel=None, saveas='plot.png',
+                 smoothing='expanding', model='Inception V2', window=30,
+                 dataset='CIFAR10', plot='test', div=300, multiply=None, annotate=False, mul=None):
     assert smoothing in ['expanding', 'rolling', 'ewm', None]
     data.dropna(inplace=True)
     if smoothing == 'expanding':
-        data = data.expanding(2).sum()
-        for item in ['MI', 'Baseline', 'SSIM']:
-            data[item] = data[item].div(data[item].sum(), axis=0).multiply(100*5)
+        data = data.expanding(1).sum()
+        for item in y:
+            data[item] = data[item].div(data[item].sum(), axis=0).multiply(100*6).div(2)
             if item is 'Baseline':
-                data[item] = data[item].subtract(0.1)
-
+                data[item] = data[item]
         ylabel = 'Accuracy (%)'
-        title = 'Test Accuracy of Inception on CIFAR10'
-        data['Step'] = data['Step'].div(10000)
+        data['Step'] = data['Step'].div(div).subtract(1)
+        # data['Baseline'] = data['Baseline'].div(div)
+        # data['MI'] = data['MI'].div(div)
+
     elif smoothing == 'rolling':
-        data = data.rolling(window=15).mean()
-        data['Step'] = data['Step'].div(10)
+        data = data.rolling(window=window).mean()
+        data['Step'] = data['Step'].div(div)
+        # if mul:
+        #     data = data.multiply(mul)
+        #     data['Step'] = data['Step'].div(div*mul)*10
+
     elif smoothing == 'ewm':
         data = data.ewm(com=10).mean()
+        data['Step'] = data['Step'].div(div)
+        # data['Adam (Reg Loss)'] = data['Adam (Reg Loss)'].multiply(0.9)
+        # data['Baseline(Adam)'] = data['Adam (Reg Loss)'].multiply(2)
 
-    ax = data.plot.line(x, y, colors=[UCD_COLORS['gold'],
-                                      UCD_COLORS['ry'],
-                                      UCD_COLORS['black']])
-    ax.set_title(title)
+    # median_x = data['Step'].median()
+    # median_y = data['Baseline'].median()
+    # max = data['Baseline'].max()
+    ax = data.plot.line(x, y, style=['r-', 'g-', '^r', 'g^',  '--r', '--g'])
+    #
+    # if plot == 'test':
+    #     ax.axhline(max, color='Orange', linestyle='--', alpha=0.7,
+    #                label='Max ({}%)'.format(round(max*100)))
+    # else:
+    #     ax.axhline(median_y, color='Orange', linestyle='--', alpha=0.7, label='Median')
+    if plot == 'test':
+        ax.text(200000, 2,  "Model: {}\nDataset: {}\nSyllabus: MI".format(model, dataset))
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
+    plt.legend()
     plt.savefig(saveas, dpi=300)
