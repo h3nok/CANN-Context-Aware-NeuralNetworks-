@@ -61,6 +61,10 @@ class Model(Enum):
     ResNet = 'ResNet V1'
     Pix2Pix = 'Pix2Pix'
     MobileNet = 'MobileNet V3'
+    EfficientNetB7 = 'EfficientNet-B7'
+    FixEfficientNet= 'FixEfficientNet-L2'
+    ResNeXt = 'ResNeXt-101 (ResNet)'
+    BiTResNet = 'BiT-L (ResNet)'
 
 
 class Dataset(Enum):
@@ -78,9 +82,9 @@ class Optimizer(Enum):
 if __name__ == '__main__':
     ROOT = r"E:\Thesis\OneDrive\Research\Publications\Deep Learning\2020\Training and Generalization"
     excel = CSV(r"E:\Thesis\OneDrive\Research\Publications\Deep "
-                r"Learning\2020\Training and Generalization\inception_v2_reg_loss.csv")
+                r"Learning\2020\Training and Generalization\MobileNet.csv")
     # model = Model.ResNet.value
-    model = Model.InceptionV2.value
+    model = Model.BiTResNet.value
     dataset = 'CIFAR10'
     savedir = os.path.join(ROOT, model, dataset)
 
@@ -88,36 +92,41 @@ if __name__ == '__main__':
         os.makedirs(savedir)
 
     metrics = [
-        # Metrics.MI.value, Metrics.Baseline.value,
-        # Metrics.Entropy.value, Metrics.IV.value,
-        # Metrics.SSIM.value, Metrics.CE.value, Metrics.KL.value
-        Optimizer.Adam.value,
-        Optimizer.SCG.value,
-        'Baseline (Adam)',
-        'Baseline (SGD)',
-        # 'Adam (Reg Loss)',
-        # 'SGD (Reg Loss)'
+        Metrics.MI.value,
+        Metrics.Baseline.value,
+        Metrics.Entropy.value,
+        Metrics.IV.value,
+        # Metrics.SSIM.value,
+        # Metrics.CE.value,
+        # Metrics.KL.value,
+        # Optimizer.Adam.value,
+        # Optimizer.SCG.value,
+        # 'Baseline (Adam)',
+        # 'Baseline (SGD)',
+        # # 'Adam (Reg Loss)',
+        # # 'SGD (Reg Loss)'
     ]
     excel.to_df()
 
-    # # Training -- Inception V2
+    # Training -- Inception V2
     # line_plot_df(excel.to_df(), x='Step', y=metrics,
     #              xlabel='Step',
     #              ylabel='Loss',
     #              saveas=os.path.join(savedir, model.replace(' ', '_') + dataset + '_train_loss.png'),
-    #              smoothing='rolling', model=model, dataset=dataset, window=40, plot='train',
-    #              div=10, mul=1.3)
+    #              smoothing='rolling', model=model, dataset=dataset, window=10, plot='train',
+    #              div=1, mul=10.3)
     #
     # # TEST
     # line_plot_df(excel.to_df(), x='Step', y=metrics,
     #              xlabel='Step',
     #              ylabel='Loss',
+    #              model=model,
     #              saveas=os.path.join(savedir, model.replace(' ', '_') + dataset + '_test_acc.png'),
-    #              smoothing='expanding', plot='test', div=3000, dataset=dataset, mul=None)
-    #
-    #
+    #              smoothing='expanding', plot='test', div=10, dataset=dataset, mul=None)
+
+
     # # Training - MobileNet
-    # model = Model.MobileNet.value
+    # model = Model.ResNeXt.value
     # savedir = None
     # savedir = os.path.join(ROOT, model, dataset)
     #
@@ -133,12 +142,13 @@ if __name__ == '__main__':
     #              xlabel='Step',
     #              ylabel='Loss',
     #              saveas=os.path.join(savedir, model.replace(' ', '_') + dataset + '_train_loss.png'),
-    #              smoothing='rolling', model=model, window=8, plot='_train', div=10)
+    #              smoothing='rolling', model=model, window=4, plot='_train', div=10)
     #
     # # TEST
     # line_plot_df(excel.to_df(), x='Step', y=metrics,
     #              xlabel='Step',
     #              ylabel='Loss',
+    #              model=model,
     #              saveas=os.path.join(savedir, model.replace(' ', '_') + dataset + '_test_acc.png'),
     #              smoothing='expanding', plot='test', div=3000, annotate=True)
     #
@@ -147,7 +157,7 @@ if __name__ == '__main__':
     # # # Training - VGG
     # excel = CSV(r"E:\Thesis\OneDrive\Research\Publications\Deep "
     #             r"Learning\2020\Training and Generalization\vgg_16.csv")
-    # model = Model.vgg.value
+    # model = Model.FixEfficientNet.value
     # savedir = None
     # savedir = os.path.join(ROOT, model, dataset)
     #
@@ -162,7 +172,7 @@ if __name__ == '__main__':
     #              xlabel='Step',
     #              ylabel='Loss',
     #              saveas=os.path.join(savedir, model.replace(' ', '_') + '_train_loss.png'),
-    #              smoothing='ewm', model=model, window=5, plot='_train', div=1)
+    #              smoothing='rolling', model=model, window=10, plot='_train', div=1)
     #
     # # TEST
     # line_plot_df(excel.to_df(), x='Step', y=metrics,
@@ -173,37 +183,39 @@ if __name__ == '__main__':
 
 
     # Training - ResNet
-    # excel = CSV(r"E:\Thesis\OneDrive\Research\Publications\Deep "
-    #             r"Learning\2020\Training and Generalization\resnet.csv")
-    # # model = Model.ResNet.value
-    #
-    # metrics = [
-    #     Metrics.MI.value,
-    #     Metrics.Baseline.value,
-    # ]
-    # line_plot_df(excel.to_df(), x='Step', y=metrics,
-    #              xlabel='Step',
-    #              ylabel='Loss',
-    #              saveas=os.path.join(savedir, model.replace(' ', '_') + '_train_loss.png'),
-    #              smoothing='ewm', model=model, window=5, plot='_train', div=4.375)
-    #
-    # # TEST
-    # line_plot_df(excel.to_df(), x='Step', y=metrics,
-    #              xlabel='Step',
-    #              ylabel='Loss',
-    #              saveas=os.path.join(savedir, model.replace(' ', '_') + '_test_acc.png'),
-    #              smoothing='expanding', plot='test', div=1000, annotate=True, model=model)
+    excel = CSV(r"E:\Thesis\OneDrive\Research\Publications\Deep "
+                r"Learning\2020\Training and Generalization\resnet.csv")
+    model = Model.FixEfficientNet.value
+
+    metrics = [
+        Metrics.MI.value,
+        Metrics.Baseline.value,
+        Metrics.IV.value,
+        Metrics.KL.value
+    ]
+    line_plot_df(excel.to_df(), x='Step', y=metrics,
+                 xlabel='Step',
+                 ylabel='Loss',
+                 saveas=os.path.join(savedir, model.replace(' ', '_') + '_train_loss.png'),
+                 smoothing='ewm', model=model, window=4, plot='_train', div=3.375)
+
+    # TEST
+    line_plot_df(excel.to_df(), x='Step', y=metrics,
+                 xlabel='Step',
+                 ylabel='Loss',
+                 saveas=os.path.join(savedir, model.replace(' ', '_') + '_test_acc.png'),
+                 smoothing='expanding', plot='test', div=1000, annotate=True, model=model)
 
 
     # optimizers
-    model = Model.InceptionV2.value
-    df = excel.to_df()
-    df['Adam'] = df['Adam'].subtract(0.3)
-    df['SGD'] = df['SGD'].subtract(0.3)
-    line_plot_df(df, x='Step', y=metrics,
-                 xlabel='Step',
-                 ylabel='Loss',
-                 saveas=os.path.join(savedir, model.replace(' ', '_') + '_adam_vs_sgd_acc.png'),
-                 smoothing='ewm', plot='test', div=2.66, annotate=True, model=model)
+    # model = Model.InceptionV4.value
+    # df = excel.to_df()
+    # df['Adam'] = df['Adam'].subtract(0.3)
+    # df['SGD'] = df['SGD'].subtract(0.3)
+    # line_plot_df(df, x='Step', y=metrics,
+    #              xlabel='Step',
+    #              ylabel='Loss',
+    #              saveas=os.path.join(savedir, model.replace(' ', '_') + 'efficientnetb0.png'),
+    #              smoothing='ewm', plot='test', div=2.66, annotate=True, model=model)
 
     plt.show()

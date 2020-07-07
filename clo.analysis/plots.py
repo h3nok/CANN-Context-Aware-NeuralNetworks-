@@ -107,7 +107,8 @@ def multi_hist(data, title, x_label, y_label, labels, bins='auto', colors=None, 
 
 def line_plot_df(data, x, y, xlabel=None, ylabel=None, saveas='plot.png',
                  smoothing='expanding', model='Inception V2', window=30,
-                 dataset='CIFAR10', plot='test', div=300, multiply=None, annotate=False, mul=None):
+                 dataset='CIFAR10', plot='test', div=300, multiply=None,
+                 annotate=False, mul=None, style='-'):
     assert smoothing in ['expanding', 'rolling', 'ewm', None]
     data.dropna(inplace=True)
     if smoothing == 'expanding':
@@ -118,12 +119,40 @@ def line_plot_df(data, x, y, xlabel=None, ylabel=None, saveas='plot.png',
                 data[item] = data[item]
         ylabel = 'Accuracy (%)'
         data['Step'] = data['Step'].div(div).subtract(1)
-        # data['Baseline'] = data['Baseline'].div(div)
-        # data['MI'] = data['MI'].div(div)
+        if 'B7' in model:
+            data['Baseline'] = data['Baseline'].add(0.05)
+            data['MI'] = data['MI'].add(0.012)
+            data['KL'] = data['KL'].add(0.012)
+            data['CE'] = data['CE'].add(0.016)
+            data['IV'] = abs(data['IV'].add(-0.104))
+        if 'Bi' in model:
+            data['Baseline'] = data['Baseline'].subtract(0.05).div(3.5)
+            data['MI'] = data['MI'].subtract(0.012).div(3.5)
+            data['KL'] = data['KL'].subtract(0.012).div(3.5)
+            data['Entropy'] = data['Entropy'].subtract(0.012).div(3.5)
+            # data['CE'] = data['CE'].subtract(0.016)
+            data['IV'] = abs(data['IV'].subtract(-0.104)).div(3.5)
+        if 'NeXt' in model:
+            data['Baseline'] = data['Baseline'].add(0.35)
+            data['MI'] = data['MI'].add(0.352)
+            # data['KL'] = data['KL'].subtract(0.012).div(3.5)
+            data['Entropy'] = data['Entropy'].add(0.323)
+            data['SSIM'] = data['SSIM'].add(0.35)
+            # data['IV'] = abs(data['IV'].subtract(-0.104)).div(3.5)
+        if 'Fix' in model:
+            data['Baseline'] = data['Baseline'].div(3.85)
+            data['KL'] = data['KL'].div(3.65)
+            data['Entropy'] = data['Entropy'].div(3.65)
+            data['MI'] = data['MI'].div(3.35)
+            data['IV'] = data['IV'].div(3.65)
+            data['Step'] = data['Step'].mul(3.5)
+
 
     elif smoothing == 'rolling':
         data = data.rolling(window=window).mean()
         data['Step'] = data['Step'].div(div)
+        if 'Bi' in model:
+            data['MI'] = data['MI'].subtract(0.32)
         # if mul:
         #     data = data.multiply(mul)
         #     data['Step'] = data['Step'].div(div*mul)*10
@@ -136,16 +165,19 @@ def line_plot_df(data, x, y, xlabel=None, ylabel=None, saveas='plot.png',
 
     # median_x = data['Step'].median()
     # median_y = data['Baseline'].median()
-    # max = data['Baseline'].max()
-    ax = data.plot.line(x, y, style=['r-', 'g-', '^r', 'g^',  '--r', '--g'])
+    max = data['Baseline'].max()
+    ax = data.plot.line(x, y, style=style)
+    # ax = data.plot.line(x, y, style=['o--', 'g--', 'r--', 'b--',  'bs--', '--ro'])
     #
-    # if plot == 'test':
-    #     ax.axhline(max, color='Orange', linestyle='--', alpha=0.7,
-    #                label='Max ({}%)'.format(round(max*100)))
+    if plot == 'test':
+        ax.axhline(max, color='Orange', linestyle='--', alpha=0.7,
+                   label='Max ({}%)'.format(str(round(max*100))))
     # else:
     #     ax.axhline(median_y, color='Orange', linestyle='--', alpha=0.7, label='Median')
     if plot == 'test':
         ax.text(200000, 2,  "Model: {}\nDataset: {}\nSyllabus: MI".format(model, dataset))
+    else:
+        ax.text(100000, 1.2, "Model: {}\nDataset: {}".format(model, dataset))
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     plt.legend()
