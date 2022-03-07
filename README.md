@@ -15,5 +15,6 @@ including CIFAR10 demonstrate the effectiveness of the proposed method. We prese
 training loss reduction by as much as a factor 5. Additionally, we present a set of practical curriculum
 strategies to improve the generalization performance of select networks on various datasets.
 
+![img.png](img.png)
 
 https://link.springer.com/article/10.1007/s42979-020-00251-7
