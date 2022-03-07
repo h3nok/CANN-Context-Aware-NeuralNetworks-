@@ -166,8 +166,7 @@ def plot_losses(data, output_dir):
     _plot_multiple(data, plot="Learning rate decay", outdir=output_dir)
 
 
-def run(summaries_dir="C:\\data\\tensorboard\\curriculum\\Train\\inception_v1\\cifar10",
-        output_dir=".", iterations=100000):
+def run(summaries_dir=".",output_dir=".", iterations=100000):
     training_data = []
     data = {}
     for measure in os.listdir(summaries_dir):
@@ -176,14 +175,17 @@ def run(summaries_dir="C:\\data\\tensorboard\\curriculum\\Train\\inception_v1\\c
         if not os.path.exists(event_file_dir): continue
         files = os.listdir(event_file_dir)
         event_file = None
+
         for file in files:
             if file.endswith('.node18'):
                 event_file = file
         if not event_file: continue
+
         log_file = os.path.join(event_file_dir, event_file)
         s = InceptionNetSummary(log_file)
         steps, loss, reg_loss, softmax_loss = s.process_loss()
         sparsity_steps, mixed_4c, mixed_3b, mixed_5b, lr, walltime = s.process_sparsity()
+
         data = {
             "Steps": steps,
             "Total loss": loss,
@@ -197,6 +199,7 @@ def run(summaries_dir="C:\\data\\tensorboard\\curriculum\\Train\\inception_v1\\c
             'Mixed 5b': mixed_5b,
             'Wall time': walltime
         }
+
         training_data.append(data)
 
     plot_losses(training_data, output_dir=output_dir)
