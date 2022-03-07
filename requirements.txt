@@ -1,9 +1,0 @@
-opencv-python
-scipy
-PILLOW
-scikit-image
-numpy
-matplotlib
-pandas
-tensorflow
-tensorflow_dataset==1.3.0

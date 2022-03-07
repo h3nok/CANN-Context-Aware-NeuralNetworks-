@@ -2,19 +2,22 @@ import numpy as np
 import tensorflow as tf
 import tqdm
 
-try:
-    from clo.syllabus_factory import (Measure, MeasureType,
-                                      Ordering, map_measure_fn,
-                                      MEASURE_MAP)
-    from clo.syllabus_factory import ConfigureLogger
-except ImportError as error:
-    print(error)
-    from map_measure import (Measure, MeasureType,
-                             Ordering, map_measure_fn,
-                             MEASURE_MAP)
-    from utils import ConfigureLogger
+# try:
+#     from clo.syllabus_factory import (Measure,
+#                                       MeasureType,
+#                                       Ordering,
+#                                       map_measure_fn,
+#                                       MEASURE_MAP)
+# except ImportError as error:
+#     print(error)
+from map_measure import (Measure,
+                         MeasureType,
+                         Ordering,
+                         map_measure_fn,
+                         MEASURE_MAP)
+from utils import configure_logger
 
-_logger = ConfigureLogger(__name__, '../../clo.slim.tf')
+_logger = configure_logger(__name__, '../../clo.slim.tf')
 
 
 def _determine_measure_type(measure):
@@ -142,7 +145,9 @@ def order_samples_or_patches(patches_data, total_patches=None, measure=None,
 
 
 def sort_by_content_measure(patches_data, measure_fn, labels, curriculum=False):
-    """[summary]
+    """
+
+    Sort patches by content measure
 
     Arguments:
         patches_data {np.ndarray} -- the image patches in tensor format

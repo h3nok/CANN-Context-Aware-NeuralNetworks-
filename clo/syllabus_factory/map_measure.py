@@ -2,7 +2,7 @@ import functools
 from enum import Enum
 
 from measures import l1_norm, l2_norm, max_norm, mi, ssim, psnr, entropy
-from utils import ConfigureLogger
+from utils import configure_logger
 
 # _logger = ConfigureLogger(__file__, '../../clo.slim.tf')
 

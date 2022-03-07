@@ -36,7 +36,7 @@ def show_images(images, cols=1, titles=None):
     return fig
 
 
-def ConfigureLogger(module, logfile_dir='.', console=True):
+def configure_logger(module, logfile_dir='.', console=True):
     logger = logging.getLogger(module)
     logger.setLevel(logging.DEBUG)
     fh = logging.FileHandler(os.path.join(logfile_dir, 'syllabus_factory.log'))
