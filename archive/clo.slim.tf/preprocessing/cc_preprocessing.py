@@ -1,8 +1,8 @@
 import tensorflow as tf
 
-from clo.syllabus_factory import Measure
-from clo.syllabus_factory import Ordering
-from clo.syllabus_factory import p_por
+from deepclo.core.syllabus import Measure
+from deepclo.core.syllabus import Ordering
+from deepclo.core.syllabus import p_por
 
 MEASURE_MAP = {
     'mi': Measure.MI,
@@ -13,8 +13,8 @@ MEASURE_MAP = {
     'l1': Measure.L1,
     'l2': Measure.L2,
     'mn': Measure.MAX_NORM,
-    'psnr': Measure.PSNR,
-    'ssim': Measure.SSIM,
+    'psnr': Measure.psnr,
+    'ssim': Measure.ssim,
     'min': Measure.MI_NORMALIZED,
     'ei': Measure.EI,
     'li': Measure.LI,

@@ -63,7 +63,7 @@ LABELS_ANNOTATED="${BBOX_DIR}/*"
 NUM_XML=$(ls -1 ${LABELS_ANNOTATED} | wc -l)
 echo "Identified ${NUM_XML} bounding box annotations."
 
-# Download and uncompress all images from the ImageNet 2012 validation dataset.
+# Download and uncompress all images from the ImageNet 2012 validation pipe.
 VALIDATION_TARBALL="ILSVRC2012_img_val.tar"
 OUTPUT_PATH="${OUTDIR}validation/"
 mkdir -p "${OUTPUT_PATH}"
@@ -72,7 +72,7 @@ echo "Downloading ${VALIDATION_TARBALL} to ${OUTPUT_PATH}."
 wget -nd -c "${BASE_URL}/${VALIDATION_TARBALL}"
 tar xf "${VALIDATION_TARBALL}" -C "${OUTPUT_PATH}"
 
-# Download all images from the ImageNet 2012 train dataset.
+# Download all images from the ImageNet 2012 train pipe.
 TRAIN_TARBALL="ILSVRC2012_img_train.tar"
 OUTPUT_PATH="${OUTDIR}train/"
 mkdir -p "${OUTPUT_PATH}"

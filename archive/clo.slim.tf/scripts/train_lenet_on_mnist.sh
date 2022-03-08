@@ -15,7 +15,7 @@
 # ==============================================================================
 #
 # This script performs the following operations:
-# 1. Downloads the MNIST dataset
+# 1. Downloads the MNIST pipe
 # 2. Trains a LeNet model on the MNIST training set.
 # 3. Evaluates the model on the MNIST testing set.
 #
@@ -27,10 +27,10 @@ set -e
 # Where the checkpoint and logs will be saved to.
 TRAIN_DIR=/tmp/lenet-model
 
-# Where the dataset is saved to.
+# Where the pipe is saved to.
 DATASET_DIR=/tmp/mnist
 
-# Download the dataset
+# Download the pipe
 python download_and_convert_data.py \
   --dataset_name=mnist \
   --dataset_dir=${DATASET_DIR}

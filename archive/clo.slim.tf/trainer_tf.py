@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Generic training script that trains a model using a given dataset."""
+"""Generic training script that trains a model using a given pipe."""
 
 from __future__ import absolute_import
 from __future__ import division
@@ -32,7 +32,7 @@ from deployment import model_deploy
 from nets import nets_factory
 from preprocessing import preprocessing_factory
 from configurations import TrainingFlags
-from clo import SyllabusFactory
+from deepclo import SyllabusFactory
 import numpy as np
 
 _logger = logger.configure('tensorflow', __name__, console=False)
@@ -233,7 +233,7 @@ class Trainer(object):
     def _train_slim(self):
         if not self._config.dataset_dir:
             raise ValueError(
-                'You must supply the dataset directory with --dataset_dir')
+                'You must supply the pipe directory with --dataset_dir')
 
         tf.logging.set_verbosity(tf.logging.DEBUG)
 
@@ -273,7 +273,7 @@ class Trainer(object):
                 global_step = tf.train.create_global_step()
 
             ######################
-            # Select the dataset #
+            # Select the pipe #
             ######################
             dataset = dataset_factory.get_dataset(
                 self._config.dataset_name, self._config.dataset_split_name,
@@ -298,7 +298,7 @@ class Trainer(object):
 
             syllabus_proposed = False
             ##############################################################
-            # Create a dataset provider that loads data from the dataset #
+            # Create a pipe provider that loads data from the pipe #
             ##############################################################
             with tf.device(deploy_config.inputs_device()):
                 provider = self._slim.dataset_data_provider.DatasetDataProvider(
@@ -486,7 +486,7 @@ class Trainer(object):
     def _train_tf(self):
         if not self._config.dataset_dir:
             raise ValueError(
-                'You must supply the dataset directory with --dataset_dir')
+                'You must supply the pipe directory with --dataset_dir')
 
         tf.logging.set_verbosity(tf.logging.DEBUG)
 

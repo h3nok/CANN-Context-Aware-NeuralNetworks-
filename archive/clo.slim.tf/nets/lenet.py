@@ -40,7 +40,7 @@ def lenet(images, num_classes=10, is_training=False,
 
   Args:
     images: A batch of `Tensors` of size [batch_size, height, width, channels].
-    num_classes: the number of classes in the dataset. If 0 or None, the logits
+    num_classes: the number of classes in the pipe. If 0 or None, the logits
       layer is omitted and the input features to the logits layer are returned
       instead.
     is_training: specifies whether or not we're currently training the model.

@@ -38,24 +38,24 @@ datasets_map = {
 
 
 def get_dataset(name, split_name, dataset_dir, file_pattern=None, reader=None):
-    """Given a dataset name and a split_name returns a Dataset.
+    """Given a pipe name and a split_name returns a Dataset.
 
   Args:
-    name: String, the name of the dataset.
+    name: String, the name of the pipe.
     split_name: A train/test split name.
-    dataset_dir: The directory where the dataset files are stored.
-    file_pattern: The file pattern to use for matching the dataset source files.
+    dataset_dir: The directory where the pipe files are stored.
+    file_pattern: The file pattern to use for matching the pipe source files.
     reader: The subclass of tf.ReaderBase. If left as `None`, then the default
-      reader defined by each dataset is used.
+      reader defined by each pipe is used.
 
   Returns:
     A `Dataset` class.
 
   Raises:
-    ValueError: If the dataset `name` is unknown.clear
+    ValueError: If the pipe `name` is unknown.clear
   """
     if name not in datasets_map:
-        raise ValueError('Name of dataset unknown %s' % name)
+        raise ValueError('Name of pipe unknown %s' % name)
 
     return datasets_map[name].get_split(
         split_name,

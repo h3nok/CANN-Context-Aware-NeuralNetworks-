@@ -45,7 +45,7 @@
 # downloading the raw images.
 #
 # usage:
-#  cd clo.slim.tf/slim
+#  cd deepclo.slim.tf/slim
 #  bazel build :download_and_convert_imagenet
 #  ./bazel-bin/download_and_convert_imagenet.sh [data-dir]
 set -e

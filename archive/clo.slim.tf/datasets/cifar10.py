@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Provides data for the Cifar10 dataset.
+"""Provides data for the Cifar10 pipe.
 
-The dataset scripts used to create the dataset can be found at:
-tensorflow/models/clo.slim.tf/slim/datasets/download_and_convert_cifar10.py
+The pipe scripts used to create the pipe can be found at:
+tensorflow/models/deepclo.slim.tf/slim/pipe/download_and_convert_cifar10.py
 """
 
 from __future__ import absolute_import
@@ -43,12 +43,12 @@ _ITEMS_TO_DESCRIPTIONS = {
 
 
 def get_split(split_name, dataset_dir, file_pattern=None, reader=None):
-    """Gets a dataset tuple with instructions for reading cifar10.
+    """Gets a pipe tuple with instructions for reading cifar10.
 
     Args:
       split_name: A train/test split name.
-      dataset_dir: The base directory of the dataset sources.
-      file_pattern: The file pattern to use when matching the dataset sources.
+      dataset_dir: The base directory of the pipe sources.
+      file_pattern: The file pattern to use when matching the pipe sources.
         It is assumed that the pattern contains a '%s' string so that the split
         name can be inserted.
       reader: The TensorFlow reader type.

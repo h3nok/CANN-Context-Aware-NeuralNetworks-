@@ -13,11 +13,11 @@
 # limitations under the License.
 # ==============================================================================
 
-# Script to download the COCO dataset. See
-# http://cocodataset.org/#overview for an overview of the dataset.
+# Script to download the COCO pipe. See
+# http://cocodataset.org/#overview for an overview of the pipe.
 #
 # usage:
-#  bash datasets/download_mscoco.sh path-to-COCO-dataset
+#  bash pipe/download_mscoco.sh path-to-COCO-pipe
 #
 set -e
 

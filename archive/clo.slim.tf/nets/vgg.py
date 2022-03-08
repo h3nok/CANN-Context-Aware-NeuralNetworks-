@@ -24,7 +24,7 @@ These model definitions were introduced in the following technical report:
   CC-BY-4.0
 
 More information can be obtained from the VGG website:
-www.robots.ox.ac.uk/~vgg/clo.slim.tf/very_deep/
+www.robots.ox.ac.uk/~vgg/deepclo.slim.tf/very_deep/
 
 Usage:
   with slim.arg_scope(vgg.vgg_arg_scope()):

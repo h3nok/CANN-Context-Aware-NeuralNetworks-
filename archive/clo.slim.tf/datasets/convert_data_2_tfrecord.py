@@ -19,7 +19,7 @@ _NUM_VALIDATION = 0
 # Seed for repeatability.
 _RANDOM_SEED = 0
 
-# The number of shards per dataset split.
+# The number of shards per pipe split.
 _NUM_SHARDS = 5
 
 
@@ -121,14 +121,14 @@ def _cc_ppor(measure_type):
 
 
 def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tracks, normalize, prefix, ppor=None):
-    """Converts the given filenames to a TFRecord dataset.
+    """Converts the given filenames to a TFRecord pipe.
 
     Args:
-      split_name: The name of the dataset, either 'train' or 'validation'.
+      split_name: The name of the pipe, either 'train' or 'validation'.
       filenames: A list of absolute paths to png or jpg images.
       class_names_to_ids: A dictionary from class names (strings) to ids
         (integers).
-      dataset_dir: The directory where the converted datasets are stored.
+      dataset_dir: The directory where the converted pipe are stored.
       ppor: image preprocessing based on Patch ordering and Reconstruction 
     """
     assert split_name in ['train', 'validation']
@@ -156,7 +156,7 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, tra
                                 i + 1, len(filenames), shard_id))
                             sys.stdout.flush()
 
-                            # TODO: stick p-por here
+                            # TODO: stick p-layers here
 
                             # Read the filename:
                             image_data = tf.gfile.FastGFile(
@@ -195,7 +195,7 @@ def run(dataset_dir, output_dir, dataset_name, set_type='validation', tracks=Fal
     """Runs the download and conversion operation.
 
     Args:
-      dataset_dir: The dataset directory where the dataset is stored.
+      dataset_dir: The pipe directory where the pipe is stored.
     """
     if not tf.gfile.Exists(dataset_dir):
         tf.gfile.MakeDirs(dataset_dir)
@@ -239,7 +239,7 @@ def run(dataset_dir, output_dir, dataset_name, set_type='validation', tracks=Fal
     dataset_utils.write_label_file(labels_to_class_names, output_dir)
 
     # _clean_up_temporary_files(dataset_dir)
-    print('\nFinished converting the {} dataset!'.format(set_type))
+    print('\nFinished converting the {} pipe!'.format(set_type))
 
 
 if __name__ == '__main__':

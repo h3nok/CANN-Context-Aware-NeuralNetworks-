@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Contains utilities for downloading and converting datasets."""
+"""Contains utilities for downloading and converting pipe."""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -116,7 +116,7 @@ def write_label_file(labels_to_class_names, dataset_dir,
 
 
 def has_labels(dataset_dir, filename=LABELS_FILENAME):
-    """Specifies whether or not the dataset directory contains a label map file.
+    """Specifies whether or not the pipe directory contains a label map file.
 
     Args:
       dataset_dir: The directory in which the names file is found.

@@ -15,7 +15,7 @@
 # ==============================================================================
 #
 # This script performs the following operations:
-# 1. Downloads the Cifar10 dataset
+# 1. Downloads the Cifar10 pipe
 # 2. Trains a CifarNet model on the Cifar10 training set.
 # 3. Evaluates the model on the Cifar10 testing set.
 #
@@ -27,10 +27,10 @@ set -e
 # Where the checkpoint and logs will be saved to.
 TRAIN_DIR=/tmp/cifarnet-model
 
-# Where the dataset is saved to.
+# Where the pipe is saved to.
 DATASET_DIR=/tmp/cifar10
 
-# Download the dataset
+# Download the pipe
 python download_and_convert_data.py \
   --dataset_name=cifar10 \
   --dataset_dir=${DATASET_DIR}

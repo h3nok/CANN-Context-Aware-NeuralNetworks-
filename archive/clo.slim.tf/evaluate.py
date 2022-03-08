@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Generic evaluation script that evaluates a model using a given dataset."""
+"""Generic evaluation script that evaluates a model using a given pipe."""
 
 from __future__ import absolute_import
 from __future__ import division
@@ -66,7 +66,7 @@ tf.app.flags.DEFINE_integer(
     'The number of threads used to create the batches.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_name', 'cifar10', 'The name of the dataset to load.')
+    'dataset_name', 'cifar10', 'The name of the pipe to load.')
 
 tf.app.flags.DEFINE_string(
     'dataset_split_name', 'validation', 'The name of the train/test split.')
@@ -74,13 +74,13 @@ tf.app.flags.DEFINE_string(
 tf.app.flags.DEFINE_string(
     'dataset_dir', '/home/deeplearning/data/cifar10-val',
     # 'dataset_dir', 'E:\\Datasets\\cifar\cifar10\\tfrecord\\test',
-    "The directory where the dataset files are stored.")
+    "The directory where the pipe files are stored.")
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
-    'An offset for the names in the dataset. This flag is primarily used to '
+    'An offset for the names in the pipe. This flag is primarily used to '
     'evaluate the VGG and ResNet architectures which do not use a background '
-    'class for the ImageNet dataset.')
+    'class for the ImageNet pipe.')
 
 tf.app.flags.DEFINE_string(
     'model_name', 'inception_v2', 'The name of the architecture to evaluate.')
@@ -131,7 +131,7 @@ def get_checkpoints():
 def eval(checkpoint, output_dir):
     if not FLAGS.dataset_dir:
         raise ValueError(
-            'You must supply the dataset directory with --dataset_dir')
+            'You must supply the pipe directory with --dataset_dir')
     output_dir = os.path.join(FLAGS.eval_dir,
                               FLAGS.training_mode, FLAGS.model_name,
                               FLAGS.metric,
@@ -145,7 +145,7 @@ def eval(checkpoint, output_dir):
         tf_global_step = slim.get_or_create_global_step()
 
         ######################
-        # Select the dataset #
+        # Select the pipe #
         ######################
         dataset = dataset_factory.get_dataset(
             FLAGS.dataset_name, FLAGS.dataset_split_name, FLAGS.dataset_dir)
@@ -159,7 +159,7 @@ def eval(checkpoint, output_dir):
             is_training=False)
 
         ##############################################################
-        # Create a dataset provider that loads data from the dataset #
+        # Create a pipe provider that loads data from the pipe #
         ##############################################################
         provider = slim.dataset_data_provider.DatasetDataProvider(
             dataset,

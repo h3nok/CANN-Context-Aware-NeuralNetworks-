@@ -16,8 +16,8 @@ r"""Saves out a GraphDef containing the architecture of the model.
 
 To use it, run something like this, with a model name defined by slim:
 
-bazel build tensorflow_models/clo.slim.tf/slim:export_inference_graph
-bazel-bin/tensorflow_models/clo.slim.tf/slim/export_inference_graph \
+bazel build tensorflow_models/deepclo.slim.tf/slim:export_inference_graph
+bazel-bin/tensorflow_models/deepclo.slim.tf/slim/export_inference_graph \
 --model_name=inception_v3 --output_file=/tmp/inception_v3_inf_graph.pb
 
 If you then want to use the resulting model with your own or pretrained
@@ -81,19 +81,19 @@ tf.app.flags.DEFINE_integer(
     'be specified at model runtime.')
 
 tf.app.flags.DEFINE_string('dataset_name', 'vinet',
-                           'The name of the dataset to use with the model.')
+                           'The name of the pipe to use with the model.')
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
-    'An offset for the names in the dataset. This flag is primarily used to '
+    'An offset for the names in the pipe. This flag is primarily used to '
     'evaluate the VGG and ResNet architectures which do not use a background '
-    'class for the ImageNet dataset.')
+    'class for the ImageNet pipe.')
 
 tf.app.flags.DEFINE_string(
     'output_file', 'D:\\viNet\RnD\\results\\exports\\InceptionV1\\Inception_v2_e3.pb', 'Where to save the resulting file to.')
 
 tf.app.flags.DEFINE_string(
-    'dataset_dir', '', 'Directory to save intermediate dataset files to')
+    'dataset_dir', '', 'Directory to save intermediate pipe files to')
 
 FLAGS = tf.app.flags.FLAGS
 

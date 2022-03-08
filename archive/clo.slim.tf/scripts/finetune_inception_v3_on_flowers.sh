@@ -15,7 +15,7 @@
 # ==============================================================================
 #
 # This script performs the following operations:
-# 1. Downloads the Flowers dataset
+# 1. Downloads the Flowers pipe
 # 2. Fine-tunes an InceptionV3 model on the Flowers training set.
 # 3. Evaluates the model on the Flowers validation set.
 #
@@ -30,7 +30,7 @@ PRETRAINED_CHECKPOINT_DIR=/tmp/checkpoints
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
 TRAIN_DIR=/tmp/flowers-models/inception_v3
 
-# Where the dataset is saved to.
+# Where the pipe is saved to.
 DATASET_DIR=/tmp/flowers
 
 # Download the pre-trained checkpoint.
@@ -44,7 +44,7 @@ if [ ! -f ${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt ]; then
   rm inception_v3_2016_08_28.tar.gz
 fi
 
-# Download the dataset
+# Download the pipe
 python download_and_convert_data.py \
   --dataset_name=flowers \
   --dataset_dir=${DATASET_DIR}

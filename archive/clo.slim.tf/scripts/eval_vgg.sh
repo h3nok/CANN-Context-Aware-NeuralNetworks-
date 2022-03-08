@@ -22,7 +22,7 @@ MODEL_NAME=resnet_v1_50
 DATAET_NAME=cifar100
 ITER=10000
 
-# Where the dataset is saved to.
+# Where the pipe is saved to.
 DATASET_DIR=/mnt/data/tensorflow/data
 
 # Run evaluation (using slim.evaluation.evaluate_once)

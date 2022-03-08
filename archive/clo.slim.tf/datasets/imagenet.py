@@ -59,7 +59,7 @@ _ITEMS_TO_DESCRIPTIONS = {
 
 _NUM_CLASSES = 1001
 
-# If set to false, will not try to set label_to_names in dataset
+# If set to false, will not try to set label_to_names in pipe
 # by reading them from names.txt or github.
 LOAD_READABLE_NAMES = True
 
@@ -121,12 +121,12 @@ def create_readable_names_for_imagenet_labels():
 
 
 def get_split(split_name, dataset_dir, file_pattern=None, reader=None):
-    """Gets a dataset tuple with instructions for reading ImageNet.
+    """Gets a pipe tuple with instructions for reading ImageNet.
 
   Args:
     split_name: A train/test split name.
-    dataset_dir: The base directory of the dataset sources.
-    file_pattern: The file pattern to use when matching the dataset sources.
+    dataset_dir: The base directory of the pipe sources.
+    file_pattern: The file pattern to use when matching the pipe sources.
       It is assumed that the pattern contains a '%s' string so that the split
       name can be inserted.
     reader: The TensorFlow reader type.

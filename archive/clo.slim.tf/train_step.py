@@ -14,7 +14,7 @@ from inception_resnet_v2 import inception_resnet_v2, inception_resnet_v2_arg_sco
 from tqdm import tqdm
 import os
 import time
-from clo import SyllabusFactory
+from deepclo import SyllabusFactory
 
 slim = tf.contrib.slim
 
@@ -30,7 +30,7 @@ curriculum = True
 # sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 
 # ================ DATASET INFORMATION ======================
-# dataset_dir = '/home/henok/dataset/cifar10'
+# dataset_dir = '/home/henok/pipe/cifar10'
 #
 # log_dir = '/home/henok/research/logs'
 
@@ -66,15 +66,15 @@ def get_split(split_name, dataset_dir, file_pattern=file_pattern,
               file_pattern_for_counting='cifar10'):
     '''
     Obtains the split - training or test - to create a Dataset class for feeding the examples into a queue later on. This function will
-    set up the decoder and dataset information all into one Dataset class so that you can avoid the brute work later on.
+    set up the decoder and pipe information all into one Dataset class so that you can avoid the brute work later on.
     Your file_pattern is very important in locating the files later.
     INPUTS:
     - split_name(str): 'train' or 'test'. Used to get the correct data split of tfrecord files
-    - dataset_dir(str): the dataset directory where the tfrecord files are located
+    - dataset_dir(str): the pipe directory where the tfrecord files are located
     - file_pattern(str): the file name structure of the tfrecord files in order to get the correct data
     - file_pattern_for_counting(str): the string name to identify your tfrecord files for counting
     OUTPUTS:
-    - dataset (Dataset): A Dataset class object where we can read its various components for easier batch creation later.
+    - pipe (Dataset): A Dataset class object where we can read its various components for easier batch creation later.
     '''
     # First check whether the split_name is train or test
     if split_name not in ['train', 'test']:
@@ -115,7 +115,7 @@ def get_split(split_name, dataset_dir, file_pattern=file_pattern,
     # Create the labels_to_name file
     labels_to_name_dict = labels_to_name
 
-    # Actually create the dataset
+    # Actually create the pipe
     dataset = slim.dataset.Dataset(
         data_sources=file_pattern_path,
         decoder=decoder,
@@ -141,7 +141,7 @@ def load_batch(dataset, batch_size, height=image_size, width=image_size, is_trai
 
         Loads a batch for training.
     INPUTS:
-    - dataset(Dataset): a Dataset class object that is created from the get_split function
+    - pipe(Dataset): a Dataset class object that is created from the get_split function
     - batch_size(int): determines how big of a batch to train
     - height(int): the height of the image to resize to during preprocessing
     - width(int): the width of the image to resize to during preprocessing
@@ -195,7 +195,7 @@ def run():
     with tf.Graph().as_default() as graph:
         tf.logging.set_verbosity(tf.logging.INFO)  # Set the verbosity to INFO level
 
-        # First create the dataset and load one batch
+        # First create the pipe and load one batch
         dataset = get_split('train', dataset_dir, file_pattern=file_pattern)
         images, labels = load_batch(dataset, batch_size=batch_size)
 

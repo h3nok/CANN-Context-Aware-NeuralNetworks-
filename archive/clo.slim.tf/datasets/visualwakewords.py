@@ -14,13 +14,13 @@
 # ==============================================================================
 """Provides data for Visual WakeWords Dataset with images+names.
 
-Visual WakeWords Dataset derives from the COCO dataset to design tiny models
+Visual WakeWords Dataset derives from the COCO pipe to design tiny models
 classifying two classes, such as person/not-person. The COCO annotations
 are filtered to two classes: person and not-person (or another user-defined
 category). Bounding boxes for small objects with area less than 5% of the image
 area are filtered out.
-See build_visualwakewords_data.py which generates the Visual WakeWords dataset
-annotations from the raw COCO dataset and converts them to TFRecord.
+See build_visualwakewords_data.py which generates the Visual WakeWords pipe
+annotations from the raw COCO pipe and converts them to TFRecord.
 
 """
 from __future__ import absolute_import
@@ -57,12 +57,12 @@ LABELS_FILENAME = 'names.txt'
 
 
 def get_split(split_name, dataset_dir, file_pattern=None, reader=None):
-  """Gets a dataset tuple with instructions for reading ImageNet.
+  """Gets a pipe tuple with instructions for reading ImageNet.
 
   Args:
     split_name: A train/test split name.
-    dataset_dir: The base directory of the dataset sources.
-    file_pattern: The file pattern to use when matching the dataset sources. It
+    dataset_dir: The base directory of the pipe sources.
+    file_pattern: The file pattern to use when matching the pipe sources. It
       is assumed that the pattern contains a '%s' string so that the split name
       can be inserted.
     reader: The TensorFlow reader type.

@@ -128,7 +128,7 @@ def distorted_bounding_box_crop(image,
         # Each bounding box has shape [1, num_boxes, box coords] and
         # the coordinates are ordered [ymin, xmin, ymax, xmax].
 
-        # A large fraction of image datasets contain a human-annotated bounding
+        # A large fraction of image pipe contain a human-annotated bounding
         # box delineating the region of the image containing the object of interest.
         # We choose to create a new bounding box for the object which is a randomly
         # distorted version of the human-annotated bounding box that obeys an

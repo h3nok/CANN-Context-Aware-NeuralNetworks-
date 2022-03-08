@@ -13,7 +13,7 @@
 # limitations under the License.
 # ==============================================================================
 -
-"""Generic training script that trains a model using a given dataset."""
+"""Generic training script that trains a model using a given pipe."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -55,7 +55,7 @@ tf.app.flags.DEFINE_integer(
 
 tf.app.flags.DEFINE_integer(
     'num_readers', 4,
-    'The number of parallel readers that read data from the dataset.')
+    'The number of parallel readers that read data from the pipe.')
 
 tf.app.flags.DEFINE_integer(
     'num_preprocessing_threads', 4,
@@ -171,20 +171,20 @@ tf.app.flags.DEFINE_float(
 #######################
 
 tf.app.flags.DEFINE_string(
-    'dataset_name', 'imagenet', 'The name of the dataset to load.')
+    'dataset_name', 'imagenet', 'The name of the pipe to load.')
 
 tf.app.flags.DEFINE_string(
     'dataset_split_name', 'train', 'The name of the train/test split.')
 
 tf.app.flags.DEFINE_string(
     'dataset_dir', "/home/deeplearning/data/imagenet/train",
-    'The directory where the dataset files are stored.')
+    'The directory where the pipe files are stored.')
 
 tf.app.flags.DEFINE_integer(
     'labels_offset', 0,
-    'An offset for the names in the dataset. This flag is primarily used to '
+    'An offset for the names in the pipe. This flag is primarily used to '
     'evaluate the VGG and ResNet architectures which do not use a background '
-    'class for the ImageNet dataset.')
+    'class for the ImageNet pipe.')
 
 tf.app.flags.DEFINE_string(
     'model_name', 'inception_v2', 'The name of the architecture to train.')
@@ -424,7 +424,7 @@ def _get_variables_to_train():
 def main(_):
     if not FLAGS.dataset_dir:
         raise ValueError(
-            'You must supply the dataset directory with --dataset_dir')
+            'You must supply the pipe directory with --dataset_dir')
 
     tf.logging.set_verbosity(tf.logging.INFO)
     if FLAGS.measure is None or FLAGS.preprocessing_name is None and FLAGS.curriculum is False:
@@ -457,7 +457,7 @@ def main(_):
             global_step = tf.train.create_global_step()
 
         ######################
-        # Select the dataset #
+        # Select the pipe #
         ######################
         dataset = dataset_factory.get_dataset(
             FLAGS.dataset_name, FLAGS.dataset_split_name, FLAGS.dataset_dir)
@@ -480,7 +480,7 @@ def main(_):
             is_training=True)
 
         ##############################################################
-        # Create a dataset provider that loads data from the dataset #
+        # Create a pipe provider that loads data from the pipe #
         ##############################################################
         with tf.device(deploy_config.inputs_device()):
             provider = slim.dataset_data_provider.DatasetDataProvider(

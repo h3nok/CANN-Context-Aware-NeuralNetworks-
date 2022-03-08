@@ -14,16 +14,16 @@
 # ==============================================================================
 r"""Build Visual WakeWords Dataset with images and names for person/not-person.
 
-This script generates the Visual WakeWords dataset annotations from
-the raw COCO dataset and converts them to TFRecord.
-Visual WakeWords Dataset derives from the COCO dataset to design tiny models
+This script generates the Visual WakeWords pipe annotations from
+the raw COCO pipe and converts them to TFRecord.
+Visual WakeWords Dataset derives from the COCO pipe to design tiny models
 classifying two classes, such as person/not-person. The COCO annotations
 are filtered to two classes: foreground_class_of_interest and background
 ( for e.g. person and not-person). Bounding boxes for small objects
 with area less than 5% of the image area are filtered out.
 
 The resulting annotations file has the following fields, where
-the image and categories fields are same as COCO dataset, while the annotation
+the image and categories fields are same as COCO pipe, while the annotation
 field corresponds to the foreground_class_of_interest/background class and
 bounding boxes for the foreground_class_of_interest class.
 
@@ -52,17 +52,17 @@ For classification models, you need the image/encoded and image/class/label.
 Please note that this tool creates sharded output files.
 
 Example usage:
-Add folder tensorflow/models/clo.slim.tf/slim to your PYTHONPATH,
+Add folder tensorflow/models/deepclo.slim.tf/slim to your PYTHONPATH,
 and from this folder, run the following commands:
 
-    bash download_mscoco.sh path-to-mscoco-dataset
-    TRAIN_IMAGE_DIR="path-to-mscoco-dataset/train2014"
-    VAL_IMAGE_DIR="path-to-mscoco-dataset/val2014"
+    bash download_mscoco.sh path-to-mscoco-pipe
+    TRAIN_IMAGE_DIR="path-to-mscoco-pipe/train2014"
+    VAL_IMAGE_DIR="path-to-mscoco-pipe/val2014"
 
-    TRAIN_ANNOTATIONS_FILE="path-to-mscoco-dataset/annotations/instances_train2014.json"
-    VAL_ANNOTATIONS_FILE="path-to-mscoco-dataset/annotations/instances_val2014.json"
+    TRAIN_ANNOTATIONS_FILE="path-to-mscoco-pipe/annotations/instances_train2014.json"
+    VAL_ANNOTATIONS_FILE="path-to-mscoco-pipe/annotations/instances_val2014.json"
 
-    python datasets/build_visualwakewords_data.py --logtostderr \
+    python pipe/build_visualwakewords_data.py --logtostderr \
       --train_image_dir="${TRAIN_IMAGE_DIR}" \
       --val_image_dir="${VAL_IMAGE_DIR}" \
       --train_annotations_file="${TRAIN_ANNOTATIONS_FILE}" \
@@ -105,7 +105,7 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 
 def main(unused_argv):
-  # Path to COCO dataset images and annotations
+  # Path to COCO pipe images and annotations
   assert FLAGS.train_image_dir, '`train_image_dir` missing.'
   assert FLAGS.val_image_dir, '`val_image_dir` missing.'
   assert FLAGS.train_annotations_file, '`train_annotations_file` missing.'

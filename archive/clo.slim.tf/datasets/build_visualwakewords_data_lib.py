@@ -14,7 +14,7 @@
 # ==============================================================================
 r"""Generate Visual Wakewords Dataset.
 
-    Helper functions to generate the Visual WakeWords dataset. It filters raw
+    Helper functions to generate the Visual WakeWords pipe. It filters raw
     COCO annotations file to Visual WakeWords Dataset annotations.
     The resulting annotations and COCO images are then
     converted to TF records.
@@ -56,8 +56,8 @@ def create_visual_wakeword_annotations(annotations_file,
     visualwakewords_annotations_path: output path to annotations file
     small_object_area_threshold: threshold on fraction of image area below which
       small object bounding boxes are filtered
-    foreground_class_of_interest: category from COCO dataset that is filtered by
-      the visual wakewords dataset
+    foreground_class_of_interest: category from COCO pipe that is filtered by
+      the visual wakewords pipe
     visualwakewords_labels_filename: The filename to write the visual wakewords
       label file
   """
@@ -130,13 +130,13 @@ def _filter_annotations_list(annotations_list, image,
     annotations_list: list of dicts with keys: [ u'id', u'image_id',
     u'category_id', u'segmentation', u'area', u'bbox' : [x,y,width,height],
       u'iscrowd']. Notice that bounding box coordinates in the official COCO
-      dataset are given as [x, y, width, height] tuples using absolute
+      pipe are given as [x, y, width, height] tuples using absolute
       coordinates where x, y represent the top-left (0-indexed) corner.
     image: dict with keys: [u'license', u'file_name', u'coco_url', u'height',
       u'width', u'date_captured', u'flickr_url', u'id']
     small_object_area_threshold: threshold on fraction of image area below which
       small objects are filtered
-    foreground_class_of_interest_id: category of COCO dataset which visual
+    foreground_class_of_interest_id: category of COCO pipe which visual
       wakewords filters
 
   Returns:
@@ -253,7 +253,7 @@ def _create_tf_example(image, annotations_list, image_dir):
     annotations_list:
       list of dicts with keys: [u'image_id', u'bbox', u'label',
       object[{"category_id", "area", "bbox" : [x,y,width,height],}]]. Notice
-        that bounding box coordinates in the COCO dataset are given as [x, y,
+        that bounding box coordinates in the COCO pipe are given as [x, y,
         width, height] tuples using absolute coordinates where x, y represent
         the top-left (0-indexed) corner. This function converts to the format
         that can be used by the Tensorflow Object Detection API (which is [ymin,

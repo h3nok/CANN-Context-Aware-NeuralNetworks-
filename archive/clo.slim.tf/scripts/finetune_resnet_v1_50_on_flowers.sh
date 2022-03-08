@@ -15,7 +15,7 @@
 # ==============================================================================
 #
 # This script performs the following operations:
-# 1. Downloads the Flowers dataset
+# 1. Downloads the Flowers pipe
 # 2. Fine-tunes a ResNetV1-50 model on the Flowers training set.
 # 3. Evaluates the model on the Flowers validation set.
 #
@@ -30,7 +30,7 @@ PRETRAINED_CHECKPOINT_DIR=/tmp/checkpoints
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
 TRAIN_DIR=/tmp/flowers-models/resnet_v1_50
 
-# Where the dataset is saved to.
+# Where the pipe is saved to.
 DATASET_DIR=/tmp/flowers
 
 # Download the pre-trained checkpoint.
@@ -44,7 +44,7 @@ if [ ! -f ${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt ]; then
   rm resnet_v1_50_2016_08_28.tar.gz
 fi
 
-# Download the dataset
+# Download the pipe
 python download_and_convert_data.py \
   --dataset_name=flowers \
   --dataset_dir=${DATASET_DIR}
