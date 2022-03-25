@@ -5,7 +5,7 @@ import tqdm
 from deepclo.core.measures.measure_functions import (Measure,
                                                      MeasureType,
                                                      Ordering,
-                                                     map_measure_fn)
+                                                     map_measure_function)
 from deepclo.utils import configure_logger
 
 _logger = configure_logger(__name__, '../../../')
@@ -18,9 +18,9 @@ def _determine_measure_type(measure):
                    Measure.MI_NORMALIZED, Measure.LI, Measure.IV, Measure.CROSS_ENTROPY,
                    Measure.CROSS_ENTROPY_PMF]:
 
-        return MeasureType.Dist
+        return MeasureType.DISTANCE
     else:
-        return MeasureType.STA
+        return MeasureType.STANDALONE
 
 
 def _swap(p1, p2):
@@ -55,7 +55,7 @@ def order_samples_or_patches(patches_data, total_patches=None, measure=None,
     _logger.info("Entering _sort_patches ... ")
     measure_type = _determine_measure_type(measure)
 
-    measure_fn = map_measure_fn(measure, measure_type)
+    measure_fn = map_measure_function(measure, measure_type)
     print(type(patches_data))
     sess = tf.Session()
     tf.train.start_queue_runners(sess=sess, coord=coord)
@@ -70,12 +70,12 @@ def order_samples_or_patches(patches_data, total_patches=None, measure=None,
     if curriculum:
         labels_data = labels.numpy()
 
-    if measure_type == MeasureType.STA:
+    if measure_type == MeasureType.STANDALONE:
         _logger.info(
             'Measure type is standalone, calling _sort_patches_by_content_measure ...')
         return sort_by_content_measure(patches_data, measure_fn, labels)
 
-    if measure_type != MeasureType.Dist:
+    if measure_type != MeasureType.DISTANCE:
         _logger.error(
             "Supplied measure is not distance measure, please call _sort_patches_by_standalone_measure instead")
 

@@ -2675,7 +2675,7 @@ def entropy_cross(X, Y=None, cartesian_product=False, base=2, fill_value=-1,
             continue
         P2, _ = _estimate_probabilities(L, estimator)
 
-        # Merge probability distributions, so that common symbols have common
+        # Merge probability distributions, so that common.py symbols have common.py
         # array location
         Alphabet = np.union1d(alphabet_X, alphabet_Y)
         P = np.zeros_like(Alphabet, dtype=P1.dtype)
@@ -2856,7 +2856,7 @@ def divergence_jensenshannon(X, Y=None, cartesian_product=False, base=2,
     **Mathematical definition**:
 
     Denoting with :math:`P_X`, :math:`P_Y` respectively probability
-    distributions with common domain, associated with discrete random variables
+    distributions with common.py domain, associated with discrete random variables
     :math:`X`, :math:`Y`, the Jensen-Shannon divergence
     :math:`D_{\\mathrm{JS}}(P_X \\parallel P_Y)` is defined as:
 
@@ -3105,7 +3105,7 @@ def divergence_jensenshannon(X, Y=None, cartesian_product=False, base=2,
             continue
         P2, _ = _estimate_probabilities(L, estimator)
 
-        # Merge probability distributions, so that common symbols have common
+        # Merge probability distributions, so that common.py symbols have common.py
         # array location
         Alphabet = np.union1d(alphabet_X, alphabet_Y)
         P = np.zeros_like(Alphabet, dtype=P1.dtype)
@@ -3136,7 +3136,7 @@ def divergence_kullbackleibler_symmetrised(X, Y=None, cartesian_product=False,
     **Mathematical definition**:
 
     Denoting with :math:`P_X`, :math:`P_Y` respectively probability
-    distributions with common domain, associated with discrete random variables
+    distributions with common.py domain, associated with discrete random variables
     :math:`X`, :math:`Y`, the symmetrised Kullback-Leibler divergence
     :math:`D_{\\mathrm{SKL}}(P_X \\parallel P_Y)` is defined as:
 
@@ -3816,6 +3816,7 @@ def entropy(X, base=2, fill_value=-1, estimator='ML', Alphabet_X=None,
     # NB: We would be able to reduce code duplication by invoking
     # entropy_cross(X,X). However, performance would likely be lower!
     X, fill_value_X = _sanitise_array_input(X, fill_value)
+
     if Alphabet_X is not None:
         Alphabet_X, fill_value_Alphabet_X = _sanitise_array_input(Alphabet_X,
                                                                   fill_value)
@@ -4150,7 +4151,7 @@ def divergence_jensenshannon_pmf(P, Q=None, cartesian_product=False, base=2,
 
     **Mathematical definition**:
 
-    Denoting with :math:`P`, :math:`Q` probability distributions with common
+    Denoting with :math:`P`, :math:`Q` probability distributions with common.py
     domain, the Jensen-Shannon divergence
     :math:`D_{\\mathrm{JS}}(P \\parallel Q)` is defined as:
 
@@ -4264,7 +4265,7 @@ def divergence_kullbackleibler_symmetrised_pmf(P, Q=None,
 
     **Mathematical definition**:
 
-    Denoting with :math:`P`, :math:`Q` probability distributions with common
+    Denoting with :math:`P`, :math:`Q` probability distributions with common.py
     domain, the symmetrised Kullback-Leibler divergence
     :math:`D_{\\mathrm{SKL}}(P \\parallel Q)` is defined as:
 
@@ -4686,6 +4687,7 @@ def _map_observations_to_integers(Symbol_matrices, Fill_values):
         # TODO make sure to test with various (unusual) data types
         Symbol_matrices = [L.transform(A.ravel()).reshape(A.shape) for A in
                            Symbol_matrices]
+
         Fill_values = [L.transform(np.atleast_1d(f)) for f in Fill_values]
 
         for A, f in zip(Symbol_matrices, Fill_values):

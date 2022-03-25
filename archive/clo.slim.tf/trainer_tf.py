@@ -313,7 +313,7 @@ class Trainer(object):
                 train_image_size = self._config.train_image_size or network_fn.default_image_size
                 image = image_preprocessing_fn(
                     image, train_image_size, train_image_size, self._measure,
-                    self._config.ordering, self._config.patch_size)
+                    self._config.ordering, self._config.block_shape)
 
                 images, labels = tf.train.batch(
                     [image, label],

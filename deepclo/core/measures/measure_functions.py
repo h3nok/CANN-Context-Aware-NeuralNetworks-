@@ -1,10 +1,9 @@
 import functools
 from enum import Enum
 
-from deepclo.core.measures.statistical import l1_norm, l2_norm, max_norm, psnr, ssim
 from deepclo.core.measures import information_theory as entropy
+from deepclo.core.measures.statistical import l1_norm, l2_norm, max_norm, psnr, ssim
 from deepclo.utils import configure_logger
-import numpy as np
 
 _logger = configure_logger(__file__, '../../')
 
@@ -36,13 +35,13 @@ class Measure(Enum):
 
 
 class Ordering(Enum):
-    Ascending = "Sort patches in ascending rank order"
-    Descending = "Sort patches in descending rank order"
+    Ascending = [1, 'asc']
+    Descending = [0, 'desc']
 
 
 class MeasureType(Enum):
-    Dist = "Distance measure between two patches"
-    STA = "Standalone measure of a patch"
+    DISTANCE = "Distance measure between two patches"
+    STANDALONE = "Standalone measure of a patch"
 
 
 MEASURE_MAP = {
@@ -71,8 +70,14 @@ MEASURE_MAP = {
 }
 
 
-# @tf.function
-def map_measure_fn(m, measure_type=MeasureType.Dist):
+def determine_measure_classification(m):
+    if m in [Measure.ENTROPY, Measure.SSIM]:
+        return MeasureType.STANDALONE
+
+    return MeasureType.DISTANCE
+
+
+def map_measure_function(m, measure_type=None):
     """[summary]
 
     Arguments:
@@ -81,8 +86,9 @@ def map_measure_fn(m, measure_type=MeasureType.Dist):
     Keyword Arguments:
         measureType {MeasureType} -- measure type (default: {MeasureType.Dist})
     """
+    if not measure_type:
+        measure_type = determine_measure_classification(m)
 
-    _logger.info("Entering map_measure_fn, measure: {}".format(m.value))
     if not isinstance(m, Measure):
         raise ValueError(
             "Supplied argument must be an instance of Measure Enum")
@@ -99,12 +105,9 @@ def map_measure_fn(m, measure_type=MeasureType.Dist):
     # Call functions by reflection
     @functools.wraps(func)
     def measure_fn(image_patches):
-        if measure_type == MeasureType.Dist:
+        if measure_type == MeasureType.DISTANCE:
             return func(image_patches[0], image_patches[1])
         else:
             return func(image_patches)
 
-    _logger.info("Successfully mapped measure function")
-
     return measure_fn
-

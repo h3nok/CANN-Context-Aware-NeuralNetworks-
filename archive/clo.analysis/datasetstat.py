@@ -1,4 +1,4 @@
-from deepclo.training_sample import Sample
+from archive.training_sample import Sample
 import numpy as np
 import uuid
 import csv

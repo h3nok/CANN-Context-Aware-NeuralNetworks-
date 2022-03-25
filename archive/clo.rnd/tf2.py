@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.datasets import fashion_mnist
-from deepclo.training_sample import Sample, SampleAttribute
+from archive.training_sample import Sample
 
 
 def load_data():

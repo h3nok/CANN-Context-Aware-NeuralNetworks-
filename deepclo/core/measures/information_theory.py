@@ -214,6 +214,15 @@ def mutual_information(patch_1, patch_2):
 
 
 def normalized_mutual_information(patch_1, patch_2):
+    """
+
+    Args:
+        patch_1:
+        patch_2:
+
+    Returns:
+
+    """
     assert isinstance(patch_1, np.ndarray), "Patch data must be a numpy array."
     assert isinstance(patch_2, np.ndarray), "Patch data must be a numpy array."
     assert patch_1.shape == patch_2.shape, "Patches must have similar tensor shapes of [p_w, p_h, c]"
@@ -229,6 +238,14 @@ def normalized_mutual_information(patch_1, patch_2):
 
 
 def enigmatic_information(patch_1):
+    """
+
+    Args:
+        patch_1:
+
+    Returns:
+
+    """
     assert isinstance(patch_1, np.ndarray), "Patch data must be a numpy array."
 
     patch_1 = patch_1.flatten()
@@ -239,6 +256,15 @@ def enigmatic_information(patch_1):
 
 
 def lautum_information(patch_1, patch_2):
+    """
+
+    Args:
+        patch_1:
+        patch_2:
+
+    Returns:
+
+    """
     assert isinstance(patch_1, np.ndarray), "Patch data must be a numpy array."
     assert isinstance(patch_2, np.ndarray), "Patch data must be a numpy array."
     assert patch_1.shape == patch_2.shape, "Patches must have similar tensor shapes of [p_w, p_h, c]"
@@ -254,6 +280,14 @@ def lautum_information(patch_1, patch_2):
 
 
 def multi_information(patch_1):
+    """
+
+    Args:
+        patch_1:
+
+    Returns:
+
+    """
     assert isinstance(patch_1, np.ndarray), "Patch data must be a numpy array."
 
     patch_1 = patch_1.flatten()
@@ -264,6 +298,14 @@ def multi_information(patch_1):
 
 
 def exogenous_local_information(patch):
+    """
+
+    Args:
+        patch:
+
+    Returns:
+
+    """
     assert isinstance(patch, np.ndarray), "Patch data must be a numpy array."
 
     # flatten the tensor into a single dimensional array
@@ -274,6 +316,14 @@ def exogenous_local_information(patch):
 
 
 def information_interaction(patch):
+    """
+
+    Args:
+        patch:
+
+    Returns:
+
+    """
     assert isinstance(patch, np.ndarray), "Patch data must be a numpy array."
 
     # flatten the tensor into a single dimensional array
@@ -284,6 +334,15 @@ def information_interaction(patch):
 
 
 def information_variation(patch_1, patch_2):
+    """
+
+    Args:
+        patch_1:
+        patch_2:
+
+    Returns:
+
+    """
     assert isinstance(patch_1, np.ndarray), "Patch data must be a numpy array."
     assert isinstance(patch_2, np.ndarray), "Patch data must be a numpy array."
     assert patch_1.shape == patch_2.shape, "Patches must have similar tensor shapes of [p_w, p_h, c]"
@@ -299,6 +358,14 @@ def information_variation(patch_1, patch_2):
 
 
 def binding_information(patch):
+    """
+
+    Args:
+        patch:
+
+    Returns:
+
+    """
     assert isinstance(patch, np.ndarray), "Patch data must be a numpy array."
 
     patch = patch.flatten()
@@ -308,6 +375,14 @@ def binding_information(patch):
 
 
 def co_information(patch):
+    """
+
+    Args:
+        patch:
+
+    Returns:
+
+    """
     assert isinstance(patch, np.ndarray), "Patch data must be a numpy array."
 
     # flatten the tensor into a single dimensional array

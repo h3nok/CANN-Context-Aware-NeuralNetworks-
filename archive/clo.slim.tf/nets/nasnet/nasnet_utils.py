@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""A custom module for some common operations used by NASNet.
+"""A custom module for some common.py operations used by NASNet.
 
 Functions exposed in this file:
 - calc_reduction_layers

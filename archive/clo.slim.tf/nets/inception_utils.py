@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Contains common code shared by all inception models.
+"""Contains common.py code shared by all inception models.
 
 Usage of arg scope:
   with slim.arg_scope(inception_arg_scope()):
