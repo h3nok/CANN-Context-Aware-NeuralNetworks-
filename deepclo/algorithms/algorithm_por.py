@@ -84,29 +84,6 @@ class AlgorithmPOR:
         self.patches_per_col = None
         self.measure = None
 
-    def split_image(self, block_shape: tuple = None):
-        """
-        Split image into equal sized blocks
-
-        Args:
-            block_shape:
-        Returns:
-        """
-        if not block_shape:
-            assert self.block_shape
-
-        elif block_shape:
-            self.block_shape = block_shape
-
-        assert self.block_shape
-        assert len(self.block_shape) == 2
-        assert self.block_shape[0] == self.block_shape[1]
-        self.block_shape = (self.block_shape[0], self.block_shape[1], self.channels)
-
-        self._divide_into_blocks(block_shape=self.block_shape)
-
-        assert len(self.blocks) > 0
-
     def _divide_into_blocks(self, block_shape):
         """
         split the image into equal sized blocks
@@ -145,6 +122,29 @@ class AlgorithmPOR:
         sample_set = set(self.sample.flatten())
         for block in self.blocks:
             assert set(block.flatten()).issubset(sample_set)
+
+    def split_image(self, block_shape: tuple = None):
+        """
+        Split image into equal sized blocks
+
+        Args:
+            block_shape:
+        Returns:
+        """
+        if not block_shape:
+            assert self.block_shape
+
+        elif block_shape:
+            self.block_shape = block_shape
+
+        assert self.block_shape
+        assert len(self.block_shape) == 2
+        assert self.block_shape[0] == self.block_shape[1]
+        self.block_shape = (self.block_shape[0], self.block_shape[1], self.channels)
+
+        self._divide_into_blocks(block_shape=self.block_shape)
+
+        assert len(self.blocks) > 0
 
     def construct_new_input(self,
                             block_ranking_measure: Measure = Measure.ENTROPY,
