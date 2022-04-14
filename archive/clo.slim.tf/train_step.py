@@ -116,7 +116,7 @@ def get_split(split_name, dataset_dir, file_pattern=file_pattern,
     labels_to_name_dict = labels_to_name
 
     # Actually create the pipe
-    dataset = slim.dataset.Dataset(
+    dataset = slim.dataset.DeepCLODataProvider(
         data_sources=file_pattern_path,
         decoder=decoder,
         reader=reader,
@@ -202,7 +202,7 @@ def run():
         def _propose_syllabus(local_graph, images, labels):
             assert local_graph
             sf = SyllabusFactory(local_graph, images, labels, batch_size)
-            images, labels = sf.propose_syllabus('mi', 0)
+            images, labels = sf._propose_syllabus('mi', 0)
 
             return images, labels
 

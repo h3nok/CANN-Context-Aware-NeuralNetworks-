@@ -28,8 +28,8 @@ class Dataset:
             self._test_total = self._metadata.splits['test']
 
     def get(self):
-        assert isinstance(self._train, tf.data.Dataset)
-        assert isinstance(self._test, tf.data.Dataset)
+        assert isinstance(self._train, tf.data.DeepCLODataProvider)
+        assert isinstance(self._test, tf.data.DeepCLODataProvider)
         return self._train, self._test
 
     @property

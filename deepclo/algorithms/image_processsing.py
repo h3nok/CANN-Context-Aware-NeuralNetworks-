@@ -3,7 +3,52 @@ from deepclo.core.measures.measure_functions import map_measure_function, \
 import numpy as np
 
 
-def measure_image_content(image, content_measure: Measure):
+def assess_and_rank_images(
+        batch_or_image_blocks,
+        content_measure: Measure,
+        reference_block_index
+):
+    """
+    Rank image blocks by measuring the content of each block or similarity of each block to
+    the reference block
+
+    Args:
+        batch_or_image_blocks:
+        content_measure:
+        reference_block_index:
+
+    Returns:
+
+    """
+    ranks = []
+    if determine_measure_classification(content_measure) == MeasureType.STANDALONE:
+        for i, block in enumerate(batch_or_image_blocks):
+            rank = measure_image_content(block, content_measure=content_measure)
+            ranks.append(rank)
+
+        return np.array(ranks)
+
+    else:
+        if not reference_block_index:
+            raise RuntimeError("Must supply reference image or block.")
+        ranks = []
+        reference_block = batch_or_image_blocks[reference_block_index]
+
+        for i, block in enumerate(batch_or_image_blocks):
+            if i == reference_block_index:
+                continue
+            rank = measure_content_similarity(reference_block, block, content_measure)
+            ranks.insert(i, rank)
+
+        ranks.insert(reference_block_index, 0.0)
+
+        return np.array(ranks)
+
+
+def measure_image_content(
+        image,
+        content_measure: Measure
+):
     """
     Rank images - using standalone metric
     Standalone measures –measure some characteristic
@@ -24,7 +69,11 @@ def measure_image_content(image, content_measure: Measure):
     return result
 
 
-def measure_content_similarity(image1: np.ndarray, image2: np.ndarray, content_measure: Measure):
+def measure_content_similarity(
+        image1: np.ndarray,
+        image2: np.ndarray,
+        content_measure: Measure
+):
     """
     Similarity measures – these measures on the other
     hand, compare a pair of patches. The comparison measures can
@@ -48,14 +97,18 @@ def measure_content_similarity(image1: np.ndarray, image2: np.ndarray, content_m
     return result
 
 
-def sort_image_blocks(blocks: np.array,
-                      ranks: np.array,
-                      block_rank_ordering=Ordering.Descending):
+def sort_images(
+        batch_or_image_blocks: np.array,
+        ranks: np.array,
+        labels: np.array = np.array([]),
+        block_rank_ordering=Ordering.Descending
+):
     """
     Sort image blocks using a standalone metric, entropy and ssim
 
     Args:
-        blocks: np.ndarray of blocks of an image - ordered as in original image
+        batch_or_image_blocks: np.ndarray of blocks of an image - ordered as in original image
+        labels: np.array - labels if input is a batch
         ranks: n.array of blocks ranks
         block_rank_ordering: how blocks or to be ordered - ascending or
         descending order of ranks
@@ -64,16 +117,24 @@ def sort_image_blocks(blocks: np.array,
     TODO : Combine with rank_blocks to reduce code
     """
     ranks_indices = None
-    assert blocks.shape[0] == ranks.shape[0]
+    assert batch_or_image_blocks.shape[0] == ranks.shape[0]
     if block_rank_ordering in Ordering.Ascending.value:
         ranks_indices = ranks.argsort()
     elif block_rank_ordering in Ordering.Descending.value:
         ranks_indices = (-ranks).argsort()
+    if labels.any():
+        return batch_or_image_blocks[ranks_indices], labels[ranks_indices], ranks_indices
 
-    return blocks[ranks_indices], ranks_indices
+    return batch_or_image_blocks[ranks_indices], ranks_indices
 
 
-def construct_new_input(blocks: np.ndarray, im_h: int, im_w: int, n_channels: int, stride: int = None):
+def construct_new_input(
+        blocks: np.ndarray,
+        image_height: int,
+        image_width: int,
+        number_of_channels: int,
+        stride: int = None
+):
     """
        Reconstruct the image from all patches.
        Patches are assumed to be square and overlapping depending on the stride. The image is constructed
@@ -84,11 +145,11 @@ def construct_new_input(blocks: np.ndarray, im_h: int, im_w: int, n_channels: in
         Array containing extracted patches. If the patches contain colour information,
         channels are indexed along the last dimension: RGB patches would
         have `n_channels=3`.
-    im_h: int
+    image_height: int
         original height of image to be reconstructed
-    im_w: int
+    image_width: int
         original width of image to be reconstructed
-    n_channels: int
+    number_of_channels: int
         number of channels the image has. For  RGB image, n_channels = 3
     stride: int
            desired patch stride
@@ -102,16 +163,17 @@ def construct_new_input(blocks: np.ndarray, im_h: int, im_w: int, n_channels: in
     patch_size = blocks.shape[1]  # patches assumed to be square
     if not stride:
         stride = patch_size
-    # Assign output image shape based on patch sizes
-    rows = ((im_h - patch_size) // stride) * stride + patch_size
-    cols = ((im_w - patch_size) // stride) * stride + patch_size
 
-    if n_channels == 1:
+    # Assign output image shape based on patch sizes
+    rows = ((image_height - patch_size) // stride) * stride + patch_size
+    cols = ((image_width - patch_size) // stride) * stride + patch_size
+
+    if number_of_channels == 1:
         reconstructed_img_array = np.zeros((rows, cols))
         divide_image = np.zeros((rows, cols))
     else:
-        reconstructed_img_array = np.zeros((rows, cols, n_channels))
-        divide_image = np.zeros((rows, cols, n_channels))
+        reconstructed_img_array = np.zeros((rows, cols, number_of_channels))
+        divide_image = np.zeros((rows, cols, number_of_channels))
 
     number_patches_per_row = (cols - patch_size + stride) / stride  # number of patches needed to fill out a row
     total_patches = blocks.shape[0]
@@ -144,4 +206,3 @@ def construct_new_input(blocks: np.ndarray, im_h: int, im_w: int, n_channels: in
     reconstructedim = reconstructed_img_array / divide_image
 
     return reconstructedim.astype(np.uint8)
-

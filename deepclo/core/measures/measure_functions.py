@@ -34,6 +34,26 @@ class Measure(Enum):
     IQ = ('iq', "Image quality based on FFT spectrum analysis")
 
 
+RANK_MEASURES= {
+    'MI': Measure.MI,
+    'JE': Measure.JE,
+    'CE': Measure.CE,
+    'CROSS_ENTROPY': Measure.CROSS_ENTROPY,
+    'ENTROPY': Measure.ENTROPY,
+    'KL': Measure.KL,
+    'L1': Measure.L1,
+    'L2': Measure.L2,
+    'SSIM': Measure.SSIM,
+    'RE': Measure.RE,
+    'PSNR': Measure.PSNR,
+    'MAX_NORM': Measure.MAX_NORM,
+    'EI': Measure.EI,
+    'LI': Measure.LI,
+    'BI': Measure.BI,
+    'COI': Measure.COI
+}
+
+
 class Ordering(Enum):
     Ascending = [1, 'asc']
     Descending = [0, 'desc']

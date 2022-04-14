@@ -256,7 +256,7 @@ def _write_config():
     if not os.path.exists(FLAGS.train_dir):
         raise ValueError("Unable to create train_dir")
     file = os.path.join(FLAGS.train_dir,
-                        FLAGS.model_name + "__"+FLAGS.measure + ".config")
+                        FLAGS.model_name + "__" + FLAGS._block_raking_measure + ".config")
     print("Writing network and training configuration to " + file)
     f = open(file, 'w+')
     time = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M%S")
@@ -430,17 +430,17 @@ def main(_):
             'You must supply the pipe directory with --dataset_dir')
 
     tf.logging.set_verbosity(tf.logging.INFO)
-    if FLAGS.measure is None or FLAGS.preprocessing_name is None and FLAGS.curriculum is False:
-        FLAGS.measure = 'baseline'
+    if FLAGS._block_raking_measure is None or FLAGS.preprocessing_name is None and FLAGS.curriculum is False:
+        FLAGS._block_raking_measure = 'baseline'
 
     if FLAGS.curriculum:
         FLAGS.train_dir = os.path.join(FLAGS.train_dir, 'curriculum', FLAGS.model_name, FLAGS.dataset_name,
-                                   FLAGS.measure,
-                                   str(FLAGS.max_number_of_steps))
+                                       FLAGS._block_raking_measure,
+                                       str(FLAGS.max_number_of_steps))
     else:
         FLAGS.train_dir = os.path.join(FLAGS.train_dir, FLAGS.model_name, FLAGS.dataset_name,
-                                   FLAGS.measure,
-                                   str(FLAGS.max_number_of_steps))
+                                       FLAGS._block_raking_measure,
+                                       str(FLAGS.max_number_of_steps))
 
     _write_config()
 
@@ -496,7 +496,7 @@ def main(_):
 
             train_image_size = FLAGS.train_image_size or network_fn.default_image_size
             image = image_preprocessing_fn(
-                image, train_image_size, train_image_size, FLAGS.measure, FLAGS.ordering, FLAGS.block_shape)
+                image, train_image_size, train_image_size, FLAGS._block_raking_measure, FLAGS.ordering, FLAGS._block_shape)
 
             images, labels = tf.train.batch(
                 [image, label],
@@ -507,10 +507,10 @@ def main(_):
             # curriculum learning based on image content
             curriculum = None
             if FLAGS.curriculum:
-                if FLAGS.measure is None:
+                if FLAGS._block_raking_measure is None:
                     raise RuntimeError("Must supply measure for curriculum learning")
                 curriculum = curriculum_learning_optimization.SyllabusFactory(images, labels, FLAGS.batch_size)
-                images, labels = curriculum.propose_syllabus(FLAGS.measure, FLAGS.ordering)
+                images, labels = curriculum._propose_syllabus(FLAGS._block_raking_measure, FLAGS.ordering)
             # curriculum learning
             labels = slim.one_hot_encoding(
                 labels, dataset.num_classes - FLAGS.labels_offset)

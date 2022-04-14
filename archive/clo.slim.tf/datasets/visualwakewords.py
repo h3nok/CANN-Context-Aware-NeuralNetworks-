@@ -123,7 +123,7 @@ def get_split(split_name, dataset_dir, file_pattern=None, reader=None):
   if tf.gfile.Exists(labels_file):
     labels_to_names = dataset_utils.read_label_file(dataset_dir)
 
-  return slim.dataset.Dataset(
+  return slim.dataset.DeepCLODataProvider(
       data_sources=file_pattern,
       reader=reader,
       decoder=decoder,

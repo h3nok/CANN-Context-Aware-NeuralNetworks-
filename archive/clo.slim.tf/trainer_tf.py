@@ -55,10 +55,10 @@ class Trainer(object):
         self._config = config
         self._slim = tf.contrib.slim
 
-        assert self._config.measure is None or self._config.measure_list is None, \
+        assert self._config._block_raking_measure is None or self._config.measure_list is None, \
             "Must supply either a measure or a list of measures "
-        if self._config.measure:
-            self._measure = self._config.measure
+        if self._config._block_raking_measure:
+            self._measure = self._config._block_raking_measure
         elif self._config.measure_list:
             _logger.info("Selecting ranking measure at index {} from list, measures: "
                          "{}".format(self._measure_index, self._config.measure_list))
@@ -248,7 +248,7 @@ class Trainer(object):
             if self._config.measure_list:
                 measure_list = self._config.measure_list.replace(",", "_")
             else:
-                measure_list = self._config.measure
+                measure_list = self._config._block_raking_measure
             self._train_dir = os.path.join(self._config.training_log_dir,
                                            self._config.dataset_name,
                                            self._config.model_name,
@@ -313,7 +313,7 @@ class Trainer(object):
                 train_image_size = self._config.train_image_size or network_fn.default_image_size
                 image = image_preprocessing_fn(
                     image, train_image_size, train_image_size, self._measure,
-                    self._config.ordering, self._config.block_shape)
+                    self._config.ordering, self._config._block_shape)
 
                 images, labels = tf.train.batch(
                     [image, label],
@@ -328,7 +328,7 @@ class Trainer(object):
                 def _propose_syllabus(graph, images, labels):
                     assert graph
                     sf = SyllabusFactory(graph, images, labels, self._config.batch_size)
-                    images, labels = sf.propose_syllabus(self._measure, self._config.ordering)
+                    images, labels = sf._propose_syllabus(self._measure, self._config.ordering)
 
                     return images, labels
 

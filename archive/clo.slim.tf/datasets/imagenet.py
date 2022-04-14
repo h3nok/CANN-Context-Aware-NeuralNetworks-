@@ -189,7 +189,7 @@ def get_split(split_name, dataset_dir, file_pattern=None, reader=None):
             labels_to_names = create_readable_names_for_imagenet_labels()
             dataset_utils.write_label_file(labels_to_names, dataset_dir)
 
-    return slim.dataset.Dataset(
+    return slim.dataset.DeepCLODataProvider(
         data_sources=file_pattern,
         reader=reader,
         decoder=decoder,

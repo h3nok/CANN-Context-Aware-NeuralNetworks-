@@ -8,7 +8,7 @@ from deepclo.core.measures.measure_functions import (Measure,
                                                      map_measure_function)
 from deepclo.utils import configure_logger
 
-_logger = configure_logger(__name__, '../../../')
+_logger = configure_logger(__name__, '../')
 
 
 def _determine_measure_type(measure):

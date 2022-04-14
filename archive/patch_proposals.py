@@ -116,7 +116,7 @@ def p_por(image, height, width, measure, ordering, patch_h, patch_w):
 
 
 def test():
-    image_file = '../../../samples/husky.jpg'
+    image_file = '../samples/husky.jpg'
     patch_width = 56
     patch_height = 56
     input_size = (224, 224)
