@@ -1,4 +1,39 @@
-from setuptools import setup
+from setuptools import setup, Command
+import os
+
+dependencies = [
+    'pandas',
+    'scikit-learn',
+]
+
+
+class CleanCommand(Command):
+    """Custom clean command to tidy up the project root."""
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        os.system('rm -vrf ./*.pyc ./*.tgz ./*.egg-info ./test-reports ./.pytest_cache')
+
+
+class UploadCommand(Command):
+    """Custom clean command to tidy up the project root."""
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        pass
+
 
 setup(
     name='deepclo',
@@ -13,5 +48,10 @@ setup(
     license='MIT',
     author='Henok',
     author_email='henok.ghebrechristos@ucdenver.edu',
-    description='Deep Curriculum Learning Optimization'
+    description='Deep Curriculum Learning Optimization',
+
+    cmdclass={
+        'clean': CleanCommand,
+        'upload': UploadCommand
+    }
 )
