@@ -63,7 +63,7 @@ class NeuralNet:
         """
         assert config
         self.model_name = config.model
-        self._logger = configure_logger(self.__class__.__name__)
+        self._logger = configure_logger(logfile_dir=config.model_dir, module=self.__class__.__name__)
 
         if self.model_name not in SUPPORTED_MODELS:
             self._logger.debug(SUPPORTED_MODELS)

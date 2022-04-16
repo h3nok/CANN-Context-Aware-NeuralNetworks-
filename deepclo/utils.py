@@ -68,7 +68,7 @@ def show_numpy_image(image: np.array):
     img.show()
 
 
-def configure_logger(module, logfile_dir='c:/deepclo', console=False):
+def configure_logger(module, logfile_dir='.', console=False):
     """
     Configure file logger - console is optional
     Args:
