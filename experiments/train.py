@@ -24,6 +24,7 @@ if __name__ == "__main__":
     parser.add_argument('--config_file',
                         type=str,
                         default='../configurations/deepclo_train_config.ini',
+                        required=True,
                         help="Path to .ini config file ")
 
     args = parser.parse_args()
