@@ -7,7 +7,7 @@ from deepclo.pipe.dataset_base import DatasetBase, SUPPORTED_DATASETS
 from deepclo.utils import multi_hist
 
 
-class DeepCLODataProvider(DatasetBase):
+class ImageDataProvider(DatasetBase):
 
     def __init__(self, dataset_name: str = None):
         """

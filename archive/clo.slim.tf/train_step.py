@@ -116,7 +116,7 @@ def get_split(split_name, dataset_dir, file_pattern=file_pattern,
     labels_to_name_dict = labels_to_name
 
     # Actually create the pipe
-    dataset = slim.dataset.DeepCLODataProvider(
+    dataset = slim.dataset.ImageDataProvider(
         data_sources=file_pattern_path,
         decoder=decoder,
         reader=reader,

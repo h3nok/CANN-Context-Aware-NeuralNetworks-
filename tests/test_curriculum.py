@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 
 from deepclo.algorithms.curriculum import Curriculum
 from deepclo.core.measures.measure_functions import Measure
-from deepclo.pipe.dataset import DeepCLODataProvider
+from deepclo.pipe.dataset import ImageDataProvider
 from deepclo.utils import show_images
 
 
 class TestCurriculum(TestCase):
     dataset_name = 'cifar10'
-    dataset = DeepCLODataProvider(dataset_name= dataset_name)
+    dataset = ImageDataProvider(dataset_name= dataset_name)
 
 
     # sample = dataset.x_train[0]

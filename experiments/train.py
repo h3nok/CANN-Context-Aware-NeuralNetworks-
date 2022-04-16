@@ -1,17 +1,17 @@
 from deepclo.config import Config
 from deepclo.models.model_factory import NeuralNet
-from deepclo.pipe.dataset import DeepCLODataProvider
+from deepclo.pipe.dataset import ImageDataProvider
 from deepclo.utils import draw_timeline
 
 
 def main(config):
-    dataset = DeepCLODataProvider(dataset_name=config.dataset)
+    dataset = ImageDataProvider(dataset_name=config.dataset)
     net = NeuralNet(config=config, input_shape=dataset.input_shape)
     net.train(dataset)
 
 
 def benchmark(config):
-    dataset = DeepCLODataProvider(dataset_name=config.dataset)
+    dataset = ImageDataProvider(dataset_name=config.dataset)
     net = NeuralNet(config=config, input_shape=dataset.input_shape)
 
     return net.timelined_benchmark(dataset, num_epochs=config.epochs)

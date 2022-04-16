@@ -3,11 +3,11 @@ from unittest import TestCase
 from deepclo.algorithms.curriculum import Curriculum
 from deepclo.algorithms.por import POR
 from deepclo.core.measures.measure_functions import Measure
-from deepclo.pipe.dataset import DeepCLODataProvider
+from deepclo.pipe.dataset import ImageDataProvider
 
 
 class TestDataset(TestCase):
-    ds = DeepCLODataProvider(dataset_name='cifar10')
+    ds = ImageDataProvider(dataset_name='cifar10')
     assert ds.x_train.shape == (50000, 32, 32, 3)
     assert ds.input_shape == (32, 32, 3)
 

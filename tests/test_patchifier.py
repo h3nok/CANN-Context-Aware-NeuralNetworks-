@@ -7,7 +7,7 @@ from deepclo.algorithms.por import POR, \
     assess_and_rank_images as rib, sort_images
 from deepclo.core.measures.measure_functions import map_measure_function, \
     Measure
-from deepclo.pipe.dataset import DeepCLODataProvider
+from deepclo.pipe.dataset import ImageDataProvider
 from deepclo.utils import show_numpy_image
 
 
@@ -47,7 +47,7 @@ class TestPatchifier(TestCase):
         # assert not np.array_equal(new_input, new_input_je)
 
     def test_preprocess(self):
-        dataset = DeepCLODataProvider(dataset_name='cifar10')
+        dataset = ImageDataProvider(dataset_name='cifar10')
         dataset._unravel()
         label = dataset.y_train[0]
         por = POR()
