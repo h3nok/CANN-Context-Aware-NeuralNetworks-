@@ -12,11 +12,12 @@ from deepclo.config import Config
 
 from deepclo.utils import configure_logger
 from deepclo.algorithms.por import POR
+from classification_models.tfkeras import Classifiers
 
 keras_apps = tf.keras.applications
 
 Models = {
-    "EfficientNet": {
+    "Keras": {
         # EfficientNet Models
         'b0': keras_apps.EfficientNetB0,
         'b1': keras_apps.EfficientNetB1,
@@ -26,6 +27,16 @@ Models = {
         'b5': keras_apps.EfficientNetB5,
         'b6': keras_apps.EfficientNetB6,
         'b7': keras_apps.EfficientNetB7,
+        'effl2': keras_apps.EfficientNetV2L,
+        'resnet50': keras_apps.ResNet50,
+        'resnet101': keras_apps.ResNet101,
+        'inception': keras_apps.InceptionV3,
+        'mobilenet': keras_apps.MobileNet,
+        'densenet': keras_apps.DenseNet121,
+        'nasnet': keras_apps.NASNetLarge,
+        'nasnetmobile': keras_apps.NASNetMobile,
+        'resnext50': Classifiers.get('resnext50')[0],
+        'resnext101': Classifiers.get('resnext101')[0]
     },
 
     # ViT-L
@@ -34,17 +45,11 @@ Models = {
         'b32': vit.vit_b32,
         'l16': vit.vit_l16,
         'l32': vit.vit_l32
-    }
+    },
 
-    # Other popular architectures
-    # 'resnet': Resnet3DBuilder.build_resnet_18,
-    # 'resnet50': Resnet3DBuilder.build_resnet_50,
-    # 'resnet34': Resnet3DBuilder.build_resnet_34,
-    # 'resnet101': Resnet3DBuilder.build_resnet_101,
-    # 'resnet152': Resnet3DBuilder.build_resnet_152,
 }
 
-SUPPORTED_MODELS = list(Models['EfficientNet'].keys()) + list(Models['ViT-L'].keys())
+SUPPORTED_MODELS = list(Models['Keras'].keys()) + list(Models['ViT-L'].keys())
 
 Losses = {
     'SparseCategoricalCrossentropy': tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
@@ -83,13 +88,22 @@ class NeuralNet:
         self._build()
 
     def _build(self):
-        if self.model_name in Models['EfficientNet'].keys():
-            self._model = Models['EfficientNet'][self.model_name](include_top=False,
-                                                                  input_shape=self.input_shape,
-                                                                  input_tensor=None,
-                                                                  pooling=self.pooling,
-                                                                  classes=self.classes,
-                                                                  classifier_activation=self.activation)
+        if self.model_name in Models['Keras'].keys():
+            self._model = Models['Keras'][self.model_name](include_top=False,
+                                                           input_shape=self.input_shape,
+                                                           input_tensor=None,
+                                                           pooling=self.pooling,
+                                                           classes=self.classes,
+                                                           classifier_activation=self.activation)
+        elif self.model_name in Models['ViT-L'].keys():
+            self._model = Models['ViT-L'][self.model_name](
+                image_size=self.input_shape[0],
+                activation='sigmoid',
+                pretrained=False,
+                include_top=False,
+                pretrained_top=False,
+                classes=self.config.num_classes
+            )
 
     def _setup_callbacks(self, benchmark=False):
         """
@@ -154,7 +168,7 @@ class NeuralNet:
 
         """
         # performance metrics
-        metrics = ['acc']
+        metrics = ['acc', 'mse']
 
         assert self.config.loss_function in Losses.keys()
         loss_function = Losses[self.config.loss_function]
@@ -219,6 +233,7 @@ class NeuralNet:
             train_dataset = dataset.train_dataset(batch_size=self.config.batch_size,
                                                   train_preprocessing=curriculum.generate_syllabus,
                                                   clo=True)
+
             validation_dataset = dataset.test_dataset(batch_size=self.config.batch_size)
 
             self.train_history = self._model.fit(
@@ -257,7 +272,7 @@ class NeuralNet:
 
             # Simulate training time
             train_enter = time.perf_counter()
-            # self.train(dataset=dataset, benchmark=True, epochs=epoch_num)
+            self.train(dataset=dataset, benchmark=True, epochs=epoch_num)
             time.sleep(0.1)
             train_elapsed = time.perf_counter() - train_enter
 

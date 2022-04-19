@@ -1,12 +1,12 @@
 from deepclo.config import Config
 from deepclo.models.model_factory import NeuralNet
 from deepclo.pipe.dataset import ImageDataProvider
-from deepclo.utils import draw_timeline
 
 
 def main(config):
     dataset = ImageDataProvider(dataset_name=config.dataset)
     net = NeuralNet(config=config, input_shape=dataset.input_shape)
+    print(net)
     net.train(dataset)
 
 
@@ -19,7 +19,7 @@ def benchmark(config):
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser(description='Deep CLO experiment runs interface.')
     parser.add_argument('--benchmark', type=bool, default=False, help="Run training benchmark")
     parser.add_argument('--config_file',
                         type=str,
