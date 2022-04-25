@@ -10,9 +10,11 @@ SUPPORTED_DATASETS = {
 class DatasetBase(ABC):
     def __init__(self, name: str = None):
         if not name or name == '' or name.upper() not in list(SUPPORTED_DATASETS.keys()):
-            raise RuntimeError(f"Must supply a valid dataset name from {','.join(list(SUPPORTED_DATASETS.keys()))} ")
+            raise RuntimeError(f"Must supply a valid dataset "
+                               f"name from {','.join(list(SUPPORTED_DATASETS.keys()))} ")
 
         self._name = name
+
         self.dataset = None
 
     @property

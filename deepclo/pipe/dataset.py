@@ -56,14 +56,14 @@ class ImageDataProvider(DatasetBase):
     def input_shape(self):
         return self.x_train.shape[1:]
 
-    def train_dataset(self, batch_size, train_preprocessing=None, clo=False):
+    def train_dataset(self, batch_size, train_preprocessing=None, clo=False) -> tf.data:
         """
         Training data provider
 
         Args:
-            batch_size:
-            train_preprocessing:
-            clo:
+            batch_size: int - batch size
+            train_preprocessing: - preprocessing algorithm function
+            clo: bool - true if CLO is applied
 
         Returns: tf.data
 
@@ -94,13 +94,13 @@ class ImageDataProvider(DatasetBase):
                 .prefetch(tf.data.AUTOTUNE)
         )
 
-    def test_dataset(self, batch_size, test_preprocessing=None):
+    def test_dataset(self, batch_size, test_preprocessing=None) -> tf.data:
         """
         Test data provider
 
         Args:
-            batch_size:
-            test_preprocessing:
+            batch_size: int - batch size
+            test_preprocessing: preprocessing algorithm function
 
         Returns: tf.data
 
@@ -121,7 +121,7 @@ class ImageDataProvider(DatasetBase):
                 .prefetch(tf.data.AUTOTUNE)
         )
 
-    def plot_images(self, limit=9, dataset_type='Train'):
+    def plot_images(self, limit=9, dataset_type='Train') -> None:
         """
         Plot a few images from the dataset
 
@@ -150,16 +150,16 @@ class ImageDataProvider(DatasetBase):
     def plot_dataset_measure_distribution(self,
                                           measure=Measure.ENTROPY,
                                           limit=100,
-                                          reference_block_index=0):
+                                          reference_block_index=0) -> None:
         """
         Plot distribution of content measure (similarity) of the dataset
 
         Args:
-            reference_block_index:
-            measure:
-            limit:
+            reference_block_index: reference block if measure is a distance measure.
+            measure: content assessment measure
+            limit: int - number of samples to assess
 
-        Returns:
+        Returns: None
 
         """
         data = {}

@@ -89,12 +89,14 @@ class NeuralNet:
 
     def _build(self):
         if self.model_name in Models['Keras'].keys():
-            self._model = Models['Keras'][self.model_name](include_top=False,
-                                                           input_shape=self.input_shape,
-                                                           input_tensor=None,
-                                                           pooling=self.pooling,
-                                                           classes=self.classes,
-                                                           classifier_activation=self.activation)
+            self._model = Models['Keras'][self.model_name](
+                include_top=False,
+                input_shape=self.input_shape,
+                input_tensor=None,
+                pooling=self.pooling,
+                classes=self.classes,
+                classifier_activation=self.activation)
+
         elif self.model_name in Models['ViT-L'].keys():
             self._model = Models['ViT-L'][self.model_name](
                 image_size=self.input_shape[0],
