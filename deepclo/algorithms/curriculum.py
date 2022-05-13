@@ -104,7 +104,6 @@ class Curriculum:
             self._measure = measure
 
         self.measure_type = determine_measure_classification(measure)
-        print(self.measure_type)
         if self.measure_type == MeasureType.DISTANCE:
             if not reference_imag_index:
                 self._reference_image_index = self._select_low_entropy_reference_image()
