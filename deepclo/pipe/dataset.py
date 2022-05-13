@@ -1,15 +1,22 @@
+import numpy as np
 import tensorflow as tf
+import tensorflow_datasets as tfds
 from matplotlib import pyplot
 
 from deepclo.algorithms.image_processsing import assess_and_rank_images
 from deepclo.core.measures.measure_functions import Measure
 from deepclo.pipe.dataset_base import DatasetBase, SUPPORTED_DATASETS
 from deepclo.utils import multi_hist
+from experiments.synthetic.synthetic_data import ShapesDataset
+import os
 
 
 class ImageDataProvider(DatasetBase):
 
-    def __init__(self, dataset_name: str = None):
+    def __init__(self,
+                 dataset_name: str = None,
+                 train_limit: int = None,
+                 val_limit: int = None, custom_dataset_path=None):
         """
         Interface to construct image classification datasets using POR-enabled
         os syllabus pipeline
@@ -17,48 +24,111 @@ class ImageDataProvider(DatasetBase):
         Args:
             dataset_name: name of dataset to load
         """
-        super().__init__(dataset_name)
-        self.x_train, self.y_train = None, None
-        self.x_test, y_test = None, None
 
+        super().__init__(dataset_name)
+
+        self.val_limit = val_limit
+        self.train_limit = train_limit
+        self.x_train, self.y_train = [], []
+        self.x_test, self.y_test = [], []
+
+        self.custom_dataset_path = custom_dataset_path
         self._train_preprocessing = None
         self._test_preprocessing = None
-
-        self._load()
+        self._train_ds = None
+        self._val_ds = None
+        self._input_shape = (32, 32, 3)
+        self.classes = set()
         tf.data.experimental.enable_debug_mode()
 
-        self._train_ds = None
-        self._validation_ds = None
-
-        assert self.dataset
+        self._load()
 
     def _load(self):
         """
-        Load dataset, from keras
+        Load dataset, from keras - Returns: keras dataset
 
-        Returns: keras dataset
         TODO - add support for tfds
         """
 
-        if self._name.upper() in SUPPORTED_DATASETS.keys():
-            self.dataset = SUPPORTED_DATASETS[self._name.upper()].load_data()
+        if self._name.upper() in list(SUPPORTED_DATASETS['keras'].keys()):
+            self.dataset = SUPPORTED_DATASETS['keras'][self._name.upper()].load_data()
+            self._unravel()
+            self._input_shape = self.x_train.shape[1:]
+
+        elif 'SHAPES' in self._name.upper():
+            assert os.path.exists(self.custom_dataset_path)
+            self.dataset = ShapesDataset(dataset_path=self.custom_dataset_path)
+            self._unravel()
+
+        elif self._name.upper() in SUPPORTED_DATASETS['tf'].keys():
+            if self._name == 'cats_vs_dogs':
+                split = ['train[:80%]', 'train[80%:]']
+                self._train_ds, self._val_ds = tfds.as_numpy(tfds.load(name=self._name,
+                                                                       split=split,
+                                                                       shuffle_files=False,
+                                                                       as_supervised=True)
+                                                             )
+
+            else:
+                self._train_ds = tfds.as_numpy(tfds.load(name=self._name,
+                                                         split='train',
+                                                         shuffle_files=False,
+                                                         as_supervised=True)
+                                               )
+                self._val_ds = tfds.as_numpy(tfds.load(name=self._name,
+                                                       split='validation',
+                                                       shuffle_files=False,
+                                                       as_supervised=True)
+                                             )
+            self._unravel()
+
         else:
             print(list(SUPPORTED_DATASETS.keys()))
-            raise RuntimeError("Supplied dataset name is not supported. "
+            raise RuntimeError(f"Supplied dataset name '{self._name}' is not supported. "
                                "Please select one from the list")
 
-        self._unravel()
-
     def _unravel(self):
-        (self.x_train, self.y_train), (self.x_test, self.y_test) = self.dataset
+        if self._name.upper() in SUPPORTED_DATASETS['keras'].keys():
+            (self.x_train, self.y_train), (self.x_test, self.y_test) = self.dataset
+            self.y_train = self.y_train.astype(np.uint8)
+            self.y_test = self.y_test.astype(np.uint8)
+
+        elif 'SHAPES' in self._name.upper():
+            (self.x_train, self.y_train) = self.dataset.train_dataset
+            (self.x_test, self.y_test) = self.dataset.test_dataset
+
+        else:
+            for index, sample in enumerate(self._val_ds):
+                self.x_test.append(np.resize(sample[0], self._input_shape).astype(np.uint8))
+                self.y_test.append(np.array([sample[1]]).astype(np.uint8))
+                self.classes.add(sample[1])
+                if index % 1000 == 0:
+                    print(f"Processed {index} val samples ... ")
+
+            print(f"Successfully processed validation dataset, "
+                  f"train: {len(self.x_test)}, classes: {len(self.classes)}")
+
+            for index, sample in enumerate(self._train_ds):
+                self.x_train.append(np.array(sample[0]).astype(np.uint8))
+                self.y_train.append(np.array([sample[1]]).astype(np.uint8))
+
+                if self.train_limit:
+                    if index > self.train_limit:
+                        break
+
+                if index % 1000 == 0:
+                    print(f"Processed {index} train samples ... ")
 
     @property
     def input_shape(self):
-        return self.x_train.shape[1:]
+        return self._input_shape
+
+    def num_classes(self):
+        return len(self.classes)
 
     def train_dataset(self, batch_size, train_preprocessing=None, clo=False) -> tf.data:
         """
-        Training data provider
+        Training data provider -
 
         Args:
             batch_size: int - batch size
@@ -68,6 +138,7 @@ class ImageDataProvider(DatasetBase):
         Returns: tf.data
 
         """
+        # if self._name.upper() in SUPPORTED_DATASETS['keras'].keys():
         self._train_ds = tf.data.Dataset.from_tensor_slices((self.x_train, self.y_train))
 
         if train_preprocessing:
@@ -96,34 +167,34 @@ class ImageDataProvider(DatasetBase):
 
     def test_dataset(self, batch_size, test_preprocessing=None) -> tf.data:
         """
-        Test data provider
+        Test data provider -
 
         Args:
             batch_size: int - batch size
             test_preprocessing: preprocessing algorithm function
 
         Returns: tf.data
-
         """
-        self._validation_ds = tf.data.Dataset.from_tensor_slices((self.x_test, self.y_test))
+
+        self._val_ds = tf.data.Dataset.from_tensor_slices((self.x_test, self.y_test))
 
         if test_preprocessing:
             return (
-                self._validation_ds.shuffle(len(self.x_test))
+                self._val_ds.shuffle(len(self.x_test))
                     .map(test_preprocessing)
                     .batch(batch_size)
                     .prefetch(tf.data.AUTOTUNE)
             )
 
         return (
-            self._validation_ds.shuffle(len(self.x_test))
+            self._val_ds.shuffle(len(self.x_test))
                 .batch(batch_size)
                 .prefetch(tf.data.AUTOTUNE)
         )
 
     def plot_images(self, limit=9, dataset_type='Train') -> None:
         """
-        Plot a few images from the dataset
+        Plot a few images from the dataset -
 
         Args:
             limit: number of samples to plot
@@ -160,8 +231,8 @@ class ImageDataProvider(DatasetBase):
             limit: int - number of samples to assess
 
         Returns: None
-
         """
+
         data = {}
         train_ranks = assess_and_rank_images(self.x_train[:limit],
                                              content_measure=measure,
@@ -183,6 +254,6 @@ class ImageDataProvider(DatasetBase):
     def __repr__(self):
         return f""" {self.__class__.__name__}
             \tName   : {self.name}
-            \tTrain  : {self.x_train.shape}
-            \tTest   : {self.x_test.shape}
+            \tInput shape : {self.input_shape}
+            \tClasses     : {self.num_classes}
         """

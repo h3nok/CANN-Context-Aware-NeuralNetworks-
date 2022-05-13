@@ -2,19 +2,39 @@ from abc import ABC, abstractmethod
 import tensorflow as tf
 
 SUPPORTED_DATASETS = {
-    'CIFAR10': tf.keras.datasets.cifar10,
-    'CIFAR100': tf.keras.datasets.cifar100,
+    'keras':
+        {
+            'CIFAR10': tf.keras.datasets.cifar10,
+            'CIFAR100': tf.keras.datasets.cifar100
+        },
+    'tf':
+        {
+            'IMAGENET2012': None,
+            'CATS_VS_DOGS': None,
+            'IMAGENET2012_SUBSET': None,
+            'CALTECH101': None,
+            'IMAGENET_RESIZED': None,
+            'IMAGENET_RESIZED/32X32': None,
+            'IMAGENET_RESIZED/64X64': None,
+            'SHAPES': None
+        }
 }
 
 
 class DatasetBase(ABC):
     def __init__(self, name: str = None):
-        if not name or name == '' or name.upper() not in list(SUPPORTED_DATASETS.keys()):
-            raise RuntimeError(f"Must supply a valid dataset "
-                               f"name from {','.join(list(SUPPORTED_DATASETS.keys()))} ")
+        """
+        Base interface to dataset providers
+
+        Args:
+            name:
+        """
+        supported_models = list(SUPPORTED_DATASETS['keras'].keys()) + list(SUPPORTED_DATASETS['tf'].keys())
+        if not name or name == '' or name.upper() not in supported_models:
+            raise RuntimeError(f"Supplied dataset name '{name}' doesn't exist. 'Must supply a valid dataset "
+                               f"name from {','.join(supported_models)} ")
 
         self._name = name
-
         self.dataset = None
 
     @property

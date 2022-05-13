@@ -21,6 +21,7 @@ def assess_and_rank_images(
 
     """
     ranks = []
+
     if determine_measure_classification(content_measure) == MeasureType.STANDALONE:
         for i, block in enumerate(batch_or_image_blocks):
             rank = measure_image_content(block, content_measure=content_measure)
@@ -29,7 +30,7 @@ def assess_and_rank_images(
         return np.array(ranks)
 
     else:
-        if not reference_block_index:
+        if reference_block_index is None:
             raise RuntimeError("Must supply reference image or block.")
         ranks = []
         reference_block = batch_or_image_blocks[reference_block_index]
@@ -122,7 +123,8 @@ def sort_images(
         ranks_indices = ranks.argsort()
     elif block_rank_ordering in Ordering.Descending.value:
         ranks_indices = (-ranks).argsort()
-    if labels.any():
+
+    if labels.size != 0:
         return batch_or_image_blocks[ranks_indices], labels[ranks_indices], ranks_indices
 
     return batch_or_image_blocks[ranks_indices], ranks_indices

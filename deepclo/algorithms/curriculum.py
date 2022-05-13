@@ -104,12 +104,12 @@ class Curriculum:
             self._measure = measure
 
         self.measure_type = determine_measure_classification(measure)
-
-        if self.measure_type == MeasureType.DISTANCE and not reference_imag_index:
-            print("Reference image index not supplied. Using minimum entropy sample as a reference image ")
-            self._reference_image_index = self._select_low_entropy_reference_image()
-        else:
-            self._reference_image_index = reference_imag_index
+        print(self.measure_type)
+        if self.measure_type == MeasureType.DISTANCE:
+            if not reference_imag_index:
+                self._reference_image_index = self._select_low_entropy_reference_image()
+            else:
+                self._reference_image_index = reference_imag_index
 
         self.ranks = assess_and_rank_images(self.batch,
                                             content_measure=measure,
@@ -149,12 +149,17 @@ class Curriculum:
         assert self._measure
         assert self._rank_ordering in [0, 1, 'dec', 'asc']
 
-        return self._rank_and_sort_batch(self._measure, self._reference_image_index, self._rank_ordering)
+        return self._rank_and_sort_batch(self._measure,
+                                         self._reference_image_index,
+                                         self._rank_ordering)
 
     @tf.function(input_signature=(tf.TensorSpec(shape=[None, None, None, 3],
                                                 dtype=tf.uint8),
-                                  tf.TensorSpec(shape=[None, 1], dtype=tf.uint8)))
-    def generate_syllabus(self, batch: np.ndarray, labels: np.ndarray):
+                                  tf.TensorSpec(shape=[None, 1],
+                                                dtype=tf.uint8)))
+    def generate_syllabus(self,
+                          batch: np.ndarray,
+                          labels: np.ndarray):
         """
         Generate batch training syllabus - tensorflow training pipeline
 
@@ -165,7 +170,9 @@ class Curriculum:
         Returns:
 
         """
-        batch_syllabus, batch_labels = tf.numpy_function(self._propose_syllabus, (batch, labels), [tf.uint8, tf.uint8], name='CLO')
+        batch_syllabus, batch_labels = tf.numpy_function(self._propose_syllabus,
+                                                         (batch, labels),
+                                                         [tf.uint8, tf.uint8], name='CLO')
 
         batch_syllabus.set_shape(batch.get_shape())
         batch_labels.set_shape(labels.get_shape())

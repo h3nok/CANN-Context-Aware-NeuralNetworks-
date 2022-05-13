@@ -1,19 +1,17 @@
 from deepclo.config import Config
-from deepclo.models.model_factory import NeuralNet
+from deepclo.models.model_factory import NeuralNetFactory
 from deepclo.pipe.dataset import ImageDataProvider
 
 
 def main(config):
-    dataset = ImageDataProvider(dataset_name=config.dataset)
-    net = NeuralNet(config=config, input_shape=dataset.input_shape)
-    print(net)
+    dataset = ImageDataProvider(dataset_name=config.dataset, custom_dataset_path=config.custom_dataset_path)
+    net = NeuralNetFactory(config=config, input_shape=dataset.input_shape)
     net.train(dataset)
 
 
 def benchmark(config):
-    dataset = ImageDataProvider(dataset_name=config.dataset)
-    net = NeuralNet(config=config, input_shape=dataset.input_shape)
-
+    dataset = ImageDataProvider(dataset_name=config.dataset, custom_dataset_path=config.custom_dataset_path)
+    net = NeuralNetFactory(config=config, input_shape=dataset.input_shape)
     return net.timelined_benchmark(dataset, num_epochs=config.epochs)
 
 

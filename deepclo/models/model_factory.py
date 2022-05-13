@@ -9,6 +9,7 @@ import tensorflow as tf
 from vit_keras import vit
 from deepclo.algorithms.curriculum import Curriculum
 from deepclo.config import Config
+import keras
 
 from deepclo.utils import configure_logger
 from deepclo.algorithms.por import POR
@@ -27,7 +28,7 @@ Models = {
         'b5': keras_apps.EfficientNetB5,
         'b6': keras_apps.EfficientNetB6,
         'b7': keras_apps.EfficientNetB7,
-        'effl2': keras_apps.EfficientNetV2L,
+        'l2': keras_apps.EfficientNetV2L,
         'resnet50': keras_apps.ResNet50,
         'resnet101': keras_apps.ResNet101,
         'inception': keras_apps.InceptionV3,
@@ -46,7 +47,6 @@ Models = {
         'l16': vit.vit_l16,
         'l32': vit.vit_l32
     },
-
 }
 
 SUPPORTED_MODELS = list(Models['Keras'].keys()) + list(Models['ViT-L'].keys())
@@ -56,7 +56,7 @@ Losses = {
 }
 
 
-class NeuralNet:
+class NeuralNetFactory:
 
     def __init__(self, config: Config, input_shape: tuple):
         """
@@ -117,7 +117,10 @@ class NeuralNet:
         # Set up file system
         self._logger.debug(f"Setting up callbacks, model_dir: {self.config.model_dir}")
 
-        model_dir = os.path.join(self.config.model_dir, self.model_name, self.config.dataset, self.config.optimizer)
+        model_dir = os.path.join(self.config.model_dir,
+                                 self.model_name,
+                                 self.config.dataset.replace('/', '_'),
+                                 self.config.optimizer)
         if benchmark:
             model_dir = os.path.join(model_dir, 'benchmark')
         if self.config.use_por:
@@ -132,7 +135,8 @@ class NeuralNet:
         while not os.path.exists(model_dir):
             os.makedirs(model_dir)
 
-        config_file_dump = os.path.join(model_dir, f"{self.model_name}_{self.config.dataset}.ini")
+        config_file_dump = os.path.join(model_dir,
+                                        f"{self.model_name}_{self.config.dataset.replace('/', '_')}.ini")
         shutil.copy(self.config_filepath, config_file_dump)
         checkpoint_dir = os.path.join(model_dir, 'checkpoints')
         events_dir = os.path.join(model_dir, 'events')
@@ -156,6 +160,35 @@ class NeuralNet:
                                                               update_freq='epoch')
 
         self.callbacks = [checkpoint_callback, tensorboard_callback]
+
+    def get(self, model_name):
+        model_name = model_name.lower()
+
+        if model_name == 'inception':
+            self.input_shape = (75, 75, 3)
+
+        if model_name in Models['Keras'].keys():
+            self._model = Models['Keras'][model_name](
+                include_top=False,
+                input_shape=self.input_shape,
+                input_tensor=None,
+                pooling=self.pooling,
+                classes=self.classes,
+                weights=None)
+
+        elif model_name in Models['ViT-L'].keys():
+            self._model = Models['ViT-L'][model_name](
+                image_size=self.input_shape[0],
+                activation='sigmoid',
+                pretrained=False,
+                include_top=False,
+                pretrained_top=False,
+                classes=self.config.num_classes
+            )
+        else:
+            raise RuntimeError('Unable to build model, supplied model name is does not exist')
+
+        return self._model
 
     def train(self, dataset, benchmark: bool = False, epochs: int = None):
         """

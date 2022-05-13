@@ -42,12 +42,17 @@ class Config:
         self._parser.set('Training', 'model', 'b0')
         self._parser.set('Training', 'activation', 'softmax')
         self._parser.set('Training', 'pooling', 'max')
+        self._parser.set('Training', 'dataset_dir', '')
 
         return self._parser
 
     @property
     def model(self):
         return self._parser.get(section='Training', option='model')
+
+    @property
+    def custom_dataset_path(self):
+        return self._parser.get(section='Training', option='dataset_dir')
 
     @property
     def activation(self):
