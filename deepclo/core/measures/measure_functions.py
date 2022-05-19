@@ -3,9 +3,6 @@ from enum import Enum
 
 from deepclo.core.measures import information_theory as entropy
 from deepclo.core.measures.statistical import l1_norm, l2_norm, max_norm, psnr, ssim
-# from deepclo.utils import configure_logger
-
-# _logger = configure_logger(__file__, '../../')
 
 
 class Measure(Enum):
