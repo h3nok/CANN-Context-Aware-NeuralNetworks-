@@ -18,7 +18,6 @@ def main(use_clo: bool = False, use_por: bool = False):
         for m in RANK_MEASURES.keys():
             config.use_clo = use_clo
             config.use_por = use_por
-            config.epochs = 1
 
             if use_clo:
                 config.syllabus_measure = m

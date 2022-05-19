@@ -91,7 +91,9 @@ MEASURE_MAP = {
 
 
 def determine_measure_classification(m):
-    if m in [Measure.ENTROPY, Measure.RE]:
+    if m in [Measure.ENTROPY, Measure.RE, Measure.EI,
+             Measure.BI, Measure.ELI, Measure.II,
+             Measure.COI, Measure.MULTI_I]:
         return MeasureType.STANDALONE
 
     return MeasureType.DISTANCE
