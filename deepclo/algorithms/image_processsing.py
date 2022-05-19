@@ -143,6 +143,7 @@ def construct_new_input(
        by filling in the patches from left to right, top to bottom, averaging the overlapping parts.
     Parameters
     -----------
+
     blocks: 4D ndarray with shape (patch_number,patch_height,patch_width,channels)
         Array containing extracted patches. If the patches contain colour information,
         channels are indexed along the last dimension: RGB patches would

@@ -34,7 +34,7 @@ class Measure(Enum):
     IQ = ('iq', "Image quality based on FFT spectrum analysis")
 
 
-RANK_MEASURES= {
+RANK_MEASURES = {
     'MI': Measure.MI,
     'JE': Measure.JE,
     'CE': Measure.CE,
@@ -50,7 +50,7 @@ RANK_MEASURES= {
     'EI': Measure.EI,
     'LI': Measure.LI,
     'BI': Measure.BI,
-    'COI': Measure.COI
+    'COI': Measure.COI,
 }
 
 
@@ -91,14 +91,15 @@ MEASURE_MAP = {
 
 
 def determine_measure_classification(m):
-    if m in [Measure.ENTROPY, Measure.SSIM]:
+    if m in [Measure.ENTROPY, Measure.RE]:
         return MeasureType.STANDALONE
 
     return MeasureType.DISTANCE
 
 
 def map_measure_function(m, measure_type=None):
-    """[summary]
+    """
+    Measure string to measure function mapper
 
     Arguments:
         m {Measure} -- measure to use
@@ -110,6 +111,7 @@ def map_measure_function(m, measure_type=None):
         measure_type = determine_measure_classification(m)
 
     if not isinstance(m, Measure):
+
         raise ValueError(
             "Supplied argument must be an instance of Measure Enum")
     if not isinstance(measure_type, MeasureType):

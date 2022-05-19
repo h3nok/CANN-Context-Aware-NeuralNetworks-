@@ -9,6 +9,7 @@ import tensorflow as tf
 from vit_keras import vit
 from deepclo.algorithms.curriculum import Curriculum
 from deepclo.config import Config
+from datetime import date
 import keras
 
 from deepclo.utils import configure_logger
@@ -75,6 +76,8 @@ class NeuralNetFactory:
             raise RuntimeError(
                 f"Supplied network name '{self.model_name}' is invalid. Please select one from the list.")
 
+        assert os.path.exists(config.model_dir)
+
         self.config = config
         self.config_filepath = config.filepath
         self._model = None
@@ -118,6 +121,7 @@ class NeuralNetFactory:
         self._logger.debug(f"Setting up callbacks, model_dir: {self.config.model_dir}")
 
         model_dir = os.path.join(self.config.model_dir,
+                                 str(date.today()),
                                  self.model_name,
                                  self.config.dataset.replace('/', '_'),
                                  self.config.optimizer)
@@ -135,9 +139,11 @@ class NeuralNetFactory:
         while not os.path.exists(model_dir):
             os.makedirs(model_dir)
 
+        print(model_dir)
+
         config_file_dump = os.path.join(model_dir,
                                         f"{self.model_name}_{self.config.dataset.replace('/', '_')}.ini")
-        shutil.copy(self.config_filepath, config_file_dump)
+        self.config.dump(config_file_dump)
         checkpoint_dir = os.path.join(model_dir, 'checkpoints')
         events_dir = os.path.join(model_dir, 'events')
         self._logger.debug('To open tensorboard run `tensorboard --logdir {}`'.format(events_dir))
@@ -152,8 +158,7 @@ class NeuralNetFactory:
                                                                  verbose=1,
                                                                  save_freq='epoch',
                                                                  save_best_only=True,
-                                                                 mode='min'
-                                                                 )
+                                                                 mode='min')
 
         tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=events_dir,
                                                               histogram_freq=0,

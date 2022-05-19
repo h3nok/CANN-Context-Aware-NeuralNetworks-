@@ -21,12 +21,24 @@ class Config:
             self.filepath = config_file
             self.parse()
 
+        self._use_clo = self._parser.getboolean(section='Training', option='use_clo')
+        self._epochs = self._parser.getint(section='Training', option='epochs')
+        self._use_por = self._parser.getboolean(section='Training', option='use_por')
+        self._por_measure = self._parser.get(section='Training', option='por_measure')
+        self._syllabus_measure = self._parser.get(section='Training', option='syllabus_measure')
+        self._optimizer = self._parser.get(section='Training', option='optimizer')
+        self._dataset = self._parser.get(section='Training', option='dataset')
+        self._model = self._parser.get(section='Training', option='model')
+        self._model_dir = self._parser.get(section='Training', option='model_dir')
+
+
+
     @property
     def default(self):
         self._parser = ConfigParser()
         self._parser.add_section('Training')
         self._parser.set('Training', 'dataset', 'cifar10')
-        self._parser.set('Training', 'model_dir', r".")
+        self._parser.set('Training', 'model_dir', '')
         self._parser.set('Training', 'num_classes', '2')
         self._parser.set('Training', 'batch_size', '8')
         self._parser.set('Training', 'learning_rate', '0.001')
@@ -48,7 +60,11 @@ class Config:
 
     @property
     def model(self):
-        return self._parser.get(section='Training', option='model')
+        return self._model
+
+    @model.setter
+    def model(self, model):
+        self._model = model
 
     @property
     def custom_dataset_path(self):
@@ -64,11 +80,15 @@ class Config:
 
     @property
     def dataset(self):
-        return self._parser.get(section='Training', option='dataset')
+        return self._dataset
+
+    @dataset.setter
+    def dataset(self, value):
+        self._dataset = value
 
     @property
     def model_dir(self):
-        return self._parser.get(section='Training', option='model_dir')
+        return self._model_dir
 
     @property
     def num_classes(self):
@@ -84,11 +104,19 @@ class Config:
 
     @property
     def epochs(self):
-        return self._parser.getint(section='Training', option='epochs')
+        return self._epochs
+
+    @epochs.setter
+    def epochs(self, value):
+        self._epochs = value
 
     @property
     def use_por(self):
-        return self._parser.getboolean(section='Training', option='use_por')
+        return self._use_por
+
+    @use_por.setter
+    def use_por(self, value):
+        self._use_por = value
 
     @property
     def block_size(self):
@@ -100,15 +128,27 @@ class Config:
 
     @property
     def por_measure(self):
-        return self._parser.get(section='Training', option='por_measure')
+        return self._por_measure
+
+    @por_measure.setter
+    def por_measure(self, value):
+        self._por_measure = value
 
     @property
     def use_clo(self):
-        return self._parser.getboolean(section='Training', option='use_clo')
+        return self._use_clo
+
+    @use_clo.setter
+    def use_clo(self, value):
+        self._use_clo = value
 
     @property
     def syllabus_measure(self):
-        return self._parser.get(section='Training', option='syllabus_measure')
+        return self._syllabus_measure
+
+    @syllabus_measure.setter
+    def syllabus_measure(self, value):
+        self._syllabus_measure = value
 
     @property
     def loss_function(self):
@@ -116,7 +156,11 @@ class Config:
 
     @property
     def optimizer(self):
-        return self._parser.get(section='Training', option='optimizer')
+        return self._optimizer
+
+    @optimizer.setter
+    def optimizer(self, value):
+        self._optimizer = value
 
     def parse(self):
         assert self.filepath

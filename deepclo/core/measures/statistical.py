@@ -201,3 +201,7 @@ def ssim(patch_1, patch_2):
 
     value = structural_similarity(patch_1, patch_2)
     return round(value, 4)
+
+
+def dssim(patch_1, patch_2):
+    return (1 - ssim(patch_1=patch_1, patch_2=patch_2)) / 2
