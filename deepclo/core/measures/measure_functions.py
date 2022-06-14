@@ -48,6 +48,11 @@ RANK_MEASURES = {
     'LI': Measure.LI,
     'BI': Measure.BI,
     'COI': Measure.COI,
+    'MULTI_I': Measure.MULTI_I,
+    'ELI': Measure.ELI,
+    'IV': Measure.IV,
+    'II': Measure.II
+    # 'CROSS_ENTROPY_PMF': Measure.CROSS_ENTROPY_PMF
 }
 
 
@@ -74,16 +79,16 @@ MEASURE_MAP = {
     Measure.SSIM: ssim,
     Measure.MI_NORMALIZED: entropy.normalized_mutual_information,
     Measure.EI: entropy.enigmatic_information,
-    Measure.LI: entropy.lautum_information,
+    # Measure.LI: entropy.lautum_information,
     Measure.RE: entropy.residual_entropy,
     Measure.MULTI_I: entropy.multi_information,
     Measure.BI: entropy.binding_information,
     Measure.ELI: entropy.exogenous_local_information,
     Measure.IV: entropy.information_variation,
     Measure.CROSS_ENTROPY: entropy.cross_entropy,
-    Measure.CROSS_ENTROPY_PMF: entropy.cross_entropy_pmf,
+    # Measure.CROSS_ENTROPY_PMF: entropy.cross_entropy_pmf,
     Measure.II: entropy.information_interaction,
-    Measure.COI: entropy.co_information
+    Measure.COI: entropy.co_information,
 }
 
 

@@ -274,7 +274,7 @@ def lautum_information(patch_1, patch_2):
     patch_1 = patch_1.flatten()
     patch_2 = patch_2.flatten()
 
-    li = round(itt.information_lautum(patch_1, patch_2), 4)  # result x.xxxx
+    li = itt.information_lautum(patch_1, patch_2)  # result x.xxxx
 
     return li
 
