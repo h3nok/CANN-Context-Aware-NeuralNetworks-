@@ -4,7 +4,10 @@ from deepclo.pipe.dataset import ImageDataProvider
 from deepclo.core.measures.measure_functions import RANK_MEASURES
 
 
-def main(use_clo: bool = False, use_por: bool = False, rank_measures=None):
+def main(use_clo: bool = False,
+         use_por: bool = False,
+         rank_measures=None):
+
     config = Config(config_file=args.config_file)
     dataset = ImageDataProvider(dataset_name=config.dataset,
                                 custom_dataset_path=config.custom_dataset_path)
@@ -22,7 +25,6 @@ def main(use_clo: bool = False, use_por: bool = False, rank_measures=None):
         for m in rank_measures:
             config.use_clo = use_clo
             config.use_por = use_por
-            config.epochs = 1
             if use_clo:
                 config.syllabus_measure = m
             elif use_por:
@@ -35,6 +37,7 @@ def main(use_clo: bool = False, use_por: bool = False, rank_measures=None):
 def benchmark(config):
     dataset = ImageDataProvider(dataset_name=config.dataset, custom_dataset_path=config.custom_dataset_path)
     net = NeuralNetFactory(config=config, input_shape=dataset.input_shape)
+
     return net.timelined_benchmark(dataset, num_epochs=config.epochs)
 
 
@@ -42,7 +45,8 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description='Deep CLO experiment runs interface.')
     parser.add_argument('--benchmark', type=bool, default=False, help="Run training benchmark")
-    parser.add_argument('--rank_measures', type=list, default=['BI', 'EI', 'ELI', 'IV',
+    parser.add_argument('--rank_measures', type=list, default=['BI',
+                                                               'EI', 'ELI', 'IV',
                                                                'II', 'COI'],
                         help="Run training benchmark")
     parser.add_argument('--config_file',
@@ -57,5 +61,5 @@ if __name__ == "__main__":
         configuration = Config(config_file=args.config_file)
         results = benchmark(config=configuration)
     else:
-        main(use_clo=True, use_por=False, rank_measures=args.rank_measures)
+        main(use_clo=True, use_por=False, rank_measures=None)
 
