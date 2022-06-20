@@ -139,7 +139,7 @@ class NeuralNetFactory:
         while not os.path.exists(model_dir):
             os.makedirs(model_dir)
 
-        print(model_dir)
+        print('Model Dir:', model_dir)
 
         config_file_dump = os.path.join(model_dir,
                                         f"{self.model_name}_{self.config.dataset.replace('/', '_')}.ini")

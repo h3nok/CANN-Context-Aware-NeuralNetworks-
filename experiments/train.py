@@ -4,10 +4,20 @@ from deepclo.pipe.dataset import ImageDataProvider
 from deepclo.core.measures.measure_functions import RANK_MEASURES
 
 
-def main(use_clo: bool = False,
-         use_por: bool = False,
-         rank_measures=None):
+def train_all(use_clo: bool = False,
+              use_por: bool = False,
+              rank_measures=None):
+    """
+    Bulk train models
 
+    Args:
+        use_clo:
+        use_por:
+        rank_measures:
+
+    Returns:
+
+    """
     config = Config(config_file=args.config_file)
     dataset = ImageDataProvider(dataset_name=config.dataset,
                                 custom_dataset_path=config.custom_dataset_path)
@@ -15,7 +25,8 @@ def main(use_clo: bool = False,
     if not use_clo and not use_por:
         config.use_clo = False
         config.use_por = False
-        net = NeuralNetFactory(config=config, input_shape=dataset.input_shape)
+        net = NeuralNetFactory(config=config,
+                               input_shape=dataset.input_shape)
         net.train(dataset)
     else:
         config = Config(config_file=args.config_file)
@@ -34,6 +45,25 @@ def main(use_clo: bool = False,
             net.train(dataset)
 
 
+def train(config_file):
+    """
+    Train based on a config file
+
+    Args:
+        config_file:
+
+    Returns:
+
+    """
+    config = Config(config_file=config_file)
+    dataset = ImageDataProvider(dataset_name=config.dataset,
+                                custom_dataset_path=config.custom_dataset_path)
+
+    net = NeuralNetFactory(config=config,
+                           input_shape=dataset.input_shape)
+    net.train(dataset)
+
+
 def benchmark(config):
     dataset = ImageDataProvider(dataset_name=config.dataset, custom_dataset_path=config.custom_dataset_path)
     net = NeuralNetFactory(config=config, input_shape=dataset.input_shape)
@@ -45,9 +75,13 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description='Deep CLO experiment runs interface.')
     parser.add_argument('--benchmark', type=bool, default=False, help="Run training benchmark")
+    parser.add_argument('--run_all', type=bool, default=False, help="Run bulk train operation")
     parser.add_argument('--rank_measures', type=list, default=['BI',
-                                                               'EI', 'ELI', 'IV',
-                                                               'II', 'COI'],
+                                                               'EI',
+                                                               'ELI',
+                                                               'IV',
+                                                               'II',
+                                                               'COI'],
                         help="Run training benchmark")
     parser.add_argument('--config_file',
                         type=str,
@@ -60,6 +94,8 @@ if __name__ == "__main__":
     if args.benchmark:
         configuration = Config(config_file=args.config_file)
         results = benchmark(config=configuration)
+    elif args.run_all:
+        train_all(use_clo=True, use_por=False, rank_measures=None)
     else:
-        main(use_clo=True, use_por=False, rank_measures=None)
+        train(args.config_file)
 
