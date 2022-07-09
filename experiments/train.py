@@ -18,6 +18,9 @@ def train_all(use_clo: bool = False,
     Returns:
 
     """
+
+    print("Calling train_all() function ... ")
+
     config = Config(config_file=args.config_file)
     dataset = ImageDataProvider(dataset_name=config.dataset,
                                 custom_dataset_path=config.custom_dataset_path)
@@ -55,6 +58,8 @@ def train(config_file):
     Returns:
 
     """
+    print("Calling train() function ... ")
+
     config = Config(config_file=config_file)
     dataset = ImageDataProvider(dataset_name=config.dataset,
                                 custom_dataset_path=config.custom_dataset_path)
@@ -65,7 +70,8 @@ def train(config_file):
 
 
 def benchmark(config):
-    dataset = ImageDataProvider(dataset_name=config.dataset, custom_dataset_path=config.custom_dataset_path)
+    dataset = ImageDataProvider(dataset_name=config.dataset,
+                                custom_dataset_path=config.custom_dataset_path)
     net = NeuralNetFactory(config=config, input_shape=dataset.input_shape)
 
     return net.timelined_benchmark(dataset, num_epochs=config.epochs)
