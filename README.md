@@ -1,6 +1,6 @@
 # Deep-CLO : A Framework for Deep Curriculum Learning Optimization and Input Manipulation 
 
-###Abstract 
+### Abstract ###
 Convolutional neural networks (CNN) can be trained to extract patterns from datasets that are comprised 
 of data which a trained human observer would consider to be noise. These networks are robust at making 
 relevant predictions on images with no human-recognizable features. In addition, research has revealed 
