@@ -5,10 +5,9 @@ from deepclo.core.measures.measure_functions import RANK_MEASURES
 
 
 def train_all(use_clo: bool = False,
-              use_por: bool = False,
-              rank_measures=None):
+              use_por: bool = False, rank_measures=None):
     """
-    Bulk train models
+    Bulk train models.
 
     Args:
         use_clo:
@@ -50,14 +49,9 @@ def train_all(use_clo: bool = False,
 
 def train(config_file):
     """
-    Train based on a config file
-
-    Args:
-        config_file:
-
-    Returns:
-
+    Train based on a config file.
     """
+
     print("Calling train() function ... ")
 
     config = Config(config_file=config_file)
@@ -82,12 +76,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Deep CLO experiment runs interface.')
     parser.add_argument('--benchmark', type=bool, default=False, help="Run training benchmark")
     parser.add_argument('--run_all', type=bool, default=False, help="Run bulk train operation")
-    parser.add_argument('--rank_measures', type=list, default=['BI',
-                                                               'EI',
-                                                               'ELI',
-                                                               'IV',
-                                                               'II',
-                                                               'COI'],
+    parser.add_argument('--rank_measures', type=list, default=['BI',  'EI',
+                                                               'ELI', 'IV',
+                                                               'II', 'COI'],
                         help="Run training benchmark")
     parser.add_argument('--config_file',
                         type=str,
