@@ -18,7 +18,6 @@ analyzed, reorganized, and stitched back together to generate a new training sam
 
 ### Algorithm POR - Patch proposal, Ordering and new Input Reconstruction 
 
-![img.png](por_stages.png)
-
+![img.png](por.png)
 
 
