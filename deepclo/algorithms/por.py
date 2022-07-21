@@ -310,9 +310,9 @@ class POR:
             img.save(os.path.join(output_dir, f'{counter}.png'))
             counter += 1
 
-        Image.fromarray(self.sample,
-                        'RGB').save(os.path.join(output_dir,
-                                                 str(self.label[0]) + ".png"))
+        # Image.fromarray(self.sample,
+        #                 'RGB').save(os.path.join(output_dir,
+        #                                          str(self.label[0]) + ".png"))
 
     def show_image_blocks(self):
         show_images(images=self.blocks, titles="Image Blocks")
