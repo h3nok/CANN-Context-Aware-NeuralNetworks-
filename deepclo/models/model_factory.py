@@ -1,20 +1,28 @@
 import os
-import shutil
 import time
-import netron
-import tqdm
-
-import tensorflow as tf
-
-from vit_keras import vit
-from deepclo.algorithms.curriculum import Curriculum
-from deepclo.config import Config
 from datetime import date
-import keras
 
-from deepclo.utils import configure_logger
-from deepclo.algorithms.por import POR
+import netron
+import tensorflow as tf
+import tqdm
 from classification_models.tfkeras import Classifiers
+from keras.backend import sigmoid
+from keras.layers import Dense, Dropout, Activation, BatchNormalization
+from keras.models import Model
+from vit_keras import vit
+import numpy as np
+import keras
+from tensorflow.keras.utils import get_custom_objects
+import seaborn as sns
+from sklearn.metrics import confusion_matrix, classification_report
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from deepclo.algorithms.curriculum import Curriculum
+from deepclo.algorithms.por import POR
+from deepclo.config import Config
+from deepclo.utils import configure_logger
 
 keras_apps = tf.keras.applications
 
@@ -53,13 +61,25 @@ Models = {
 SUPPORTED_MODELS = list(Models['Keras'].keys()) + list(Models['ViT-L'].keys())
 
 Losses = {
-    'SparseCategoricalCrossentropy': tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+    'SparseCategoricalCrossentropy': tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    'categorical_crossentropy': 'categorical_crossentropy'
 }
+
+
+class SwishActivation(Activation):
+
+    def __init__(self, activation, **kwargs):
+        super(SwishActivation, self).__init__(activation, **kwargs)
+        self.__name__ = 'swish_act'
+
+
+def swish(x, beta=1):
+    return x * sigmoid(beta * x)
 
 
 class NeuralNetFactory:
 
-    def __init__(self, config: Config, input_shape: tuple):
+    def __init__(self, config: Config, input_shape: tuple, mode='Train', weights=None):
         """
         Artificial Neural network model factory
 
@@ -70,6 +90,7 @@ class NeuralNetFactory:
         assert config
         self.model_name = config.model
         self._logger = configure_logger(logfile_dir=config.model_dir, module=self.__class__.__name__)
+        get_custom_objects().update({'swish': swish})
 
         if self.model_name not in SUPPORTED_MODELS:
             self._logger.debug(SUPPORTED_MODELS)
@@ -86,29 +107,80 @@ class NeuralNetFactory:
         self.classes = config.num_classes
         self.activation = config.activation
         self.train_history = None
+        self.weights = weights
+        self.mode = mode
         self.callbacks = []
+        self.model_dir = None
+        self.y_true = None
+        self.y_pred = None
 
-        self._build()
+        self._build(mode=self.mode)
 
-    def _build(self):
-        if self.model_name in Models['Keras'].keys():
-            self._model = Models['Keras'][self.model_name](
-                include_top=False,
-                input_shape=self.input_shape,
-                input_tensor=None,
-                pooling=self.pooling,
-                classes=self.classes,
-                classifier_activation=self.activation)
+    def _build(self, mode='Train'):
+        self._logger.info(f"Building model, mode: {mode}")
+        if mode == 'Train':
+            if self.model_name in Models['Keras'].keys():
+                self._model = Models['Keras'][self.model_name](
+                    include_top=False,
+                    input_shape=self.input_shape,
+                    input_tensor=None,
+                    pooling=self.pooling,
+                    classes=self.classes,
+                    classifier_activation=self.activation
+                    )
 
-        elif self.model_name in Models['ViT-L'].keys():
-            self._model = Models['ViT-L'][self.model_name](
-                image_size=self.input_shape[0],
-                activation='sigmoid',
-                pretrained=False,
-                include_top=False,
-                pretrained_top=False,
-                classes=self.config.num_classes
-            )
+            elif self.model_name in Models['ViT-L'].keys():
+                self._model = Models['ViT-L'][self.model_name](
+                    image_size=self.input_shape[0],
+                    activation='sigmoid',
+                    pretrained=False,
+                    include_top=False,
+                    pretrained_top=False,
+                    classes=self.config.num_classes
+                )
+
+            self._append_classification_block()
+
+        else:
+            if not self.weights:
+                raise RuntimeError(f"Unable to build model for '{mode}'. Must supply path to a valid .h5 model")
+
+            self._model = keras.models.load_model(self.weights)
+
+    def _append_classification_block(self):
+        # Build the classification component of the network
+        x = self._model.output
+        x = BatchNormalization(name='BN1_Custom')(x)
+        x = Dropout(0.7, name='Dropout1_Custom')(x)
+
+        x = Dense(512, name='FC1')(x)
+        x = BatchNormalization(name='BN2_Custom')(x)
+        x = Activation(swish)(x)
+        x = Dropout(0.5, name='Dropout_custom')(x)
+
+        x = Dense(128, name='FC2')(x)
+        x = BatchNormalization(name='BN3_Custom')(x)
+        x = Activation(swish)(x)
+
+        # output layer
+        predictions = Dense(self.classes, activation="softmax")(x)
+        self._model = Model(inputs=self._model.input, outputs=predictions)
+
+    def _compile(self):
+        # performance metrics
+        metrics = ['acc']
+
+        assert self.config.loss_function in Losses.keys()
+        loss_function = Losses[self.config.loss_function]
+
+        self._logger.debug(f"Compiling model, loss: {self.config.loss_function}, optimizer: {self.config.optimizer}")
+        self._setup_callbacks()
+
+        self._model.compile(
+            loss=loss_function,
+            optimizer=self.config.optimizer,
+            metrics=metrics
+        )
 
     def _setup_callbacks(self, benchmark=False):
         """
@@ -139,8 +211,8 @@ class NeuralNetFactory:
         while not os.path.exists(model_dir):
             os.makedirs(model_dir)
 
-        print('Model Dir:', model_dir)
-
+        # print('Model Dir:', model_dir)
+        self.model_dir = model_dir
         config_file_dump = os.path.join(model_dir,
                                         f"{self.model_name}_{self.config.dataset.replace('/', '_')}.ini")
         self.config.dump(config_file_dump)
@@ -154,17 +226,16 @@ class NeuralNetFactory:
         # Set up callbacks for saving checkpoints, logging, and tensorboard
         best_model_path = os.path.join(checkpoint_dir, 'e{epoch:02d}.h5')
         checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath=best_model_path,
-                                                                 save_weights_only=True,
-                                                                 verbose=1,
-                                                                 save_freq='epoch',
                                                                  save_best_only=True,
-                                                                 mode='min')
+                                                                 monitor='val_acc')
 
         tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=events_dir,
                                                               histogram_freq=0,
                                                               update_freq='epoch')
 
-        self.callbacks = [checkpoint_callback, tensorboard_callback]
+        reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=2, verbose=1,)
+
+        self.callbacks = [checkpoint_callback, tensorboard_callback, reduce_lr]
 
     def get(self, model_name):
         model_name = model_name.lower()
@@ -207,20 +278,8 @@ class NeuralNetFactory:
         Returns:
 
         """
-        # performance metrics
-        metrics = ['acc', 'mse']
 
-        assert self.config.loss_function in Losses.keys()
-        loss_function = Losses[self.config.loss_function]
-
-        self._logger.debug(f"Compiling model, loss: {self.config.loss_function}, optimizer: {self.config.optimizer}")
-        self._setup_callbacks()
-
-        self._model.compile(
-            loss=loss_function,
-            optimizer=self.config.optimizer,
-            metrics=metrics
-        )
+        self._compile()
 
         if benchmark:
             assert epochs >= 1
@@ -299,6 +358,61 @@ class NeuralNetFactory:
                 callbacks=self.callbacks,
                 shuffle=True
             )
+
+        final_model_path = os.path.join(self.model_dir, 'FINAL.h5')
+        self._logger.info(f"Final model saved to, {final_model_path}")
+        self._model.save(final_model_path)
+
+        self.evaluate(dataset.x_test, dataset.y_test, model_path=final_model_path, output_dir=self.model_dir)
+
+    def _classification_report(self, output_dir=None):
+        """
+
+        Args:
+            output_dir:
+
+        Returns:
+
+        """
+        cr = classification_report(self.y_true, self.y_pred, output_dict=True)
+        cr_df = pd.DataFrame.from_dict(cr)
+
+        if output_dir:
+            cr_df.to_csv(os.path.join(output_dir, f"{self.model_name}_{self.config.dataset}_cr.csv"))
+
+    def evaluate(self, x_test, y_test, model_path=None, output_dir=None):
+        """
+        Evaluate generalization performance of final (best) model_path
+
+        Args:
+            x_test:
+            y_test:
+            model_path:
+            output_dir:
+
+        Returns:
+
+        """
+        sns.set_style('whitegrid')
+        sns.set_palette("bright", 10, 1)
+
+        if model_path:
+            self._model = keras.models.load_model(model_path)
+
+        self.y_pred = np.argmax(self._model.predict(x_test), axis=1)
+        self.y_true = np.argmax(y_test, axis=1)
+        cm = confusion_matrix(self.y_true, self.y_pred)
+        sns.heatmap(cm, annot=True, fmt="d")
+        plt.ylabel("Groundtruth")
+        plt.xlabel("Predicted")
+        plt.title(f"{self.model_name.capitalize()} generalization confusion matrix")
+
+        if output_dir:
+            cm_file = os.path.join(output_dir, f"{self.model_name}_{self.config.dataset}_cm.png")
+            plt.savefig(cm_file, dpi=1000)
+
+        self._classification_report(output_dir=output_dir)
+        plt.show()
 
     def timelined_benchmark(self, dataset, num_epochs=2, algorithm=None):
 

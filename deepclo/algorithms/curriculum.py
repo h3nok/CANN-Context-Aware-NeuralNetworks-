@@ -33,7 +33,6 @@ class Curriculum:
         """
         self.batch = batch
         self.labels = labels
-
         # assert len(self.batch.shape) == 4
         # assert len(self.labels.shape) == 2
         # assert self.batch.shape[0] == self.labels.shape[0]
@@ -154,7 +153,7 @@ class Curriculum:
 
     @tf.function(input_signature=(tf.TensorSpec(shape=[None, None, None, 3],
                                                 dtype=tf.uint8),
-                                  tf.TensorSpec(shape=[None, 1],
+                                  tf.TensorSpec(shape=[None, None],
                                                 dtype=tf.uint8)))
     def generate_syllabus(self,
                           batch: np.ndarray,

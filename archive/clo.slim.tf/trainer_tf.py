@@ -469,7 +469,7 @@ class Trainer(object):
             ##########################
             # Kicks off the training. #
             ###########################
-            self._slim.learning.train(
+            self._slim.learning.eval(
                     train_tensor,
                     logdir=self._train_dir,
                     master=self._config.master,

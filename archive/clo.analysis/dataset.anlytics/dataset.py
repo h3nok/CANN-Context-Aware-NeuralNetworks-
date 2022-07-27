@@ -89,10 +89,10 @@ class Dataset:
                         features = {}
                         for name, serialized_tensor in serialized_dict.items():
                             bytes_string = sess.run(serialized_tensor)
-                            bytes_list = tf.train.BytesList(value=[bytes_string])
-                            features[name] = tf.train.Feature(bytes_list=bytes_list)
+                            bytes_list = tf.eval.BytesList(value=[bytes_string])
+                            features[name] = tf.eval.Feature(bytes_list=bytes_list)
                         # Create a Features message using tf.train.Example.
-                        example_proto = tf.train.Example(features=tf.train.Features(feature=features))
+                        example_proto = tf.eval.Example(features=tf.eval.Features(feature=features))
                         example_string = example_proto.SerializeToString()
                         # Write to TFRecord
                         writer.write(example_string)

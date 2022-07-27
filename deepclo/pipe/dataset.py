@@ -9,7 +9,7 @@ from deepclo.pipe.dataset_base import DatasetBase, SUPPORTED_DATASETS
 from deepclo.utils import multi_hist
 from experiments.synthetic.synthetic_data import ShapesDataset
 import os
-
+import keras
 
 class ImageDataProvider(DatasetBase):
 
@@ -119,10 +119,14 @@ class ImageDataProvider(DatasetBase):
                 if index % 1000 == 0:
                     print(f"Processed {index} train samples ... ")
 
+        self.y_train = keras.utils.np_utils.to_categorical(self.y_train, self.num_classes, dtype=np.uint8)
+        self.y_test = keras.utils.np_utils.to_categorical(self.y_test, self.num_classes, dtype=np.uint8)
+
     @property
     def input_shape(self):
         return self._input_shape
 
+    @property
     def num_classes(self):
         return len(self.classes)
 

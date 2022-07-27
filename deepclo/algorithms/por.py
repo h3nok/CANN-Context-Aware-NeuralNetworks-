@@ -212,8 +212,8 @@ class POR:
 
         elif metric_type == MeasureType.DISTANCE:
             if not reference_block_index:
-                self._logger.warning("Reference image index not supplied. Using minimum entropy sample as a reference "
-                                     "image ")
+                self._logger.warning("Reference image index not supplied. "
+                                     "Using minimum entropy sample as a reference image ")
                 reference_block_index = self._select_maximum_low_entropy_reference_block()
 
             self._logger.debug(f"Constructing new input using {self._block_raking_measure} DISTANCE measure, "
@@ -236,7 +236,7 @@ class POR:
 
     @tf.function(input_signature=(tf.TensorSpec(shape=[None, None, 3],
                                                 dtype=tf.uint8),
-                                  tf.TensorSpec(shape=[1, ], dtype=tf.uint8)))
+                                  tf.TensorSpec(shape=[None, ], dtype=tf.uint8)))
     def algorithm_por(self, sample, label):
         """
         Tensorflow training pipeline operator

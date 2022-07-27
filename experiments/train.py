@@ -18,7 +18,6 @@ def train_all(use_clo: bool = False,
 
     """
 
-    print("Calling train_all() function ... ")
 
     config = Config(config_file=args.config_file)
     dataset = ImageDataProvider(dataset_name=config.dataset,
@@ -35,6 +34,8 @@ def train_all(use_clo: bool = False,
         if not rank_measures:
             rank_measures = list(RANK_MEASURES.keys())
 
+        print(f"Calling train_all() function, rank measures: {rank_measures} ... ")
+
         for m in rank_measures:
             config.use_clo = use_clo
             config.use_por = use_por
@@ -44,6 +45,7 @@ def train_all(use_clo: bool = False,
                 config.por_measure = m
 
             net = NeuralNetFactory(config=config, input_shape=dataset.input_shape)
+
             net.train(dataset)
 
 
@@ -60,6 +62,7 @@ def train(config_file):
 
     net = NeuralNetFactory(config=config,
                            input_shape=dataset.input_shape)
+    print(net)
     net.train(dataset)
 
 
@@ -73,12 +76,12 @@ def benchmark(config):
 
 if __name__ == "__main__":
     import argparse
+
     parser = argparse.ArgumentParser(description='Deep CLO experiment runs interface.')
     parser.add_argument('--benchmark', type=bool, default=False, help="Run training benchmark")
-    parser.add_argument('--run_all', type=bool, default=False, help="Run bulk train operation")
-    parser.add_argument('--rank_measures', type=list, default=['BI',  'EI',
-                                                               'ELI', 'IV',
-                                                               'II', 'COI'],
+    parser.add_argument('--run_all', type=bool, default=True, help="Run bulk train operation")
+    parser.add_argument('--rank_measures', type=list,
+                        default=['KL', 'PSNR', 'MAX', 'CE', 'Entropy', 'MI'],
                         help="Run training benchmark")
     parser.add_argument('--config_file',
                         type=str,
@@ -92,7 +95,6 @@ if __name__ == "__main__":
         configuration = Config(config_file=args.config_file)
         results = benchmark(config=configuration)
     elif args.run_all:
-        train_all(use_clo=True, use_por=False, rank_measures=None)
+        train_all(use_clo=True, use_por=False, rank_measures=args.rank_measures)
     else:
         train(args.config_file)
-

@@ -164,6 +164,7 @@ class Report:
         fig, ax = plt.subplots()
         data = pd.DataFrame(self.max_values.items(), columns=['Syllabus', 'Acc'], index=None)
         sns.histplot(data=data, x='Acc', y='Syllabus', hue='Syllabus')
+        print(np.argmax(dataset.y_test, axis=1))
         ax.get_legend().remove()
         plt.axhline(y='baseline'.upper(), lw=1, ls='--', color=Colors.gold_1())
         ax.set_title(f"{self.model}  Validation Accuracy Comparison ({self.dataset}, {self.optimizer})")
@@ -171,7 +172,8 @@ class Report:
                                  f'{self.model}_{self.dataset}_{self.optimizer}_{self.split}_val_hist.png'),
                     dpi=1000)
         data.to_csv(os.path.join('../experiments/results/',
-                                 f'{self.model}_{self.dataset}_{self.optimizer}_{self.split}_va.csv'), index=False)
+                                 f'{self.model}_{self.dataset}_{self.optimizer}_{self.split}_va.csv'),
+                    index=False)
 
 
 if __name__ == "__main__":
