@@ -45,7 +45,6 @@ def train_all(use_clo: bool = False,
                 config.por_measure = m
 
             net = NeuralNetFactory(config=config, input_shape=dataset.input_shape)
-
             net.train(dataset)
 
 
