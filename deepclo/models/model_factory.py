@@ -299,6 +299,7 @@ class NeuralNetFactory:
         if self.config.use_por:
 
             assert self.config.por_measure != ''
+
             assert self.config.block_size >= 4
             assert self.config.rank_order in [0, 1]
 
@@ -344,6 +345,9 @@ class NeuralNetFactory:
                 callbacks=self.callbacks,
                 shuffle=False
             )
+
+        elif self.config.use_clo and self.config.use_por:
+            raise NotImplementedError('POR-CLO training procedure is not implemented yet.')
 
         else:
             train_dataset = dataset.train_dataset(batch_size=self.config.batch_size)
@@ -438,6 +442,7 @@ class NeuralNetFactory:
             # times_acc = tf.concat((times_acc, [(epoch_enter, epoch_elapsed)]), axis=0)
 
         tf.print("Execution time:", time.perf_counter() - start_time)
+
         if not algorithm:
             return {"Baseline": times_acc}
         else:

@@ -4,6 +4,7 @@ import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
 from functools import reduce
+import numpy as np
 
 
 class Colors:

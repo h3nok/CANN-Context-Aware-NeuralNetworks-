@@ -5,7 +5,9 @@ from deepclo.core.measures.measure_functions import RANK_MEASURES
 
 
 def train_all(use_clo: bool = False,
-              use_por: bool = False, rank_measures=None):
+              use_por: bool = False,
+              rank_measures=None
+              ):
     """
     Bulk train models.
 
@@ -17,7 +19,6 @@ def train_all(use_clo: bool = False,
     Returns:
 
     """
-
 
     config = Config(config_file=args.config_file)
     dataset = ImageDataProvider(dataset_name=config.dataset,
@@ -32,7 +33,7 @@ def train_all(use_clo: bool = False,
     else:
         config = Config(config_file=args.config_file)
         if not rank_measures:
-            rank_measures = list(RANK_MEASURES.keys())
+            rank_measures = list(RANK_SURES.keys())
 
         print(f"Calling train_all() function, rank measures: {rank_measures} ... ")
 
@@ -61,7 +62,6 @@ def train(config_file):
 
     net = NeuralNetFactory(config=config,
                            input_shape=dataset.input_shape)
-    print(net)
     net.train(dataset)
 
 
@@ -78,16 +78,15 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Deep CLO experiment runs interface.')
     parser.add_argument('--benchmark', type=bool, default=False, help="Run training benchmark")
-    parser.add_argument('--run_all', type=bool, default=True, help="Run bulk train operation")
+    parser.add_argument('--run_all', type=bool, default=False, help="Run bulk train operation")
     parser.add_argument('--rank_measures', type=list,
-                        default=['KL', 'PSNR', 'MAX', 'CE', 'Entropy', 'MI'],
+                        default=['KL', 'PSNR', 'MAX_NORM', 'CE', 'Entropy', 'MI'],
                         help="Run training benchmark")
     parser.add_argument('--config_file',
                         type=str,
                         default='../configurations/deepclo_train_config.ini',
                         required=True,
                         help="Path to .ini config file ")
-
     args = parser.parse_args()
 
     if args.benchmark:
