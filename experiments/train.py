@@ -1,7 +1,7 @@
 from deepclo.config import Config
+from deepclo.core.measures.measure_functions import RANK_MEASURES
 from deepclo.models.model_factory import NeuralNetFactory
 from deepclo.pipe.dataset import ImageDataProvider
-from deepclo.core.measures.measure_functions import RANK_MEASURES
 
 
 def train_all(use_clo: bool = False,
@@ -33,7 +33,7 @@ def train_all(use_clo: bool = False,
     else:
         config = Config(config_file=args.config_file)
         if not rank_measures:
-            rank_measures = list(RANK_SURES.keys())
+            rank_measures = list(RANK_MEASURES.keys())
 
         print(f"Calling train_all() function, rank measures: {rank_measures} ... ")
 
@@ -76,6 +76,7 @@ def benchmark(config):
 if __name__ == "__main__":
     import argparse
 
+    # with mlflow.start_run() as run:
     parser = argparse.ArgumentParser(description='Deep CLO experiment runs interface.')
     parser.add_argument('--benchmark', type=bool, default=False, help="Run training benchmark")
     parser.add_argument('--run_all', type=bool, default=False, help="Run bulk train operation")
@@ -87,6 +88,7 @@ if __name__ == "__main__":
                         default='../configurations/deepclo_train_config.ini',
                         required=True,
                         help="Path to .ini config file ")
+
     args = parser.parse_args()
 
     if args.benchmark:

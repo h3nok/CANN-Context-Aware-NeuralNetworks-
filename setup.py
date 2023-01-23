@@ -18,7 +18,7 @@ class CleanCommand(Command):
         pass
 
     def run(self):
-        os.system('rm -vrf ./*.pyc ./*.tgz ./*.egg-info ./test-reports ./.pytest_cache')
+        os.system('del -vrf ./*.pyc ./*.tgz ./*.egg-info ./test-reports ./.pytest_cache')
 
 
 class UploadCommand(Command):
@@ -45,6 +45,7 @@ setup(
               'deepclo.models',
               'deepclo.algorithms',
               'experiments',
+              'experiments.attacks',
               'experiments.synthetic'],
     url='https://github.com/h3nok/curriculum_learning_optimization.git',
     license='MIT',

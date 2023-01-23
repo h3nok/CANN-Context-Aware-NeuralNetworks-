@@ -3,7 +3,8 @@ import os
 from PIL import Image
 from skimage.util.shape import view_as_blocks
 
-from deepclo.algorithms.image_processsing import sort_images, construct_new_input, assess_and_rank_images
+from deepclo.algorithms.image_processsing import sort_images, blocks_to_2d_image, assess_and_rank_images,\
+    blocks_to_3d_volume
 from deepclo.core.measures.information_theory import *
 from deepclo.core.measures.measure_functions import Measure, RANK_MEASURES, determine_measure_classification, \
     MeasureType
@@ -167,7 +168,63 @@ class POR:
 
         assert len(self.blocks) > 0
 
-    def construct_new_input_from_blocks(self,
+    def _construct_3d_input_from_blocks(self,
+                                        block_ranking_measure: Measure = None,
+                                        rank_order=None,
+                                        reference_block_index=0):
+
+        assert self.blocks.any(), "Invalid input. Blocks array is empty. Must call split_image before " \
+                                  "construct_new_input "
+        if not block_ranking_measure:
+            assert self._block_raking_measure, "Please set block rank measure,  por.measure = ..."
+        else:
+            self._block_raking_measure = block_ranking_measure
+
+        if not rank_order:
+            assert self._rank_ordering in [0, 1]
+        else:
+            self._rank_ordering = rank_order
+
+        metric_type = determine_measure_classification(self._block_raking_measure)
+
+        if metric_type == MeasureType.STANDALONE:
+            self._logger.debug(f"Constructing new input using {self._block_raking_measure} STA measure... ")
+            self.ranks = assess_and_rank_images(self.blocks, self._block_raking_measure, reference_block_index=None)
+            self.sorted_blocks, _ = sort_images(self.blocks,
+                                                ranks=self.ranks,
+                                                block_rank_ordering=self._rank_ordering)
+
+            self.reconstructed_input = blocks_to_3d_volume(self.sorted_blocks,
+                                                          self.height,
+                                                          self.width,
+                                                          self.channels)
+
+        elif metric_type == MeasureType.DISTANCE:
+            if not reference_block_index:
+                self._logger.warning("Reference image index not supplied. "
+                                     "Using minimum entropy sample as a reference image ")
+                reference_block_index = self._select_maximum_low_entropy_reference_block()
+
+            self._logger.debug(f"Constructing new input using {self._block_raking_measure} DISTANCE measure, "
+                               f"reference_block_index: {reference_block_index}... ")
+            self.ranks = assess_and_rank_images(self.blocks,
+                                                content_measure=self._block_raking_measure,
+                                                reference_block_index=reference_block_index)
+            self.sorted_blocks, _ = sort_images(self.blocks,
+                                                ranks=self.ranks,
+                                                block_rank_ordering=self._rank_ordering)
+
+            assert not np.array_equal(self.sorted_blocks, self.blocks)
+
+            self.reconstructed_input = blocks_to_3d_volume(self.sorted_blocks,
+                                                          self.height,
+                                                          self.width,
+                                                          self.channels)
+
+        return self.reconstructed_input, self.label
+
+
+    def _construct_2d_input_from_blocks(self,
                                         block_ranking_measure: Measure = None,
                                         rank_order=None,
                                         reference_block_index=0):
@@ -205,10 +262,10 @@ class POR:
                                                 ranks=self.ranks,
                                                 block_rank_ordering=self._rank_ordering)
 
-            self.reconstructed_input = construct_new_input(self.sorted_blocks,
-                                                           self.height,
-                                                           self.width,
-                                                           self.channels)
+            self.reconstructed_input = blocks_to_2d_image(self.sorted_blocks,
+                                                          self.height,
+                                                          self.width,
+                                                          self.channels)
 
         elif metric_type == MeasureType.DISTANCE:
             if not reference_block_index:
@@ -227,10 +284,10 @@ class POR:
 
             assert not np.array_equal(self.sorted_blocks, self.blocks)
 
-            self.reconstructed_input = construct_new_input(self.sorted_blocks,
-                                                           self.height,
-                                                           self.width,
-                                                           self.channels)
+            self.reconstructed_input = blocks_to_2d_image(self.sorted_blocks,
+                                                          self.height,
+                                                          self.width,
+                                                          self.channels)
 
         return self.reconstructed_input, self.label
 
@@ -284,7 +341,7 @@ class POR:
 
         self.split_image(self.block_shape)
 
-        return self.construct_new_input_from_blocks()
+        return self._construct_2d_input_from_blocks()
 
     def save_image_blocks(self, output_dir: str = None) -> None:
         """

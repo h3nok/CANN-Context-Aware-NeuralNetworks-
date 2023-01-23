@@ -104,8 +104,28 @@ def configure_logger(module, logfile_dir='.', console=False):
     return logger
 
 
-def hist(data, title=None, x_label=None, label=None, bins='auto', color=COLORS['gold'],
+def hist(data, title=None,
+         x_label=None,
+         label=None,
+         bins='auto',
+         color=COLORS['gold'],
          alpha=0.7, rwidth=0.85):
+    """
+    Histogram plotting routine
+
+    Args:
+        data:
+        title:
+        x_label:
+        label:
+        bins:
+        color:
+        alpha:
+        rwidth:
+
+    Returns:
+
+    """
     assert isinstance(data, np.ndarray)
     n, bins, patches = plt.hist(x=data, label=label, bins=bins, color=color,
                                 alpha=alpha, rwidth=rwidth, density=True)
@@ -119,7 +139,29 @@ def hist(data, title=None, x_label=None, label=None, bins='auto', color=COLORS['
     plt.ylim(ymax=np.ceil(maxfreq / 10) * 10 if maxfreq % 10 else maxfreq + 10)
 
 
-def scatter(x, y, title=None, x_label=None, y_label=None, alpha=0.75, save_as='plot.png', c=None):
+def scatter(x,
+            y,
+            title=None,
+            x_label=None,
+            y_label=None,
+            alpha=0.75,
+            save_as='plot.png',
+            c=None):
+    """
+
+    Args:
+        x:
+        y:
+        title:
+        x_label:
+        y_label:
+        alpha:
+        save_as:
+        c:
+
+    Returns:
+
+    """
     save_as = os.path.join(PLOTS_DIR, save_as)
     area = y ** 2
     plt.scatter(x, y, s=area, c=c)

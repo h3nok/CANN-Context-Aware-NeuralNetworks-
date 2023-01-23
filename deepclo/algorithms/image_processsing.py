@@ -130,7 +130,17 @@ def sort_images(
     return batch_or_image_blocks[ranks_indices], ranks_indices
 
 
-def construct_new_input(
+def blocks_to_3d_volume(
+        blocks: np.ndarray,
+        image_height: int,
+        image_width: int,
+        number_of_channels: int,
+        stride: int = None
+):
+    pass
+
+
+def blocks_to_2d_image(
         blocks: np.ndarray,
         image_height: int,
         image_width: int,
@@ -138,7 +148,7 @@ def construct_new_input(
         stride: int = None
 ):
     """
-       Reconstruct the image from all patches.
+       Reconstruct a 2-d image from all patches.
        Patches are assumed to be square and overlapping depending on the stride. The image is constructed
        by filling in the patches from left to right, top to bottom, averaging the overlapping parts.
     Parameters

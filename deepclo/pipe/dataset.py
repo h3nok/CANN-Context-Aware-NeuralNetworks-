@@ -11,6 +11,7 @@ from experiments.synthetic.synthetic_data import ShapesDataset
 import os
 import keras
 
+
 class ImageDataProvider(DatasetBase):
 
     def __init__(self,
@@ -165,8 +166,8 @@ class ImageDataProvider(DatasetBase):
 
         return (
             self._train_ds.shuffle(len(self.x_train))
-                .batch(batch_size)
-                .prefetch(tf.data.AUTOTUNE)
+            .batch(batch_size)
+            .prefetch(tf.data.AUTOTUNE)
         )
 
     def test_dataset(self, batch_size, test_preprocessing=None) -> tf.data:
@@ -185,15 +186,15 @@ class ImageDataProvider(DatasetBase):
         if test_preprocessing:
             return (
                 self._val_ds.shuffle(len(self.x_test))
-                    .map(test_preprocessing)
-                    .batch(batch_size)
-                    .prefetch(tf.data.AUTOTUNE)
+                .map(test_preprocessing)
+                .batch(batch_size)
+                .prefetch(tf.data.AUTOTUNE)
             )
 
         return (
             self._val_ds.shuffle(len(self.x_test))
-                .batch(batch_size)
-                .prefetch(tf.data.AUTOTUNE)
+            .batch(batch_size)
+            .prefetch(tf.data.AUTOTUNE)
         )
 
     def plot_images(self, limit=9, dataset_type='Train') -> None:

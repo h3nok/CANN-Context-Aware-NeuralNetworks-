@@ -35,7 +35,7 @@ class TestPatchifier(TestCase):
 
     def test_construct_new_input(self):
         self.patchifier.split_image()
-        new_input = self.patchifier.construct_new_input_from_blocks()
+        new_input = self.patchifier._construct_2d_input_from_blocks()
         # self.patchifier.save_reconstructed_input(measure='Entropy')
         # new_input_mi = self.patchifier.construct_new_input_from_blocks(Measure.MI, rank_order=0)
         # self.patchifier.save_reconstructed_input(measure='MI')
