@@ -12,7 +12,6 @@ class TestCurriculum(TestCase):
     dataset_name = 'cifar10'
     dataset = ImageDataProvider(dataset_name= dataset_name)
 
-
     # sample = dataset.x_train[0]
     label = dataset.y_train[0]
     batch_size = 8
