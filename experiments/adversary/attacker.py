@@ -3,6 +3,29 @@ from deepclo.pipe.dataset import ImageDataProvider
 import matplotlib.pyplot as plt
 
 
+def mask_generation(mask_type='rectangle', patch=None, image_size=(3, 224, 224)):
+    applied_patch = np.zeros(image_size)
+    if mask_type == 'rectangle' or mask_type == 'square':
+        '''Square Patch
+        # patch rotation
+        rotation_angle = np.random.choice(4)
+        for i in range(patch.shape[0]):
+            patch[i] = np.rot90(patch[i], rotation_angle)  # The actual rotation angle is rotation_angle * 90
+        '''
+        # patch location
+        x_location, y_location = np.random.randint(low=0, high=image_size[1] - patch.shape[1]), \
+                                 np.random.randint(
+                                     low=0, high=image_size[2] - patch.shape[2])
+        for i in range(patch.shape[0]):
+            applied_patch[:, x_location:x_location + patch.shape[1],
+            y_location:y_location + patch.shape[2]] = patch
+    mask = applied_patch.copy()
+
+    mask[mask != 0] = 1.0
+
+    return applied_patch, mask, x_location, y_location
+
+
 class Attacker:
     def __init__(self, img: np.ndarray):
         self._img = img
@@ -40,7 +63,8 @@ class Attacker:
 
         return imgs
 
-    def patch_attack(self, patch_type='rectangle', image_size=(3, 224, 224), noise_percentage=0.03):
+    @staticmethod
+    def patch_attack(patch_type='rectangle', image_size=(3, 224, 224), noise_percentage=0.03):
         if patch_type == 'rectangle':
             # Rectangular Patch
             mask_length = int(((noise_percentage) * image_size[1] * image_size[2]) ** 0.45)
@@ -53,27 +77,6 @@ class Attacker:
 
         return patch
 
-    def mask_generation(self, mask_type='rectangle', patch=None, image_size=(3, 224, 224)):
-        applied_patch = np.zeros(image_size)
-        if mask_type == 'rectangle' or mask_type == 'square':
-            '''Square Patch
-            # patch rotation
-            rotation_angle = np.random.choice(4)
-            for i in range(patch.shape[0]):
-                patch[i] = np.rot90(patch[i], rotation_angle)  # The actual rotation angle is rotation_angle * 90
-            '''
-            # patch location
-            x_location, y_location = np.random.randint(low=0, high=image_size[1] - patch.shape[1]),\
-                                     np.random.randint(
-                low=0, high=image_size[2] - patch.shape[2])
-            for i in range(patch.shape[0]):
-                applied_patch[:, x_location:x_location + patch.shape[1],
-                y_location:y_location + patch.shape[2]] = patch
-        mask = applied_patch.copy()
-
-        mask[mask != 0] = 1.0
-
-        return applied_patch, mask, x_location, y_location
 
 def plot_image(image, label_true=None, class_names=None, label_pred=None):
     if image.ndim == 4 and image.shape[0] == 1:
@@ -109,7 +112,7 @@ image_id = 99
 attacker = Attacker(ds.x_test[image_id])
 patch = attacker.patch_attack()
 print(patch.shape)
-applied_patch, mask, x_location, y_location = attacker.mask_generation(patch=patch, image_size=(3, 224, 224))
+applied_patch, mask, x_location, y_location = mask_generation(patch=patch, image_size=(3, 224, 224))
 applied_patch = np.moveaxis(applied_patch, 0, -1)
 plot_image(applied_patch)
 
