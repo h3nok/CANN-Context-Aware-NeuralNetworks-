@@ -45,7 +45,7 @@ setup(
               'deepclo.models',
               'deepclo.algorithms',
               'experiments',
-              'experiments.attacks',
+              'experiments.adversary',
               'experiments.synthetic'],
     url='https://github.com/h3nok/curriculum_learning_optimization.git',
     license='MIT',

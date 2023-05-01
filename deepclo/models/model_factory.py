@@ -406,6 +406,7 @@ class NeuralNetFactory:
         self.y_pred = np.argmax(self._model.predict(x_test), axis=1)
         self.y_true = np.argmax(y_test, axis=1)
         cm = confusion_matrix(self.y_true, self.y_pred)
+        cm_df = pd.DataFrame(cm)
         sns.heatmap(cm, annot=True, fmt="d")
         plt.ylabel("Groundtruth")
         plt.xlabel("Predicted")
@@ -414,6 +415,7 @@ class NeuralNetFactory:
         if output_dir:
             cm_file = os.path.join(output_dir, f"{self.model_name}_{self.config.dataset}_cm.png")
             plt.savefig(cm_file, dpi=1000)
+            cm_df.to_csv(os.path.join(output_dir, f"{self.model_name}_{self.config.dataset}_cm.csv:)"))
 
         self._classification_report(output_dir=output_dir)
         plt.show()
