@@ -9,13 +9,13 @@ from matplotlib import rc, rcParams
 
 rc('font', weight='bold', )
 rcParams["font.family"] = "Times New Roman"
-# sns.set_palette(sns.color_palette("Pastel1", 10))
 
 
-def create_trend_plot(x_data, y1_data_list, y2_data_list, labels, title='Trend Plot', subtitle="", attack='X',
+def create_trend_plot(x_data, y1_data_list,
+                      y2_data_list, labels,
+                      title='Trend Plot', subtitle="", attack='X',
                       y1_label='Y1',
                       y2_label='Y2', output_file='trend_plot.png'):
-
     # Convert the input lists into a Pandas DataFrame
     df1 = pd.DataFrame({'X': x_data})
     for i, y_data in enumerate(y1_data_list):
@@ -48,15 +48,15 @@ def create_trend_plot(x_data, y1_data_list, y2_data_list, labels, title='Trend P
     ax1.tick_params(axis='y', labelcolor='black', labelsize=24, width=2, length=6)
     ax1.tick_params(axis='x', labelsize=24, width=2, length=6)
 
-    # Create a second Y axis on the right side of the plot
-    ax2 = ax1.twinx()
-
-    # Set the range for the second Y axis
-    ax2.set_ylim(14, 100)
-
-    # Customize the plot appearance for the second Y axis
-    ax2.set_ylabel(y2_label, fontsize=22, fontweight='bold')
-    ax2.tick_params(axis='y', labelsize=24, width=2, length=6)
+    # # Create a second Y axis on the right side of the plot
+    # ax2 = ax1.twinx()
+    #
+    # # Set the range for the second Y axis
+    # ax2.set_ylim(14, 100)
+    #
+    # # Customize the plot appearance for the second Y axis
+    # ax2.set_ylabel(y2_label, fontsize=22, fontweight='bold')
+    # ax2.tick_params(axis='y', labelsize=24, width=2, length=6)
 
     # Add a legend for both Y axes
     lines1, labels1 = ax1.get_legend_handles_labels()
@@ -111,8 +111,8 @@ def moving_average(data, window=1):
 
 
 def plot_beta_vs_patch_size(networks, beta_patch_size, patch_size, x_label='Patch Size',
-                                   output_file='beta_plot.png', dpi=300, figsize=(8, 4), smoothing=False,
-                                   smoothing_window=2):
+                            output_file='beta_plot.png', dpi=300, figsize=(8, 4), smoothing=False,
+                            smoothing_window=2):
     data_patch_size = pd.DataFrame()
 
     for i, network in enumerate(networks):
@@ -133,7 +133,8 @@ def plot_beta_vs_patch_size(networks, beta_patch_size, patch_size, x_label='Patc
         else:
             y_data = subset['β']
             x_data = subset[x_label]
-        sns.lineplot(x=x_data, y=y_data, lw=4, label=network, ax=ax, color=bright_colors[i], marker='o', markersize=10)
+        sns.lineplot(x=x_data, y=y_data, lw=4, label=network, ax=ax,
+                     color=bright_colors[i], marker='o', markersize=10)
 
     ax.set_xlabel(x_label, fontsize=20, fontweight='bold')
     ax.set_ylabel('β', fontsize=20, fontweight='bold')
@@ -145,9 +146,12 @@ def plot_beta_vs_patch_size(networks, beta_patch_size, patch_size, x_label='Patc
     plt.show()
 
 
-def plot_defense_accuracy(defense, acc_data, attacks, dpi=300, figsize=(8, 4), font_scale=2, save_path="defense_vs_accuracy.png"):
+def plot_defense_accuracy(defense, acc_data, attacks, dpi=300, figsize=(8, 4), font_scale=2,
+                          save_path="defense_vs_accuracy.png"):
     # Create a DataFrame
-    data = pd.DataFrame(acc_data, columns=attacks, index=defense).reset_index().melt(id_vars='index', var_name='Attack', value_name='Accuracy')
+    data = pd.DataFrame(acc_data, columns=attacks,
+                        index=defense).reset_index().melt(id_vars='index',
+                                                          var_name='Attack', value_name='Accuracy')
     data.columns = ['Defense', 'Attack', 'Accuracy']
 
     # Set high-resolution plot settings
@@ -156,7 +160,7 @@ def plot_defense_accuracy(defense, acc_data, attacks, dpi=300, figsize=(8, 4), f
     sns.set_style("whitegrid")
 
     # Create the plot
-    ax = sns.lineplot(x='Attack', y='Accuracy', hue='Defense', data=data,  marker='o', markersize=10)
+    ax = sns.lineplot(x='Attack', y='Accuracy', hue='Defense', data=data, marker='o', markersize=10)
     # ax.set_title('Attack vs Accuracy for Different Defenses')
 
     # Save the plot as a high-resolution image
@@ -164,6 +168,36 @@ def plot_defense_accuracy(defense, acc_data, attacks, dpi=300, figsize=(8, 4), f
 
     # Show the plot
     plt.show()
+
+
+def create_time(csv_file, output_file, dpi=300):
+    df = pd.read_csv(csv_file)
+
+    # Convert wall-time to hours
+    df["Inception(Undefended)"] = (df["Inception(Undefended)"] - df["Inception(Undefended)"].iloc[0]) / 3600
+    df["Inception(Defense=MI)"] = (df["Inception(Defense=MI)"] - df["Inception(Defense=MI)"].iloc[0]) / 3600
+
+    sns.set(style='whitegrid', rc={'font.family': 'Arial'})
+    plt.figure(figsize=(8, 4))
+
+    sns.lineplot(x="Epoch", y="Inception(Undefended)",
+                 data=df, linewidth=4,
+                 label="Inception (Undefended)", color="yellow")
+    sns.lineplot(x="Epoch", y="Inception(Defense=MI)",
+                 data=df, linewidth=4,
+                 label="Inception (Defense=MI)", color='red')
+
+    plt.ylabel("Wall-time (hours)", fontsize=20, fontweight='bold')
+    plt.xlabel("Epoch", fontsize=20, fontweight='bold')
+    plt.legend(fontsize=15)
+    # ax1 = plt.gca()
+    # ax2 = ax1.twinx()
+    # ax2.set_ylabel("Wall-time (hours)", fontsize=22, fontweight='bold')
+    # ax2.set_yticks(ax1.get_yticks())
+    # ax2.set_ylim(ax1.get_ylim())
+
+    plt.savefig(output_file, dpi=dpi)
+    plt.close()
 
 
 def compute_robusntess_score(acc_clean: list, acc_attack: list):
@@ -195,13 +229,14 @@ def plot_gen_performance(output_dir, model, attack, Defense, clean_acc, attack_a
 
 
 # ------------------------------------------------------
+
 Defense = ['Undefended', "KL", "MI", "MN", "H", "PSNR"]
 acc_attack_b0_n_pixel = [
-    [44.3, 40.7, 35.2, 23.1, 21.2,19.3, 14.9, 14.1, 12.4],
+    [44.3, 40.7, 35.2, 23.1, 21.2, 19.3, 14.9, 14.1, 12.4],
     [82.6, 83.12, 79.4, 72.1, 70.3, 64.2, 65.8, 57.1, 52.23],
     [91.3, 86.2, 81.4, 79.3, 75.2, 70.2, 65.1, 63.2, 61.2],
     [81.6, 80.2, 75.3, 64.3, 60.2, 59.2, 55.3, 52.1, 49.6],
-    [86.2, 85.12, 83.5, 82.1, 79.4, 76.2,75.2, 70.5, 69.5],
+    [86.2, 85.12, 83.5, 82.1, 79.4, 76.2, 75.2, 70.5, 69.5],
     [89.3, 87.2, 85.23, 72.3, 70.5, 68.34, 75.3, 72.9, 70.1]
 ]
 acc_attack_b0_patch = [
@@ -223,22 +258,24 @@ csv_file_path = r"C:\github\clo\clozoo\CIFAR10\b0_cifar10_adam_poch_loss.csv"
 output_file_name = 'b0_training_trend.png'
 output_file_name = os.path.join(output_dir, model, output_file_name)
 plot_training_trend(csv_file_path, x_col='Epoch', y_cols=['Undefended', 'MI', "PSNR", "KL", "Entropy"],
-                    dpi=300, y_label="Loss", output_file=output_file_name, figsize=(10, 6))
+                    dpi=300, y_label="Loss", output_file=output_file_name, figsize=(8, 4))
 
 csv_file_path = r"C:\github\clo\clozoo\CIFAR10\b0_cifar10_adam_validation-acc.csv"
 output_file_name_success = os.path.join(output_dir, model, 'b0_training_success_rate.png')
 plot_training_trend(csv_file_path, x_col='Epoch', y_cols=['Undefended', 'MI', "MN", "Entropy"],
-                    dpi=300, output_file=output_file_name_success, figsize=(10, 6))
+                    dpi=300, output_file=output_file_name_success, figsize=(8, 4))
 
 plot_gen_performance(output_dir=output_dir, model=model,
-                     Defense=Defense,attack='N=',
+                     Defense=Defense, attack='N=',
                      clean_acc=acc_clean_b0_n_pixel,
                      attack_acc=acc_attack_b0_n_pixel, N=N)
 plot_gen_performance(output_dir=output_dir, model=model,
-                     Defense=Defense,attack='Patch Size (%)=',
+                     Defense=Defense, attack='Patch Size (%)=',
                      clean_acc=acc_clean_b0_n_pixel,
-                     attack_acc=acc_attack_b0_patch, N=Patch_size)
-networks = [ 'ResNet(MI)', 'VGG(H)', 'Inception(PSNR)', 'EfficientNet(MI)']
+                     attack_acc=acc_attack_b0_patch,
+                     N=Patch_size)
+
+networks = ['ResNet(MI)', 'VGG(H)', 'Inception(PSNR)', 'EfficientNet(MI)']
 patch_size = [5, 10, 15, 20]
 n = [1, 2, 4, 16]
 
@@ -256,5 +293,10 @@ beta_n = [
     [89.3, 87.2, 75.23, 72.3]
 ]
 
-plot_beta_vs_patch_size(networks, beta_patch_size, patch_size, x_label='Patch Size (%)=',output_file=os.path.join(output_dir, 'beta_patch_size.png'))
-plot_beta_vs_patch_size(networks, beta_n, n, x_label="N=", output_file=os.path.join(output_dir, 'beta_npixel_size.png'))
+plot_beta_vs_patch_size(networks, beta_patch_size, patch_size, x_label='Patch Size (%)=',
+                        output_file=os.path.join(output_dir, 'beta_patch_size.png'))
+plot_beta_vs_patch_size(networks, beta_n, n, x_label="N=",
+                        output_file=os.path.join(output_dir,
+                                                 'beta_npixel_size.png'))
+create_time(csv_file=r"C:\github\clo\clozoo\CIFAR10\walltime_imagenet_adam_train_acc.csv",
+            output_file=os.path.join(output_dir, 'walltime_imagenet_adam_train_acc.png'))

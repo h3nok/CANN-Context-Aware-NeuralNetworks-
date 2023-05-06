@@ -1,7 +1,5 @@
 import numpy as np
-from deepclo.pipe.dataset import ImageDataProvider
-from experiments.adversary.attacker import plot_image
-from skimage import io, data
+from skimage import data
 import matplotlib.pyplot as plt
 
 
