@@ -9,8 +9,9 @@ from matplotlib import rc, rcParams
 
 rc('font', weight='bold', )
 rcParams["font.family"] = "Times New Roman"
-
-
+plt.rcParams['grid.color'] = 'black'
+plt.rcParams['axes.grid'] = True
+sns.set_style("darkgrid", {"axes.facecolor": ".9"})
 def create_trend_plot(x_data, y1_data_list,
                       y2_data_list, labels,
                       title='Trend Plot', subtitle="", attack='X',
@@ -64,8 +65,11 @@ def create_trend_plot(x_data, y1_data_list,
     plt.show()
 
 
-def plot_training_trend(csv_file, x_col, y_cols, y_label='Accuracy(%)', output_file='training_trend_plot.png',
-                        x_label=None, highlight_col='Undefended', dpi=300, figsize=(8, 4)):
+def plot_training_trend(csv_file, x_col, y_cols,
+                        y_label='Accuracy(%)',
+                        output_file='training_trend_plot.png',
+                        x_label=None, highlight_col='Undefended',
+                        dpi=300, figsize=(8, 4)):
     # Read the CSV file into a pandas DataFrame
     data = pd.read_csv(csv_file)
 

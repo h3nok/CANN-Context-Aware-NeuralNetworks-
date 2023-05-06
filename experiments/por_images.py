@@ -1,4 +1,5 @@
 import os
+import imageio
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,6 +10,7 @@ from tensorflow.keras.datasets import cifar10
 from tensorflow.keras.layers import GlobalAveragePooling2D
 from tensorflow.keras.layers import Input, Dense, Dropout
 from tensorflow.keras.models import Sequential
+from PIL import Image
 
 from adversary.npixel_attack.attack import PixelAttacker
 from adversary.npixel_attack.helper import perturb_image
@@ -112,10 +114,15 @@ def attack_one_image_n_pixel(model, dataset, img_index=0,
     else:
         raise ValueError("Unknown dataset_name. Use either 'cifar10' or 'cifar100'.")
 
-    (_, _), (X_test, y_test) = dataset.load_data()
-    img = X_test[img_index]
-    label = class_names[y_test[img_index].item()]
-    attacker = PixelAttacker([model], (X_test, y_test), class_names)
+    if image_path is not None:
+        (_, _), (X_test, y_test) = dataset.load_data()
+        img = X_test[img_index]
+        label = class_names[y_test[img_index].item()]
+        attacker = PixelAttacker([model], (X_test, y_test), class_names)
+    else:
+        img = Image.open(image_path)
+        img = np.array(img)
+        label = "Pups"
 
     if 'inception' in model_name.lower():
         attacker = PixelAttacker([model], (X_test, y_test), class_names, dimensions=(75, 75))
@@ -166,16 +173,16 @@ def attack_one_image_n_pixel(model, dataset, img_index=0,
     filepath = os.path.join(output_directory, filename)
 
     plt.savefig(filepath, dpi=dpi, bbox_inches='tight')
+    print(filepath)
     plt.close()
 
 
 model_names = ["EfficientNetB0", "VGG16", "ResNet50"]
+image_path = r"C:\github\clo\puppies.jpg"
 for indx, model_name in enumerate(model_names):
     model = load_pretrained_model(model_name=model_name, dataset_name="cifar10", defense='MI')
     quadrants = [1, 2, 3, 4]
     for quadrant in quadrants:
-        attack_one_image_n_pixel(model, cifar10, img_index=indx, image_path=None, pixel_count=1, quadrant=quadrant,
+        attack_one_image_n_pixel(model, cifar10, img_index=indx, image_path=image_path, pixel_count=1, quadrant=quadrant,
                                  dataset_name="cifar10", dpi=600, model_name=model_name, patch_size=2,
-                                 output_directory=r"C:\Users\Henok\OneDrive\Research\Thesis\Thesis\Publications"
-                                                  r"\BMVC2023 "
-                                                  r"\figures\Attacks")
+                                 output_directory=r".")
